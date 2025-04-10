@@ -210,7 +210,7 @@
                     </UniformGrid>
                 </Grid>
             </TabItem>
-            <TabItem Header="编辑配方">
+            <!--<TabItem Header="编辑配方">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="65" />
@@ -243,7 +243,9 @@
                         ScrollViewer.HorizontalScrollBarVisibility="Auto"
                         ScrollViewer.VerticalScrollBarVisibility="Auto">
                         <DataGrid.Columns>
-                            <!--  by default a DataGridCheckBoxColumn will have the MaterialDesignDataGridCheckBoxColumnStyle and MaterialDesignDataGridCheckBoxColumnEditingStyle applied. See DataGridAssist.ApplyMaterialDesignColumnStyles attached property  -->
+            -->
+            <!--  by default a DataGridCheckBoxColumn will have the MaterialDesignDataGridCheckBoxColumnStyle and MaterialDesignDataGridCheckBoxColumnEditingStyle applied. See DataGridAssist.ApplyMaterialDesignColumnStyles attached property  -->
+            <!--
                             <DataGridCheckBoxColumn Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}">
                                 <DataGridCheckBoxColumn.Header>
                                     <Border Background="Transparent">
@@ -256,9 +258,11 @@
                                     </Style>
                                 </DataGridCheckBoxColumn.HeaderStyle>
                             </DataGridCheckBoxColumn>
-                            <!--  by default a DataGridTextColumn will have the MaterialDesignDataGridTextColumnStyle and MaterialDesignDataGridTextColumnEditingStyle applied. See DataGridAssist.ApplyMaterialDesignColumnStyles attached property  -->
+            -->
+            <!--  by default a DataGridTextColumn will have the MaterialDesignDataGridTextColumnStyle and MaterialDesignDataGridTextColumnEditingStyle applied. See DataGridAssist.ApplyMaterialDesignColumnStyles attached property  -->
 
-                            <!--  if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn  -->
+            <!--  if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn  -->
+            <!--
                             <materialDesign:DataGridTextColumn
                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                 ElementStyle="{StaticResource MaterialDesignDataGridTextColumnStyle}"
@@ -271,7 +275,9 @@
                                     </Binding>
                                 </materialDesign:DataGridTextColumn.Binding>
                             </materialDesign:DataGridTextColumn>
-                            <!--  set a max length to get an indicator in the editor  -->
+            -->
+            <!--  set a max length to get an indicator in the editor  -->
+            <!--
                             <DataGridTextColumn Header="标准重量(g)">
                                 <DataGridTextColumn.Binding>
                                     <Binding Path="Item.weights" StringFormat="{}{0:F2}">
@@ -308,7 +314,9 @@
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </materialDesign:DataGridTextColumn>
-                            <!--  use custom combo box column to get better combos. Use ItemsSourceBinding as your binding template to be applied to each combo  -->
+            -->
+            <!--  use custom combo box column to get better combos. Use ItemsSourceBinding as your binding template to be applied to each combo  -->
+            <!--
                             <materialDesign:DataGridComboBoxColumn
                                 Width="100"
                                 Header="秤台号"
@@ -316,15 +324,19 @@
                                 ItemsSourceBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Path=DataContext.ScalingNums}"
                                 SelectedValueBinding="{Binding Item.ScalingNum}">
 
-                                <!--Setting the editing element style allows access to all of the combo box's properties
+            -->
+            <!--Setting the editing element style allows access to all of the combo box's properties
 <materialDesign:MaterialDataGridComboBoxColumn.EditingElementStyle>
     <Style TargetType="ComboBox" BasedOn="{StaticResource {ComponentResourceKey TypeInTargetAssembly={x:Type ComboBox}, ResourceId=MaterialDataGridComboBoxColumnEditingStyle}}" >
         <Setter Property="IsEditable" Value="True" />
     </Style>
 </materialDesign:MaterialDataGridComboBoxColumn.EditingElementStyle>
-                                -->
+            -->
+            <!--
                             </materialDesign:DataGridComboBoxColumn>
-                            <!--  按钮列  -->
+            -->
+            <!--  按钮列  -->
+            <!--
                             <DataGridTemplateColumn Width="*" Header="操作">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
@@ -357,7 +369,7 @@
             </TabItem>
             <TabItem Header="TAB 3">
                 <TextBlock Margin="8" Text="PrimaryMid Tab 2" />
-            </TabItem>
+            </TabItem>-->
         </TabControl>
     </Grid>
 </UserControl>

@@ -30,7 +30,7 @@ namespace Weighting.Shared
         }
 
         //当前登录用户的权限列表
-        private List<string> _permission = new List<string> { "PlanManagement", "FormulaManagement" };
+        private List<string> _permission = new List<string> { "PlanManagement", "FormulaManagement" ,"UserManagement"};
         public List<string> Permissions
         {
             get => _permission;

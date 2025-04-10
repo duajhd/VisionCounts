@@ -6,12 +6,17 @@
     xmlns:local="clr-namespace:Weighting"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DesignHeight="450"
-    d:DesignWidth="800"
+    Width="Auto"
+    Height="Auto"
+    MinWidth="200"
+    MaxWidth="800"
     mc:Ignorable="d">
     <Grid>
         <materialDesign:Card>
-            <Border Padding="10">
+            <Border
+                Width="400"
+                Height="300"
+                Padding="10">
                 <UniformGrid
                     Columns="2"
                     Cursor=""
@@ -19,7 +24,7 @@
 
                     <TextBlock
                         Margin="0"
-                        HorizontalAlignment="Center"
+                        HorizontalAlignment="Right"
                         VerticalAlignment="Center">
                         账号：
                     </TextBlock>
@@ -27,17 +32,21 @@
                         Height="40"
                         VerticalAlignment="Center"
                         Text="{Binding UserName}" />
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">密码：</TextBlock>
+                    <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center">密码：</TextBlock>
                     <PasswordBox
                         x:Name="PasswordInput"
                         Height="40"
                         VerticalAlignment="Center"
                         local:PasswordBoxHelper.BoundPassword="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <Button
+                        Width="70"
                         Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
                         CommandParameter="False"
                         Content="取消" />
-                    <Button Command="{Binding SignUpCommand}" Content="确定" />
+                    <Button
+                        Width="70"
+                        Command="{Binding SignUpCommand}"
+                        Content="确定" />
 
 
                 </UniformGrid>
