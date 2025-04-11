@@ -48,7 +48,7 @@
                     FontSize="14">
                     配方编码：
                 </TextBlock>
-                <TextBox Text="{Binding Code}" />
+                <TextBox Text="{Binding Name}" />
             </UniformGrid>
             <Button
                 Grid.Column="2"

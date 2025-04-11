@@ -247,7 +247,7 @@ namespace Weighting.ViewModels
 
 
             string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\formula.db";
-            string sql = "INSERT INTO PlatformScale( MaterialName, weights, UpperTolerance, LowerTolerance, Code, ScalingName, ScalingNum,MaterialUnit,ToleranceUnit,ScalingID) VALUES( @materialName, @weights, @upperTolerance, @lowerTolerance, @code, @scalingName, @scalingNum,@materialUnit,@toleranceUnit,@scalingID)";
+            string sql = "INSERT INTO PlatformScale( MaterialName, weights, UpperTolerance, LowerTolerance,Name, Code, ScalingName, ScalingNum,MaterialUnit,ToleranceUnit,ScalingID) VALUES( @materialName, @weights, @upperTolerance, @lowerTolerance,@name, @code, @scalingName, @scalingNum,@materialUnit,@toleranceUnit,@scalingID)";
             using (DatabaseHelper db = new DatabaseHelper(connectionStr))
             {
                 db.ExecuteNonQuery("INSERT INTO  ProductFormula(Code,Name) VALUES(@code,@name)",new Dictionary<string, object>
@@ -266,6 +266,7 @@ namespace Weighting.ViewModels
                             { "@upperTolerance", Math.Round(item.Item.UpperTolerance,2) },
                             { "@lowerTolerance",Math.Round(item.Item.LowerTolerance,2)},
                             { "@code",Code},
+                            { "@name",FormulaName},
                             { "@scalingName","test"},
                             { "@scalingNum",item.Item.ScalingName}, //在combox写入数据时浪费了很多事件
                         { "@materialUnit", item.Item.MaterialUnit},

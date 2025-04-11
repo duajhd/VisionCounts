@@ -47,9 +47,10 @@
                         materialDesign:ComboBoxAssist.MaxLength="2"
                         materialDesign:HintAssist.Hint="选择角色"
                         materialDesign:HintAssist.HintOpacity=".26"
+                        DisplayMemberPath="RoleName"
                         IsEditable="True"
                         ItemsSource="{Binding AllRoles}"
-                        SelectedItem="{Binding SelectedRoleID, Converter={StaticResource RoleToIdConverter}}" />
+                        SelectedItem="{Binding SelectedRoleForEditing}" />
 
                     <Button
                         Width="70"

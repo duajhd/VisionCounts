@@ -83,6 +83,12 @@ namespace Weighting
 
         
     }
+
+    public class Roles
+    {
+        public int ID { get; set; }
+        public string RoleName { get; set; }
+    }
     public class SelectableViewModel<T> : INotifyPropertyChanged
     {
         // 数据项

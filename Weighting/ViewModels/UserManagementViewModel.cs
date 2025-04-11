@@ -35,14 +35,26 @@ namespace Weighting.ViewModels
 
             //读取所有角色名
             string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Permission.db";
-            string sql = "SELECT RoleName FROM Roles";
+            string sql = "SELECT  * FROM Roles";
 
             using (DatabaseHelper db = new DatabaseHelper(connectionStr))
             {
                DataTable dt = db.ExecuteQuery(sql);
                 foreach (DataRow row in dt.Rows)
                 {
-                    AllRoles.Add(DataRowHelper.GetValue<string>(row, "RoleName", null));
+                    //RoleName = DataRowHelper.GetValue<string>(row, "RoleName", null),
+                    //        UserName = DataRowHelper.GetValue<string>(row, "UserName", null),
+                    //        ID = DataRowHelper.GetValue<int>(row, "UserId", 0)
+                  
+                    AllRoles.Add(
+
+                          new Roles
+                          {
+                              RoleName = DataRowHelper.GetValue<string>(row, "RoleName", null),
+
+                              ID = DataRowHelper.GetValue<int>(row, "ID", 0)
+                          }
+                        );
 
                 }
             }
@@ -88,16 +100,7 @@ namespace Weighting.ViewModels
         }
 
 
-        private int _selectedRoleID;
-        public int SelectedRoleID
-        {
-            get => _selectedRoleID;
-            set
-            {
-                _selectedRoleID = value;
-                OnPropertyChanged();
-            }
-        }
+     
         public ObservableCollection<Users> Items1 { get; set; }
         private RelayCommand _searchCommand;
         public RelayCommand SearchCommand 
@@ -143,7 +146,13 @@ namespace Weighting.ViewModels
                 OnPropertyChanged();
             }
         }
-        public ObservableCollection<string> AllRoles { get; set; } = new();
+
+        //添加用户绑定的角色
+        public Roles SelectedRole { get; set; }
+
+        //编辑用户绑定的角色
+        public Roles SelectedRoleForEditing { get; set; }
+        public ObservableCollection<Roles> AllRoles { get; set; } = new();
         public Dictionary<string, bool> SelectedItemsBinding { get; set; } = new();
 
         public string SelectedItemsDisplay =>

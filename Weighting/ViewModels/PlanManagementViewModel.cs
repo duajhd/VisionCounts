@@ -111,6 +111,7 @@ namespace Weighting.ViewModels
                         {
                             ID = DataRowHelper.GetValue<int>(row, "ID", 0),
                             Code = DataRowHelper.GetValue<string>(row, "Code", null),
+                            Name = DataRowHelper.GetValue<string>(row, "Name", null),
                             Creator = DataRowHelper.GetValue<string>(row, "Creator", null),
                         }
                         );
@@ -122,24 +123,27 @@ namespace Weighting.ViewModels
         private async void ChangeRowCommandExecute(object obj)
         {
             MixedMaterial row = (MixedMaterial)obj;
-            SelectedFormulaName = row.Name;
-            var dialog = new Views.ChangeFormulaDialog();
-            Search();
-             //await DialogHost.Show(dialog, "RootDialog");
-             await DialogHost.Show(dialog, "changeFormulaDialog");
-        }
-        //修改配方时根据选定的配方名，从数据库读取配料列表
-        private void Search()
-        {
-
-            if (string.IsNullOrEmpty(SelectedFormulaName) )
+            
+            if (string.IsNullOrEmpty(row.Name))
             {
                 MessageBox.Show("配方编码或配方名称不能为空!");
 
                 return;
             }
+            Search(row.Name);
+            var dialog = new Views.ChangeFormulaDialog();
+          
+             //await DialogHost.Show(dialog, "RootDialog");
+             await DialogHost.Show(dialog, "changeFormulaDialog");
+        }
+        //修改配方时根据选定的配方名，从数据库读取配料列表
+        private void Search(string Name)
+        {
+            EdtingScalingData.Clear();
+
+
             string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\formula.db";
-            string sql = $"SELECT A.*, B.Name FROM PlatformScale A INNER JOIN ProductFormula B ON A.Code = B.Code WHERE Name = {Name} ";
+            string sql = $"SELECT A.*, B.Name FROM PlatformScale A INNER JOIN ProductFormula B ON A.Name = B.Name  WHERE .Name = '{Name}'";
             //4.08改为INNER JOIN
             //if (string.IsNullOrEmpty(Code_search) || string.IsNullOrEmpty(FormulaName_search))
             //{
