@@ -19,6 +19,9 @@
     <Compile Update="Views\ChangeFormulaDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\ChangeUserDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\DeviceManagement.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -55,6 +58,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\ChangeFormulaDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ChangeUserDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\DeviceManagement.xaml">

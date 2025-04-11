@@ -27,17 +27,9 @@ namespace Weighting.ViewModels
 
         {
             //初始化数据
-            Items1 = CreateData();
+            Items1   = new ObservableCollection<SelectableViewModel<PlatformScale>>();
             EdtingScalingData = new ObservableCollection<SelectableViewModel<PlatformScale>>();
-            foreach (var model in Items1)
-            {
-                model.PropertyChanged += (sender, args) =>
-                {
-                    if (args.PropertyName == nameof(SelectableViewModel<PlatformScale>.IsSelected))
-
-                        OnPropertyChanged(nameof(IsAllItems1Selected));
-                };
-            }
+           
 
             AddRowCommand = new RelayCommand(AddRow);
             DeleteRowCommand = new RelayCommand(DeleteRow);

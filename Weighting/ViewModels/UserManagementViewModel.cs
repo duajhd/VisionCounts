@@ -31,8 +31,11 @@ namespace Weighting.ViewModels
             ChangeRowCommand = new RelayCommand(ChangeRowCommandExecute);
             SignUpCommand = new RelayCommand(SignUp);
             AddUserCommand = new RelayCommand(AddUserCommandExecute);
-        }
 
+
+            
+        }
+        //新增用户绑定输入的用户名
         private string _username;
         public string UserName
         {
@@ -56,6 +59,30 @@ namespace Weighting.ViewModels
             }
         }
 
+        private string _selectedUserName;
+        public string SelectedUserName
+        {
+            get=> _selectedUserName;
+            set
+            {
+                _selectedUserName = value;
+              
+                    OnPropertyChanged();
+
+            }
+        }
+
+
+        private int _selectedRoleID;
+        public int SelectedRoleID
+        {
+            get => _selectedRoleID;
+            set
+            {
+                _selectedRoleID = value;
+                OnPropertyChanged();
+            }
+        }
         public ObservableCollection<Users> Items1 { get; set; }
         private RelayCommand _searchCommand;
         public RelayCommand SearchCommand 
@@ -101,7 +128,15 @@ namespace Weighting.ViewModels
                 OnPropertyChanged();
             }
         }
+        public ObservableCollection<string> AllRoles { get; set; } = new();
+        public Dictionary<string, bool> SelectedItemsBinding { get; set; } = new();
 
+        public string SelectedItemsDisplay =>
+            string.Join(", ", SelectedItemsBinding.Where(kv => kv.Value).Select(kv => kv.Key));
+
+        public bool IsDropDownOpen { get; set; }
+
+       
         //删除后将不可恢复
         private  void DeleteRowExecute(object obj)
         {
@@ -152,7 +187,7 @@ namespace Weighting.ViewModels
                             ID = DataRowHelper.GetValue<int>(row, "UserId",0)
                         }
                         );
-
+                    AllRoles.Add(DataRowHelper.GetValue<string>(row, "RoleName", null));
                 }
             }
         }
@@ -161,16 +196,17 @@ namespace Weighting.ViewModels
         /// 
         /// </summary>
         /// <param name="o"></param>
-        /// 修改用户需要知道变更后
-        private  void ChangeRowCommandExecute(object o) 
+        /// 修改用户需要知道变更后,选择了哪个用户
+        private async void ChangeRowCommandExecute(object obj) 
         {
 
-           
+            //获取选择的用户
+            Users row = (Users)obj;
+            SelectedUserName = row.UserName;
+            var dialog = new Views.ChangeUserDialog();
+            //await DialogHost.Show(dialog, "RootDialog");
+            await DialogHost.Show(dialog, "RootDialog");
 
-            //if (result is string name && !string.IsNullOrWhiteSpace(name))
-            //{
-               
-            //}
         }
 
         private async void AddUserCommandExecute(object obj)

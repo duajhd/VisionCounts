@@ -24,5 +24,6 @@ namespace Weighting.Views
         {
             InitializeComponent();
         }
+
     }
 }

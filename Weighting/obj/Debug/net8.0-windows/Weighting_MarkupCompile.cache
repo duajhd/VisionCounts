@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 D:\Quadrant\Weighting\Weighting\App.xaml
-12602368599
+131064629539
 
-331443335499
+3450473272
 209239915095
-Login.xaml;MainWindow.xaml;Pages\SignUpPage.xaml;Views\AdduserDialog.xaml;Views\ChangeFormulaDialog.xaml;Views\DeviceManagement.xaml;Views\DocumentMagement.xaml;Views\PlanManagement.xaml;Views\RoleManagement.xaml;Views\ScalingMagement.xaml;Views\SignUpView.xaml;Views\UserManagement.xaml;
+Login.xaml;MainWindow.xaml;Pages\SignUpPage.xaml;Views\AdduserDialog.xaml;Views\ChangeFormulaDialog.xaml;Views\ChangeUserDialog.xaml;Views\DeviceManagement.xaml;Views\DocumentMagement.xaml;Views\PlanManagement.xaml;Views\RoleManagement.xaml;Views\ScalingMagement.xaml;Views\SignUpView.xaml;Views\UserManagement.xaml;
 
 False
 

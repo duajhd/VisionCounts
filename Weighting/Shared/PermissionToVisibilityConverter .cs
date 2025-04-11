@@ -80,4 +80,37 @@ namespace Weighting.Shared
             return null;
         }
     }
+
+    public class RoleToIdConverter : IValueConverter
+    {
+        // 从源到目标的转换（例如：将 "Administrator" 转换为 1）
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is string roleName)
+            {
+                return roleName switch
+                {
+                    "Administrator" => 1,
+                    "User" => 2,
+                    _ => 0 // 默认值
+                };
+            }
+            return 0; // 如果值不是字符串，返回默认值
+        }
+
+        // 从目标到源的转换（例如：将 1 转换回 "Administrator"）
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is int roleId)
+            {
+                return roleId switch
+                {
+                    1 => "Administrator",
+                    2 => "User",
+                    _ => string.Empty // 默认值
+                };
+            }
+            return string.Empty; // 如果值不是整数，返回空字符串
+        }
+    }
 }

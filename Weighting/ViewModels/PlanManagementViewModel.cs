@@ -26,6 +26,8 @@ namespace Weighting.ViewModels
         //方案数据源
         public ObservableCollection<MixedMaterial> Items1 { get; set; }
 
+
+        //用于查询配方
         private string _code;
         public string Code
         {
@@ -59,6 +61,12 @@ namespace Weighting.ViewModels
                 model.IsSelected = select;
             }
         }
+        public IEnumerable<string> ScalingNumsStr => new[] { "1号秤台", "2号秤台", "3号秤台", "4号秤台", "5号秤台", "6号秤台", "7号秤台", "8号秤台", "9号秤台" };
+
+        public IEnumerable<string> Units => new[] { "g", "kg" };
+
+        public IEnumerable<string> MaterialNames => new[] { "Binder A", "Binder B", "Binder C", " 粉末（10-1）", "粉末（10 - 2）" };
+        public string SelecteScaling { get; set; }
         //1.读取
         public  PlanManagementViewModel() 
         {
@@ -166,6 +174,60 @@ namespace Weighting.ViewModels
             {
                 MessageBox.Show($"读取 DataRow 时发生错误: {ex.Message}");
             }
+
+        }
+
+        //保存更改后的配方（更改配方只ge更改配方内容）
+         private void SaveFormula(object obj)
+        {
+            //保存数据的验证原则：1.string数据不能为空2.数值要换成整数
+            if (string.IsNullOrEmpty(FormulaName)   || string.IsNullOrEmpty(Code))
+            {
+                MessageBox.Show("配方编码或配方名称不能为空!");
+               
+                return;
+            }
+
+            if (!ValidationValue())
+            {
+                MessageBox.Show("配料输入数据有误，请重检查并重新输入!");
+
+                return;
+            }
+
+
+            string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\formula.db";
+            string sql = "INSERT INTO PlatformScale( MaterialName, weights, UpperTolerance, LowerTolerance, Code, ScalingName, ScalingNum,MaterialUnit,ToleranceUnit,ScalingID) VALUES( @materialName, @weights, @upperTolerance, @lowerTolerance, @code, @scalingName, @scalingNum,@materialUnit,@toleranceUnit,@scalingID)";
+            using (DatabaseHelper db = new DatabaseHelper(connectionStr))
+            {
+                db.ExecuteNonQuery("INSERT INTO  ProductFormula(Code,Name) VALUES(@code,@name)",new Dictionary<string, object>
+                {
+                    {"@code",Code },
+                    {"@name", FormulaName}
+                });
+               
+
+                foreach (var item in Items1)
+                {
+                    db.ExecuteNonQuery(sql, new Dictionary<string, object>
+                {
+                    { "@materialName",item.Item.MaterialName},
+                    {"@weights",Math.Round(item.Item.weights,2) },
+                            { "@upperTolerance", Math.Round(item.Item.UpperTolerance,2) },
+                            { "@lowerTolerance",Math.Round(item.Item.LowerTolerance,2)},
+                            { "@code",Code},
+                            { "@scalingName","test"},
+                            { "@scalingNum",item.Item.ScalingName}, //在combox写入数据时浪费了很多事件
+                        { "@materialUnit", item.Item.MaterialUnit},
+                        {"@toleranceUnit",item.Item.ToleranceUnit },
+                        { "@scalingID",item.Item.ScalingID}
+
+
+                });
+                }
+             
+            }
+
 
         }
         //写入数据库签验证数据是否合法

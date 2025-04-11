@@ -83,3 +83,5 @@ D:\Quadrant\Weighting\Weighting\obj\Debug\net8.0-windows\Views\PlanManagement.ba
 D:\Quadrant\Weighting\Weighting\obj\Debug\net8.0-windows\Views\ChangeFormulaDialog.g.cs
 D:\Quadrant\Weighting\Weighting\obj\Debug\net8.0-windows\Views\ChangeFormulaDialog.baml
 D:\Quadrant\Weighting\Weighting\obj\Debug\net8.0-windows\Weighting.sourcelink.json
+D:\Quadrant\Weighting\Weighting\obj\Debug\net8.0-windows\Views\ChangeUserDialog.g.cs
+D:\Quadrant\Weighting\Weighting\obj\Debug\net8.0-windows\Views\ChangeUserDialog.baml

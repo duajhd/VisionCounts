@@ -199,6 +199,7 @@
             <Button
                 Width="70"
                 HorizontalAlignment="Right"
+                Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
                 Content="取消"
                 Style="{StaticResource MaterialDesignRaisedButton}"
                 ToolTip="Resource name: MaterialDesignRaisedButton" />
