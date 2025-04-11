@@ -18,6 +18,7 @@
             </Grid.RowDefinitions>
             <UniformGrid Columns="2">
                 <UniformGrid Columns="2">
+
                     <TextBlock
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"

@@ -44,6 +44,7 @@ namespace Weighting
     //单个成分描述:
     public class PlatformScale
     {
+        public int ID { get; set; }
         //秤台名
         public string ScalingName { get; set; }
         //物料名
@@ -70,11 +71,17 @@ namespace Weighting
 
     }
 
+
+    //绑定查询界面用
     public class MixedMaterial
     {
         public int ID { get; set; }
         public string Code {  get; set; }
         public string Creator {  get; set; }
+
+        public string Name {  get; set; }
+
+        
     }
     public class SelectableViewModel<T> : INotifyPropertyChanged
     {

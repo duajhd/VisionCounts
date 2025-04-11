@@ -33,7 +33,22 @@ namespace Weighting.ViewModels
             AddUserCommand = new RelayCommand(AddUserCommandExecute);
 
 
-            
+            //读取所有角色名
+            string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Permission.db";
+            string sql = "SELECT RoleName FROM Roles";
+
+            using (DatabaseHelper db = new DatabaseHelper(connectionStr))
+            {
+               DataTable dt = db.ExecuteQuery(sql);
+                foreach (DataRow row in dt.Rows)
+                {
+                    AllRoles.Add(DataRowHelper.GetValue<string>(row, "RoleName", null));
+
+                }
+            }
+
+
+
         }
         //新增用户绑定输入的用户名
         private string _username;
@@ -160,12 +175,17 @@ namespace Weighting.ViewModels
                     {
                         {"@username",row.UserName}
                     });
+
+                    Items1.Remove(row);
                 }
             }
 
         }
+        //用户模块搜索命令执行
         private void SearchCommandExecute(object o)
         {
+            
+            
             string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Permission.db";
             string sql = $"SELECT A.UserName, B.RoleName FROM Users A INNER JOIN Roles B ON A.RoleId = B.RoleId WHERE A.UserName = '{UserName}'";
             if (string.IsNullOrEmpty(UserName))
@@ -176,6 +196,14 @@ namespace Weighting.ViewModels
             using (DatabaseHelper db = new DatabaseHelper(connectionStr))
             {
                DataTable dt =  db.ExecuteQuery(sql);
+                
+                if(dt.Rows.Count == 0)
+                {
+                    MessageBox.Show("系统中没有该用户");
+                    return;
+                }
+                //执行到这里说明查询成功
+                if (Items1.Count > 0) Items1.Clear();
                 foreach (DataRow row in dt.Rows)
                 {
                     Items1.Add(
@@ -187,7 +215,7 @@ namespace Weighting.ViewModels
                             ID = DataRowHelper.GetValue<int>(row, "UserId",0)
                         }
                         );
-                    AllRoles.Add(DataRowHelper.GetValue<string>(row, "RoleName", null));
+                    
                 }
             }
         }

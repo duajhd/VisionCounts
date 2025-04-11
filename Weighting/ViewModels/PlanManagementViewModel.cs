@@ -28,12 +28,12 @@ namespace Weighting.ViewModels
 
 
         //用于查询配方
-        private string _code;
-        public string Code
+        private string _name;
+        public string Name
         {
-            get => _code;
+            get => _name;
             set{
-                _code = value;
+                _name = value;
                 OnPropertyChanged();
             }
         }
@@ -66,13 +66,13 @@ namespace Weighting.ViewModels
         public IEnumerable<string> Units => new[] { "g", "kg" };
 
         public IEnumerable<string> MaterialNames => new[] { "Binder A", "Binder B", "Binder C", " 粉末（10-1）", "粉末（10 - 2）" };
-        public string SelecteScaling { get; set; }
+        public string SelectedFormulaName { get; set; }
         //1.读取
         public  PlanManagementViewModel() 
         {
             Items1 = new ObservableCollection<MixedMaterial>();
             EdtingScalingData = new ObservableCollection<SelectableViewModel<PlatformScale>>();
-            Search();
+           
             SearchCommand = new RelayCommand(SearchCommandExecute);
 
             ChangeRowCommand = new RelayCommand(ChangeRowCommandExecute);
@@ -84,9 +84,10 @@ namespace Weighting.ViewModels
 
         private void SearchCommandExecute(object obj)
         {
+            Items1.Clear();
             string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\formula.db";
-            string sql = $"SELECT * FROM ProductFormula WHERE Code = '{Code}'";
-            if (string.IsNullOrEmpty(Code))
+            string sql = $"SELECT * FROM ProductFormula WHERE Name = '{Name}'";
+            if (string.IsNullOrEmpty(Name))
             {
                 //不填用户名，查出所有用户
                 sql = $"SELECT * FROM ProductFormula";
@@ -120,20 +121,34 @@ namespace Weighting.ViewModels
 
         private async void ChangeRowCommandExecute(object obj)
         {
+            MixedMaterial row = (MixedMaterial)obj;
+            SelectedFormulaName = row.Name;
             var dialog = new Views.ChangeFormulaDialog();
-            //await DialogHost.Show(dialog, "RootDialog");
-            await DialogHost.Show(dialog, "changeFormulaDialog");
+            Search();
+             //await DialogHost.Show(dialog, "RootDialog");
+             await DialogHost.Show(dialog, "changeFormulaDialog");
         }
+        //修改配方时根据选定的配方名，从数据库读取配料列表
         private void Search()
         {
+
+            if (string.IsNullOrEmpty(SelectedFormulaName) )
+            {
+                MessageBox.Show("配方编码或配方名称不能为空!");
+
+                return;
+            }
             string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\formula.db";
-            string sql = "SELECT A.*, B.Name FROM PlatformScale A INNER JOIN ProductFormula B ON A.Code = B.Code";
+            string sql = $"SELECT A.*, B.Name FROM PlatformScale A INNER JOIN ProductFormula B ON A.Code = B.Code WHERE Name = {Name} ";
             //4.08改为INNER JOIN
             //if (string.IsNullOrEmpty(Code_search) || string.IsNullOrEmpty(FormulaName_search))
             //{
             //    MessageBox.Show("配方编码或配方名称不能为空!");
 
             //    return;
+
+
+
             //}
             try
             {
@@ -146,6 +161,8 @@ namespace Weighting.ViewModels
 
                         EdtingScalingData.Add(new SelectableViewModel<PlatformScale>(new PlatformScale
                         {
+                            ID = DataRowHelper.GetValue<int>(row, "ID",0),
+
                             MaterialName = DataRowHelper.GetValue<string>(row, "MaterialName", null),
 
                             weights = DataRowHelper.GetValue<float>(row, "weights", 0f),
@@ -168,6 +185,7 @@ namespace Weighting.ViewModels
                                 OnPropertyChanged(nameof(IsAllItems1Selected));
                         };
                     }
+
                 }
             }
             catch (Exception ex)
@@ -177,59 +195,44 @@ namespace Weighting.ViewModels
 
         }
 
-        //保存更改后的配方（更改配方只ge更改配方内容）
-         private void SaveFormula(object obj)
+
+        private void ChangeFormula()
         {
-            //保存数据的验证原则：1.string数据不能为空2.数值要换成整数
-            if (string.IsNullOrEmpty(FormulaName)   || string.IsNullOrEmpty(Code))
-            {
-                MessageBox.Show("配方编码或配方名称不能为空!");
-               
-                return;
-            }
-
-            if (!ValidationValue())
-            {
-                MessageBox.Show("配料输入数据有误，请重检查并重新输入!");
-
-                return;
-            }
-
-
             string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\formula.db";
-            string sql = "INSERT INTO PlatformScale( MaterialName, weights, UpperTolerance, LowerTolerance, Code, ScalingName, ScalingNum,MaterialUnit,ToleranceUnit,ScalingID) VALUES( @materialName, @weights, @upperTolerance, @lowerTolerance, @code, @scalingName, @scalingNum,@materialUnit,@toleranceUnit,@scalingID)";
-            using (DatabaseHelper db = new DatabaseHelper(connectionStr))
+            try
             {
-                db.ExecuteNonQuery("INSERT INTO  ProductFormula(Code,Name) VALUES(@code,@name)",new Dictionary<string, object>
-                {
-                    {"@code",Code },
-                    {"@name", FormulaName}
-                });
-               
 
-                foreach (var item in Items1)
+                using (DatabaseHelper db = new DatabaseHelper(connectionStr))
                 {
-                    db.ExecuteNonQuery(sql, new Dictionary<string, object>
-                {
-                    { "@materialName",item.Item.MaterialName},
-                    {"@weights",Math.Round(item.Item.weights,2) },
-                            { "@upperTolerance", Math.Round(item.Item.UpperTolerance,2) },
-                            { "@lowerTolerance",Math.Round(item.Item.LowerTolerance,2)},
-                            { "@code",Code},
-                            { "@scalingName","test"},
-                            { "@scalingNum",item.Item.ScalingName}, //在combox写入数据时浪费了很多事件
-                        { "@materialUnit", item.Item.MaterialUnit},
-                        {"@toleranceUnit",item.Item.ToleranceUnit },
-                        { "@scalingID",item.Item.ScalingID}
+                    foreach (SelectableViewModel<PlatformScale> item in EdtingScalingData)
+                    {
+                        string sql = $"UPDATE PlatformScale SET  MaterialName=@materialName, weights=@weights, UpperTolerance=@upperTolerance, LowerTolerance=@lowerTolerance, Code=@code, ScalingName=@scalingName, ScalingNum=,MaterialUnit=@materialUnit,ToleranceUnit=@toleranceUnit,ScalingID=@scalingID WHERE={item.Item.ID}";
+
+                        db.ExecuteNonQuery(sql, new Dictionary<string, object>
+                        {
+                            { "@materialName",item.Item.MaterialName},
+                            {"@weights",Math.Round(item.Item.weights,2) },
+                                    { "@upperTolerance", Math.Round(item.Item.UpperTolerance,2) },
+                                    { "@lowerTolerance",Math.Round(item.Item.LowerTolerance,2)},
+                                   
+                                    { "@scalingName","test"},
+                                    { "@scalingNum",item.Item.ScalingName}, //在combox写入数据时浪费了很多事件
+                                { "@materialUnit", item.Item.MaterialUnit},
+                                {"@toleranceUnit",item.Item.ToleranceUnit },
+                                { "@scalingID",item.Item.ScalingID}
 
 
-                });
+                        });
+                    }
                 }
-             
             }
+            catch
+            {
 
-
+            }
         }
+        //保存更改后的配方（更改配方只ge更改配方内容）
+      
         //写入数据库签验证数据是否合法
         private bool ValidationValue()
         {

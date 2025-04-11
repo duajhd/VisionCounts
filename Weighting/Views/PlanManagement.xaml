@@ -26,7 +26,7 @@
                     Width="200"
                     Height="30"
                     VerticalAlignment="Center"
-                    Text="{Binding Code}" />
+                    Text="{Binding Name}" />
             </StackPanel>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
                 <Button
@@ -63,7 +63,7 @@
                     </DataGridTextColumn>
                     <DataGridTextColumn Header="方案名称">
                         <DataGridTextColumn.Binding>
-                            <Binding Path="Code" />
+                            <Binding Path="Name" />
                         </DataGridTextColumn.Binding>
                     </DataGridTextColumn>
                     <DataGridTextColumn Header="创建人">
