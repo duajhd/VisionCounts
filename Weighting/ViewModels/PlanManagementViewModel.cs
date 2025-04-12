@@ -14,7 +14,7 @@ using System.Windows.Documents;
 
 namespace Weighting.ViewModels
 {
-    public class PlanManagementViewModel: INotifyPropertyChanged
+    public class PlanManagementViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -32,7 +32,7 @@ namespace Weighting.ViewModels
         public string Name
         {
             get => _name;
-            set{
+            set {
                 _name = value;
                 OnPropertyChanged();
             }
@@ -68,21 +68,29 @@ namespace Weighting.ViewModels
         public IEnumerable<string> MaterialNames => new[] { "Binder A", "Binder B", "Binder C", " 粉末（10-1）", "粉末（10 - 2）" };
         public MixedMaterial SelectedFormulaName { get; set; }
 
-        
+
         //1.读取
-        public  PlanManagementViewModel() 
+        public PlanManagementViewModel()
         {
             Items1 = new ObservableCollection<MixedMaterial>();
             EdtingScalingData = new ObservableCollection<SelectableViewModel<PlatformScale>>();
-           
+
             SearchCommand = new RelayCommand(SearchCommandExecute);
 
             ChangeRowCommand = new RelayCommand(ChangeRowCommandExecute);
+
+            AddRowCommand = new RelayCommand(AddRow);
+
+            DeleteRowCommand = new RelayCommand(DeleteRow);
         }
 
         public RelayCommand SearchCommand { get; set; }
 
         public RelayCommand ChangeRowCommand { get; set; }
+
+        public RelayCommand AddRowCommand { get; set; }
+
+        public RelayCommand DeleteRowCommand { get; set; }
 
         private void SearchCommandExecute(object obj)
         {
@@ -140,7 +148,7 @@ namespace Weighting.ViewModels
           
              //await DialogHost.Show(dialog, "RootDialog");
            var result =   await DialogHost.Show(dialog, "changeFormulaDialog");
-            if(result.ToString() == "True")
+            if(result?.ToString() == "True")
             {
                 ChangeFormula();
             }
@@ -214,7 +222,47 @@ namespace Weighting.ViewModels
 
         }
 
+        private void AddRow(object obj)
+        {
+            var item = new SelectableViewModel<PlatformScale>(new PlatformScale
+            {
+                MaterialName = "",
 
+                weights = 0.00f,
+
+                UpperTolerance = 0.00f,
+
+                LowerTolerance = -0.00f,
+
+                ScalingNum = "1"
+
+
+            });
+
+            item.PropertyChanged += (sender, args) =>
+            {
+                if (args.PropertyName == nameof(SelectableViewModel<PlatformScale>.IsSelected))
+
+                    OnPropertyChanged(nameof(IsAllItems1Selected));
+            };
+            EdtingScalingData.Add(item);
+        }
+
+        private void DeleteRow(object obj)
+        {
+
+            if (obj != null)
+            {
+                SelectableViewModel<PlatformScale> p = (SelectableViewModel<PlatformScale>)obj;
+
+                var resultes = EdtingScalingData.FirstOrDefault(item => p.Item.MaterialName == item.Item.MaterialName);
+                if (resultes != null)
+                {
+                    EdtingScalingData.Remove(resultes);
+                }
+            }
+
+        }
         private void ChangeFormula()
         {
             string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\formula.db";
