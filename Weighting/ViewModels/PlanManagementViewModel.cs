@@ -66,7 +66,9 @@ namespace Weighting.ViewModels
         public IEnumerable<string> Units => new[] { "g", "kg" };
 
         public IEnumerable<string> MaterialNames => new[] { "Binder A", "Binder B", "Binder C", " 粉末（10-1）", "粉末（10 - 2）" };
-        public string SelectedFormulaName { get; set; }
+        public MixedMaterial SelectedFormulaName { get; set; }
+
+        
         //1.读取
         public  PlanManagementViewModel() 
         {
@@ -123,7 +125,10 @@ namespace Weighting.ViewModels
         private async void ChangeRowCommandExecute(object obj)
         {
             MixedMaterial row = (MixedMaterial)obj;
-            
+
+            SelectedFormulaName = row;
+
+
             if (string.IsNullOrEmpty(row.Name))
             {
                 MessageBox.Show("配方编码或配方名称不能为空!");
@@ -134,7 +139,11 @@ namespace Weighting.ViewModels
             var dialog = new Views.ChangeFormulaDialog();
           
              //await DialogHost.Show(dialog, "RootDialog");
-             await DialogHost.Show(dialog, "changeFormulaDialog");
+           var result =   await DialogHost.Show(dialog, "changeFormulaDialog");
+            if(result.ToString() == "True")
+            {
+                ChangeFormula();
+            }
         }
         //修改配方时根据选定的配方名，从数据库读取配料列表
         private void Search(string Name)
@@ -143,7 +152,7 @@ namespace Weighting.ViewModels
 
 
             string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\formula.db";
-            string sql = $"SELECT A.*, B.Name FROM PlatformScale A INNER JOIN ProductFormula B ON A.Name = B.Name  WHERE .Name = '{Name}'";
+            string sql = $"SELECT A.*, B.Name FROM PlatformScale A INNER JOIN ProductFormula B ON A.Name = B.Name  WHERE A.Name = '{Name}'";
             //4.08改为INNER JOIN
             //if (string.IsNullOrEmpty(Code_search) || string.IsNullOrEmpty(FormulaName_search))
             //{
@@ -173,7 +182,13 @@ namespace Weighting.ViewModels
 
                             UpperTolerance = DataRowHelper.GetValue<float>(row, "UpperTolerance", 0f),
 
-                            LowerTolerance = DataRowHelper.GetValue(row, "LowerTolerance", 0f)
+                            LowerTolerance = DataRowHelper.GetValue<float>(row, "LowerTolerance", 0f),
+
+                            MaterialUnit = DataRowHelper.GetValue<string>(row, "MaterialUnit", null),
+
+                            ToleranceUnit = DataRowHelper.GetValue<string>(row, "ToleranceUnit", null),
+
+                            ScalingID = DataRowHelper.GetValue<int>(row, "ScalingID", 0),
 
                         }));
 
@@ -210,7 +225,7 @@ namespace Weighting.ViewModels
                 {
                     foreach (SelectableViewModel<PlatformScale> item in EdtingScalingData)
                     {
-                        string sql = $"UPDATE PlatformScale SET  MaterialName=@materialName, weights=@weights, UpperTolerance=@upperTolerance, LowerTolerance=@lowerTolerance, Code=@code, ScalingName=@scalingName, ScalingNum=,MaterialUnit=@materialUnit,ToleranceUnit=@toleranceUnit,ScalingID=@scalingID WHERE={item.Item.ID}";
+                        string sql = $"UPDATE PlatformScale SET  MaterialName=@materialName, weights=@weights, UpperTolerance=@upperTolerance, LowerTolerance=@lowerTolerance,  ScalingName=@scalingName, ScalingNum=@scalingNum,MaterialUnit=@materialUnit,ToleranceUnit=@toleranceUnit,ScalingID=@scalingID WHERE ID = '{item.Item.ID}'";
 
                         db.ExecuteNonQuery(sql, new Dictionary<string, object>
                         {
@@ -218,7 +233,7 @@ namespace Weighting.ViewModels
                             {"@weights",Math.Round(item.Item.weights,2) },
                                     { "@upperTolerance", Math.Round(item.Item.UpperTolerance,2) },
                                     { "@lowerTolerance",Math.Round(item.Item.LowerTolerance,2)},
-                                   
+                           
                                     { "@scalingName","test"},
                                     { "@scalingNum",item.Item.ScalingName}, //在combox写入数据时浪费了很多事件
                                 { "@materialUnit", item.Item.MaterialUnit},

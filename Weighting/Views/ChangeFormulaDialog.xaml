@@ -19,6 +19,7 @@
         <va:NotEmptyValidationRule x:Key="NotEmptyRule" />
         <tool:BindingProxy x:Key="proxy" Data="{Binding}" />
         <va:ScaleNameToNumberConverter x:Key="ScaleNameToNumberConverter" />
+
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -158,7 +159,7 @@
                     Header="单位"
                     IsEditable="True"
                     ItemsSourceBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Path=DataContext.Units}"
-                    SelectedValueBinding="{Binding Item.ToleranceUnit}">
+                    SelectedValueBinding="{Binding Item.ToleranceUnit, Mode=TwoWay}">
 
                     <!--Setting the editing element style allows access to all of the combo box's properties
 <materialDesign:MaterialDataGridComboBoxColumn.EditingElementStyle>
@@ -205,7 +206,8 @@
                 ToolTip="Resource name: MaterialDesignRaisedButton" />
             <Button
                 Width="70"
-                Command="{Binding SaveFormulaCommand}"
+                Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                CommandParameter="True"
                 Content="保存"
                 Style="{StaticResource MaterialDesignRaisedButton}"
                 ToolTip="Resource name: MaterialDesignRaisedButton" />
