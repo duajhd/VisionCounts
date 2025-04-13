@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
+using Weighting.Shared;
 
 namespace Weighting.ViewModels
 {
@@ -82,6 +83,10 @@ namespace Weighting.ViewModels
             AddRowCommand = new RelayCommand(AddRow);
 
             DeleteRowCommand = new RelayCommand(DeleteRow);
+
+            StimulateCommand = new RelayCommand(StimulateCommandExceute);
+
+            DelateFormulaCommand = new RelayCommand(DelateFormulaCommandExecute);
         }
 
         public RelayCommand SearchCommand { get; set; }
@@ -90,8 +95,48 @@ namespace Weighting.ViewModels
 
         public RelayCommand AddRowCommand { get; set; }
 
+        //删除检出配方的一个配料
         public RelayCommand DeleteRowCommand { get; set; }
 
+        //激活配方
+        public RelayCommand StimulateCommand { get; set; }
+
+        //删除配方
+
+        public RelayCommand DelateFormulaCommand { get; set; }
+
+        //删除一个配方，同时删除所有配料
+        //20250413,一开始不能删除提示参数不足，后来可以删除却没有级联删除，为什么?
+        private void DelateFormulaCommandExecute(object parameter)
+        {
+            MixedMaterial row = (MixedMaterial) parameter;
+
+            if (!string.IsNullOrEmpty(row.Name))
+            {
+               
+                string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\formula.db";
+                // SQL 删除语句
+                string sql = $"DELETE FROM ProductFormula WHERE Name = '{row.Name}'";
+
+                MessageBoxResult result = MessageBox.Show(
+                   "将要删除配方，确定要继续吗？",
+                   "提示",
+                   MessageBoxButton.YesNo,
+                   MessageBoxImage.Question);
+
+
+                if ( result == MessageBoxResult.Yes)
+                {
+                   
+                    using (DatabaseHelper db = new DatabaseHelper(connectionStr))
+                    {
+                        db.ExecuteNonQuery(sql);
+
+                        Items1.Remove(row);
+                    }
+                }
+            }
+        }
         private void SearchCommandExecute(object obj)
         {
             Items1.Clear();
@@ -130,6 +175,77 @@ namespace Weighting.ViewModels
             }
         }
 
+        //激活配方
+        private void StimulateCommandExceute(object parameter)
+        {
+            GlobalViewModelSingleton.Instance.CuurentFormula.ScalesData.Clear();
+
+            MixedMaterial rowforstimulation = (MixedMaterial)parameter;
+
+            
+
+
+            if (string.IsNullOrEmpty(rowforstimulation.Name))
+            {
+                MessageBox.Show("配方编码或配方名称不能为空!");
+
+                return;
+            }
+
+            string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\formula.db";
+            string sql = $"SELECT A.*, B.Name FROM PlatformScale A INNER JOIN ProductFormula B ON A.Name = B.Name  WHERE A.Name = '{rowforstimulation.Name}'";
+            //4.08改为INNER JOIN
+            //if (string.IsNullOrEmpty(Code_search) || string.IsNullOrEmpty(FormulaName_search))
+            //{
+            //    MessageBox.Show("配方编码或配方名称不能为空!");
+
+            //    return;
+
+
+
+            //}
+            try
+            {
+                using (DatabaseHelper db = new DatabaseHelper(connectionStr))
+                {
+                    DataTable dt = db.ExecuteQuery(sql);
+
+                    foreach (DataRow row in dt.Rows)
+                    {
+
+                        GlobalViewModelSingleton.Instance.CuurentFormula.ScalesData.Add(new PlatformScale
+                        {
+                            ID = DataRowHelper.GetValue<int>(row, "ID", 0),
+
+                            MaterialName = DataRowHelper.GetValue<string>(row, "MaterialName", null),
+
+                            weights = DataRowHelper.GetValue<float>(row, "weights", 0f),
+
+                            UpperTolerance = DataRowHelper.GetValue<float>(row, "UpperTolerance", 0f),
+
+                            LowerTolerance = DataRowHelper.GetValue<float>(row, "LowerTolerance", 0f),
+
+                            MaterialUnit = DataRowHelper.GetValue<string>(row, "MaterialUnit", null),
+
+                            ToleranceUnit = DataRowHelper.GetValue<string>(row, "ToleranceUnit", null),
+
+                            ScalingID = DataRowHelper.GetValue<int>(row, "ScalingID", 0),
+
+                        });
+
+
+                    }
+                    MessageBox.Show(GlobalViewModelSingleton.Instance.CuurentFormula.ScalesData.Count.ToString());
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"读取 DataRow 时发生错误: {ex.Message}");
+            }
+
+
+        }
         private async void ChangeRowCommandExecute(object obj)
         {
             MixedMaterial row = (MixedMaterial)obj;

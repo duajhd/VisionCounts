@@ -5,7 +5,7 @@
     <version>1.0.0</version>
     <authors>Weighting</authors>
     <description>Package Description</description>
-    <repository type="git" />
+    <repository type="git" commit="20ae5517f615e8171c27f96ad35f2116f94b741a" />
     <dependencies>
       <group targetFramework="net8.0-windows7.0">
         <dependency id="MaterialDesignColors" version="5.2.1" exclude="Build,Analyzers" />

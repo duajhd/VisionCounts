@@ -80,14 +80,15 @@
                                         Command="{Binding DataContext.ChangeRowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                         CommandParameter="{Binding}"
                                         Content="修改"
-                                        Style="{StaticResource MaterialDesignFlatButton}" Cursor="Hand" />
+                                        Cursor="Hand"
+                                        Style="{StaticResource MaterialDesignFlatButton}" />
                                     <Button
-                                        Command="{Binding DataContext.DeleteRowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        Command="{Binding DataContext.DelateFormulaCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                         CommandParameter="{Binding}"
                                         Content="删除"
                                         Style="{StaticResource MaterialDesignFlatButton}" />
                                     <Button
-                                        Command="{Binding DataContext.ChangeRowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        Command="{Binding DataContext.StimulateCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                         CommandParameter="{Binding}"
                                         Content="激活"
                                         Style="{StaticResource MaterialDesignFlatButton}" />

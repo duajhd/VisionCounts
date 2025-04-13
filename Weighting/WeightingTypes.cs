@@ -44,6 +44,7 @@ namespace Weighting
     //单个成分描述:
     public class PlatformScale
     {
+        //数据库中的ID
         public int ID { get; set; }
         //秤台名
         public string ScalingName { get; set; }
@@ -81,7 +82,7 @@ namespace Weighting
 
         public string Name {  get; set; }
 
-        
+       
     }
 
     public class Roles
@@ -132,20 +133,53 @@ namespace Weighting
         }
     }
 
+    public class ScalingResult: PlatformScale
+    {
+        //秤台单位
+        public string ScalingUnit { get; set; }
+
+        //称重的结果数据
+        public float ScalingData { get; set; }
+    }
+
     public class Formula
     {
-         Formula() { }
+        public Formula() {
+
+
+            ScalesData = new List<PlatformScale>();
+
+
+
+        }
 
         //配方编码
-        string Code;
+        public string Code;
 
-        string FormulaName;
+        public string FormulaName;
 
-        List<PlatformScale> ScalesData;
+        public List<PlatformScale> ScalesData;
 
 
     }
 
+
+    public class Devices
+    {
+      public   int ID { get; set; }
+        public string  IP { get; set; }
+        public int Port { get; set; }
+
+        public int ScalingID { get; set; }
+
+        public int MaxWeights { get; set; }
+
+        public string Brant { get; set; }
+
+        public string DateOfManufature { get; set; }
+
+        public string DeviceName { get; set; }
+    }
     public enum MaterialType
     {
         //粘合剂

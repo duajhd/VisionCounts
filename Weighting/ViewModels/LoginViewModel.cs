@@ -96,8 +96,31 @@ namespace Weighting.ViewModels
                         GlobalViewModelSingleton.Instance.Permissions.Add(DataRowHelper.GetValue<string>(row, "PermissionName", "nullValue"));
                     }
                     
+                    
                 }
 
+                //获取秤台列表
+
+                 connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Devices.db";
+                 sql = "SELECT * FROM DeviceList";
+
+                using (DatabaseHelper db = new DatabaseHelper(connectionStr))
+                {
+                    DataTable dt = db.ExecuteQuery(sql);
+                  
+
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        GlobalViewModelSingleton.Instance.Devicelist.Add( new Devices { ID = DataRowHelper.GetValue<int>(row, "ID", 0),
+                            IP = DataRowHelper.GetValue<string>(row, "IP", null),
+                            Port = DataRowHelper.GetValue<int>(row, "Port", 0), 
+                            MaxWeights = DataRowHelper.GetValue<int>(row, "MaxWeights", 0),
+                            Brant = DataRowHelper.GetValue<string>(row, "Brant", null),
+                            DateOfManufature = DataRowHelper.GetValue<string>(row, "DateOfManufature", null),
+                            DeviceName = DataRowHelper.GetValue<string>(row, "DeviceName", null),
+                        });
+                    }
+                }
 
                 Window w = new MainWindow();
                 w.Show();

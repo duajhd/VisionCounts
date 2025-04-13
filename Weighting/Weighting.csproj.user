@@ -13,6 +13,9 @@
     <Compile Update="Pages\SignUpPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="ViewModels\ScalingResults.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\AdduserDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -52,6 +55,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pages\SignUpPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="ViewModels\ScalingResults.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\AdduserDialog.xaml">

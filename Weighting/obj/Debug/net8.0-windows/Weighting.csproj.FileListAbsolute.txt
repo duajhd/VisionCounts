@@ -85,3 +85,5 @@ D:\Quadrant\Weighting\Weighting\obj\Debug\net8.0-windows\Views\ChangeFormulaDial
 D:\Quadrant\Weighting\Weighting\obj\Debug\net8.0-windows\Weighting.sourcelink.json
 D:\Quadrant\Weighting\Weighting\obj\Debug\net8.0-windows\Views\ChangeUserDialog.g.cs
 D:\Quadrant\Weighting\Weighting\obj\Debug\net8.0-windows\Views\ChangeUserDialog.baml
+D:\Quadrant\Weighting\Weighting\obj\Debug\net8.0-windows\ViewModels\ScalingResults.g.cs
+D:\Quadrant\Weighting\Weighting\obj\Debug\net8.0-windows\ViewModels\ScalingResults.baml

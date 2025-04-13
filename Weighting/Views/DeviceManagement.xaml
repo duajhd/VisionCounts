@@ -4,11 +4,123 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Weighting.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Grid>
-        <Button>设备</Button>
-    </Grid>
+    <UserControl.Resources />
+    <materialDesign:DialogHost Identifier="DeviceManagementDialog">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70" />
+                <RowDefinition Height="40" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    FontSize="14"
+                    Text="设备名:" />
+                <TextBox
+                    Width="200"
+                    Height="30"
+                    VerticalAlignment="Center"
+                    Text="{Binding Name}" />
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <Button
+                    Margin="10,0,0,0"
+                    Command="{Binding SearchCommand}"
+                    Content="搜索"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    ToolTip="Resource name: MaterialDesignRaisedButton" />
+                <Button
+                    Margin="40,0,0,0"
+                    Command="{Binding AddUserCommand}"
+                    Content="新增"
+                    Style="{StaticResource MaterialDesignPaperButton}"
+                    ToolTip="Resource name: MaterialDesignPaperButton" />
+                <Button
+                    Margin="50,0,0,0"
+                    Content="重置"
+                    Style="{StaticResource MaterialDesignPaperButton}"
+                    ToolTip="Resource name: MaterialDesignPaperButton" />
+            </StackPanel>
+            <DataGrid
+                x:Name="DataGrid"
+                Grid.Row="2"
+                AutoGenerateColumns="False"
+                CanUserAddRows="False"
+                HeadersVisibility="All"
+                IsReadOnly="True"
+                ItemsSource="{Binding Instance.Devicelist, Source={StaticResource GlobalViewModelSingleton}}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="编号">
+                        <DataGridTextColumn.Binding>
+                            <Binding Path="ID" />
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="设备名称">
+                        <DataGridTextColumn.Binding>
+                            <Binding Path="Name" />
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="品牌">
+                        <DataGridTextColumn.Binding>
+                            <Binding Path="Brant" />
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn Header="IP">
+                        <DataGridTextColumn.Binding>
+                            <Binding Path="Creator" />
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn Header="端口号">
+                        <DataGridTextColumn.Binding>
+                            <Binding Path="Creator" />
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+
+                    <DataGridTextColumn Header="创建时间">
+                        <DataGridTextColumn.Binding>
+                            <Binding Path="Creator" />
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+
+                    <DataGridTemplateColumn Width="*" Header="操作">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button
+                                        Command="{Binding DataContext.ChangeRowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}"
+                                        Content="修改"
+                                        Cursor="Hand"
+                                        Style="{StaticResource MaterialDesignFlatButton}" />
+                                    <Button
+                                        Command="{Binding DataContext.DeleteRowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}"
+                                        Content="删除"
+                                        Style="{StaticResource MaterialDesignFlatButton}" />
+                                    <Button
+                                        Command="{Binding DataContext.StimulateCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}"
+                                        Content="激活"
+                                        Style="{StaticResource MaterialDesignFlatButton}" />
+                                </StackPanel>
+
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+
+            </DataGrid>
+
+        </Grid>
+    </materialDesign:DialogHost>
+
 </UserControl>
