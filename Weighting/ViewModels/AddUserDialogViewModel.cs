@@ -110,8 +110,13 @@ namespace Weighting.ViewModels
         public void SignUp(object o)
         {
             string message;
-            Register(UserName, Password, out message);
-            MessageBox.Show(message);
+           if (Register(UserName, Password, out message))
+            {
+                MessageBox.Show(message);
+                UserName = "";
+                Password = "";
+            }
+            
 
 
         }

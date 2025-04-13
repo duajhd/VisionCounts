@@ -35,12 +35,7 @@
                     Content="搜索"
                     Style="{StaticResource MaterialDesignRaisedButton}"
                     ToolTip="Resource name: MaterialDesignRaisedButton" />
-                <Button
-                    Margin="40,0,0,0"
-                    Command="{Binding AddUserCommand}"
-                    Content="新增"
-                    Style="{StaticResource MaterialDesignPaperButton}"
-                    ToolTip="Resource name: MaterialDesignPaperButton" />
+
                 <Button
                     Margin="50,0,0,0"
                     Content="重置"

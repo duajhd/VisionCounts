@@ -64,7 +64,7 @@
                     </DataGridTextColumn>
                     <DataGridTextColumn Header="设备名称">
                         <DataGridTextColumn.Binding>
-                            <Binding Path="Name" />
+                            <Binding Path="DeviceName" />
                         </DataGridTextColumn.Binding>
                     </DataGridTextColumn>
                     <DataGridTextColumn Header="品牌">
@@ -75,19 +75,19 @@
 
                     <DataGridTextColumn Header="IP">
                         <DataGridTextColumn.Binding>
-                            <Binding Path="Creator" />
+                            <Binding Path="IP" />
                         </DataGridTextColumn.Binding>
                     </DataGridTextColumn>
 
                     <DataGridTextColumn Header="端口号">
                         <DataGridTextColumn.Binding>
-                            <Binding Path="Creator" />
+                            <Binding Path="Port" />
                         </DataGridTextColumn.Binding>
                     </DataGridTextColumn>
 
                     <DataGridTextColumn Header="创建时间">
                         <DataGridTextColumn.Binding>
-                            <Binding Path="Creator" />
+                            <Binding Path="DateOfManufature" />
                         </DataGridTextColumn.Binding>
                     </DataGridTextColumn>
 

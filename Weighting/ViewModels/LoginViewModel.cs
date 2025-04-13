@@ -90,6 +90,7 @@ namespace Weighting.ViewModels
                         GlobalViewModelSingleton.Instance.Currentusers = new Users { ID = DataRowHelper.GetValue<int>(row, "UserId", 0), RoleName = DataRowHelper.GetValue<string>(row, "RoleName", null), UserName = DataRowHelper.GetValue<string>(row, "UserName", null) };
                     }
                     //为当前用户赋值权限列表
+                    GlobalViewModelSingleton.Instance.Permissions.Clear();
                     foreach (DataRow row in per_dt.Rows)
                     {
 
@@ -107,8 +108,8 @@ namespace Weighting.ViewModels
                 using (DatabaseHelper db = new DatabaseHelper(connectionStr))
                 {
                     DataTable dt = db.ExecuteQuery(sql);
-                  
 
+                    GlobalViewModelSingleton.Instance.Devicelist.Clear();
                     foreach (DataRow row in dt.Rows)
                     {
                         GlobalViewModelSingleton.Instance.Devicelist.Add( new Devices { ID = DataRowHelper.GetValue<int>(row, "ID", 0),

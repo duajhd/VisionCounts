@@ -86,6 +86,17 @@ namespace Weighting.ViewModels
             }
         }
 
+
+        private string _userNameForSearch;
+        public string UserNameForSearch
+        {
+            get => _userNameForSearch;
+            set
+            {
+                _userNameForSearch = value;
+                OnPropertyChanged() ;
+            }
+        }
         private string _selectedUserName;
         public string SelectedUserName
         {
@@ -196,8 +207,8 @@ namespace Weighting.ViewModels
             
             
             string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Permission.db";
-            string sql = $"SELECT A.UserName, B.RoleName FROM Users A INNER JOIN Roles B ON A.RoleId = B.RoleId WHERE A.UserName = '{UserName}'";
-            if (string.IsNullOrEmpty(UserName))
+            string sql = $"SELECT A.UserName, B.RoleName FROM Users A INNER JOIN Roles B ON A.RoleId = B.RoleId WHERE A.UserName = '{UserNameForSearch}'";
+            if (string.IsNullOrEmpty(UserNameForSearch))
             {
                 //不填用户名，查出所有用户
                 sql = $"SELECT A.UserId, A.UserName, B.RoleName FROM Users A INNER JOIN Roles B ON A.RoleId = B.RoleId ";

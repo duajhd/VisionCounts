@@ -5,7 +5,7 @@
     xmlns:converters="clr-namespace:Weighting.Shared"
     xmlns:local="clr-namespace:Weighting"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-    StartupUri="MainWindow.xaml">
+    StartupUri="Login.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

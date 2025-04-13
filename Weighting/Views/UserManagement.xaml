@@ -24,7 +24,7 @@
                         VerticalAlignment="Center"
                         FontSize="14"
                         Text="用户名:" />
-                    <TextBox Text="{Binding UserName}" />
+                    <TextBox Text="{Binding UserNameForSearch}" />
                 </UniformGrid>
                 <UniformGrid Columns="2">
                     <TextBlock
