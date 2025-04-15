@@ -183,7 +183,8 @@ namespace Weighting
         public string DeviceName { get; set; }
     }
 
-    //通过遍历DeviceList
+    //测量结果，通过继承PlatformScale 两层遍历形成IP>MeasureResult的映射，login生成一次，后续使用
+    //遍历秤台和
     public class MeasureResult: PlatformScale
     {
         public MeasureResult() { }

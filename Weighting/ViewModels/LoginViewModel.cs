@@ -120,9 +120,84 @@ namespace Weighting.ViewModels
                             GlobalViewModelSingleton.Instance.IPAdressArr[DataRowHelper.GetValue<int>(row, "ScalingID", 0)] = DataRowHelper.GetValue<string>(row, "IP", null);
                             
                         }
+                    }
 
-                       
-                        
+                    //获取一个全局秤台列表
+                    GlobalViewModelSingleton.Instance.AllScales.Clear();
+                    using (DatabaseHelper db = new DatabaseHelper(connectionStr))
+                    {
+                        DataTable dt = db.ExecuteQuery(sql);
+
+
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            GlobalViewModelSingleton.Instance.AllScales.Add(new Devices
+                            {
+                                ID = DataRowHelper.GetValue<int>(row, "ID", 0),
+                                IP = DataRowHelper.GetValue<string>(row, "IP", null),
+                                Port = DataRowHelper.GetValue<int>(row, "Port", 0),
+                                MaxWeights = DataRowHelper.GetValue<int>(row, "MaxWeights", 0),
+                                Brant = DataRowHelper.GetValue<string>(row, "Brant", null),
+                                DateOfManufature = DataRowHelper.GetValue<string>(row, "DateOfManufature", null),
+                                DeviceName = DataRowHelper.GetValue<string>(row, "DeviceName", null),
+                            });
+
+                        }
+                    }
+
+                    //数据库中的ID
+                    //public int ID { get; set; }
+                    ////秤台名
+                    //public string ScalingName { get; set; }
+                    ////物料名
+
+                    //public string MaterialName { get; set; }
+
+                    ////标准重量
+                    //public float weights { get; set; }
+
+                    ////上公差
+                    //public float UpperTolerance { get; set; }
+
+                    //public float LowerTolerance { get; set; }
+
+                    ////使用秤台号
+                    //public string ScalingNum { get; set; }
+
+                    //public int ScalingID { get; set; }
+
+                    ////配料单位
+                    //public string MaterialUnit { get; set; }
+
+                    ////公差单位
+                    //public string ToleranceUnit { get; set; }
+
+                    //生成IP到测量结果的映射（切换配方时，需要重新生成这个映射）
+                    GlobalViewModelSingleton.Instance.IPToMeasureResult.Clear();
+                    foreach (PlatformScale item1 in GlobalViewModelSingleton.Instance.CuurentFormula.ScalesData)
+                    {
+                        foreach (Devices item2 in GlobalViewModelSingleton.Instance.AllScales)
+                        {
+                            if(item1.ScalingID == item2.ScalingID)
+                            {
+                                GlobalViewModelSingleton.Instance.IPToMeasureResult.Add(item2.IP, new MeasureResult
+                                {
+                                    ID = item1.ScalingID,
+                                    ScalingName = item1.ScalingName,
+                                    MaterialName = item1.ScalingName,
+                                    weights = item1.weights,
+                                    UpperTolerance = item1.UpperTolerance,
+                                    LowerTolerance = item1.LowerTolerance,
+                                    ScalingNum = item1.ScalingNum,
+                                    ScalingID = item1.ScalingID,
+                                    MaterialUnit = item1.MaterialUnit,
+                                    ToleranceUnit = item1.ToleranceUnit,
+                                    IsSatisfied = false,
+
+
+                                }) ;
+                            }
+                        }
                     }
 
                     Window w = new MainWindow();

@@ -89,3 +89,5 @@ D:\Quadrant\Weighting\Weighting\obj\Debug\net8.0-windows\ViewModels\ScalingResul
 D:\Quadrant\Weighting\Weighting\obj\Debug\net8.0-windows\ViewModels\ScalingResults.baml
 D:\Quadrant\Weighting\Weighting\obj\Debug\net8.0-windows\Views\AddDeviceDialog.g.cs
 D:\Quadrant\Weighting\Weighting\obj\Debug\net8.0-windows\Views\AddDeviceDialog.baml
+D:\Quadrant\Weighting\Weighting\obj\Debug\net8.0-windows\Views\WeightingManagement.g.cs
+D:\Quadrant\Weighting\Weighting\obj\Debug\net8.0-windows\Views\WeightingManagement.baml

@@ -20,7 +20,7 @@
         <views:DocumentMagement x:Key="DocumentMagement" />
         <views:RoleManagement x:Key="RoleManagement" />
         <views:PlanManagement x:Key="PlanManagement" />
-
+        <views:WeightingManagement x:Key="WeightingManagement" />
 
     </Window.Resources>
     <Grid>
@@ -173,21 +173,7 @@
                             <TextBlock HorizontalAlignment="Center" Text="称重管理" />
                         </StackPanel>
                     </TabItem.Header>
-                    <StackPanel Margin="16">
-                        <TextBlock
-                            Margin="0,0,0,8"
-                            Style="{StaticResource MaterialDesignHeadline5TextBlock}"
-                            Text="Sounds" />
-
-                        <TextBlock>
-                            <Run Text="tab 4 content. Default look and behaviors." />
-                            <LineBreak />
-                            <LineBreak />
-                            <Run FontStyle="Italic">
-                                Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...
-                            </Run>
-                        </TextBlock>
-                    </StackPanel>
+                    <views:WeightingManagement />
                 </TabItem>
                 <TabItem Visibility="{Binding Instance.Permissions, Source={StaticResource GlobalViewModelSingleton}, Converter={StaticResource PermissionToVisibilityConverter}, ConverterParameter=DocumentManagement}">
                     <TabItem.Header>

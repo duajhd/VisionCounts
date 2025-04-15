@@ -31,12 +31,13 @@ namespace Weighting.Shared
             _client = new TcpClient();
             await _client.ConnectAsync(_host, _port);
             _stream = _client.GetStream();
-            Console.WriteLine($"Connected to {_host}:{_port}");
+         
 
             // 启动异步读取任务
             _ = StartReceivingAsync();
         }
 
+        
         private async Task StartReceivingAsync()
         {
             byte[] buffer = new byte[18];
@@ -52,7 +53,8 @@ namespace Weighting.Shared
 
                     // 触发事件并传递设备信息
                     OnDataReceived(new DataReceivedEventArgs(receivedData, _host, _port));
-                   
+
+
                 }
             }
             catch (Exception ex)

@@ -59,11 +59,19 @@ namespace Weighting.Shared
         //通过遍历DeviceList生成这个,IP到测量结果的映射
         public Dictionary<string, MeasureResult> IPToMeasureResult = new Dictionary<string, MeasureResult>();
 
+        
+
         //最大IP地址数也是最大秤台数，最大支持35个秤台
         public static int IPNum = 35;
         public string[] IPAdressArr = new string[IPNum];
         //直接用ScalingID做下标，用下标读取IP
         //public Dictionary<int,string> ScalingIDToIP 
+
+        
+
+        //所有秤台，用来创建连接
+        public List<Devices> AllScales = new List<Devices>();
+
     }
 
 
