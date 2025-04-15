@@ -26,8 +26,7 @@
                 <TextBox
                     Width="200"
                     Height="30"
-                    VerticalAlignment="Center"
-                    Text="{Binding Name}" />
+                    VerticalAlignment="Center" />
             </StackPanel>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
                 <Button
@@ -38,10 +37,10 @@
                     ToolTip="Resource name: MaterialDesignRaisedButton" />
                 <Button
                     Margin="40,0,0,0"
-                    Command="{Binding AddUserCommand}"
+                    Command="{Binding AddRowCommand}"
                     Content="新增"
                     Style="{StaticResource MaterialDesignPaperButton}"
-                    ToolTip="Resource name: MaterialDesignPaperButton" />
+                    ToolTip="Resource name: MaterialDesignPaperButton" Cursor="Hand" />
                 <Button
                     Margin="50,0,0,0"
                     Content="重置"
@@ -55,7 +54,7 @@
                 CanUserAddRows="False"
                 HeadersVisibility="All"
                 IsReadOnly="True"
-                ItemsSource="{Binding Instance.Devicelist, Source={StaticResource GlobalViewModelSingleton}}">
+                ItemsSource="{Binding Devicelist}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="编号">
                         <DataGridTextColumn.Binding>

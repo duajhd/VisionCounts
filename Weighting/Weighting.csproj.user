@@ -16,6 +16,9 @@
     <Compile Update="ViewModels\ScalingResults.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\AddDeviceDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\AdduserDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -58,6 +61,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="ViewModels\ScalingResults.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AddDeviceDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\AdduserDialog.xaml">

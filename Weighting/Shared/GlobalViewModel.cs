@@ -29,8 +29,8 @@ namespace Weighting.Shared
             }
         }
 
-        //当前登录用户的权限列表"PlanManagement", "FormulaManagement" ,"UserManagement", "DeviceManagementt" 
-        private List<string> _permission = new List<string> ();
+        //当前登录用户的权限列表
+        private List<string> _permission = new List<string> { "PlanManagement", "FormulaManagement", "UserManagement", "DeviceManagementt" , "DocumentManagement" };
         public List<string> Permissions
         {
             get => _permission;
@@ -54,16 +54,16 @@ namespace Weighting.Shared
 
         //当前使用的方案
         public Formula CuurentFormula = new();
-        private List<Devices> _devicelist = new List<Devices>();
-        public List<Devices> Devicelist
-        {
-            get => _devicelist;
-            set
-            {
-                _devicelist = value;
-                OnPropertyChanged();
-            }
-        }
+
+
+        //通过遍历DeviceList生成这个,IP到测量结果的映射
+        public Dictionary<string, MeasureResult> IPToMeasureResult = new Dictionary<string, MeasureResult>();
+
+        //最大IP地址数也是最大秤台数，最大支持35个秤台
+        public static int IPNum = 35;
+        public string[] IPAdressArr = new string[IPNum];
+        //直接用ScalingID做下标，用下标读取IP
+        //public Dictionary<int,string> ScalingIDToIP 
     }
 
 

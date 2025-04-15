@@ -76,64 +76,68 @@ namespace Weighting.ViewModels
 
             string message;
 
-            if(Login(UserName, Password, out message))
+            try 
             {
-                string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Permission.db";
-                string sql = $"SELECT A.UserName, B.RoleName FROM Users A INNER JOIN Roles B ON A.RoleId = B.RoleId WHERE A.UserName = '{UserName}'";
-                string sqlpermission = $"SELECT  C.PermissionName FROM Users A INNER JOIN RolePermissions B ON A.RoleId = B.RoleId INNER JOIN permissions C ON B.PermissionId = C.PermissionId WHERE A.UserName = '{UserName}'" ;
-                using (DatabaseHelper db = new DatabaseHelper(connectionStr))
+                if (Login(UserName, Password, out message))
                 {
-                    DataTable dt = db.ExecuteQuery(sql);
-                    DataTable per_dt = db.ExecuteQuery(sqlpermission);
-                    foreach (DataRow row in dt.Rows)
+                    string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Permission.db";
+                    string sql = $"SELECT A.UserName, B.RoleName FROM Users A INNER JOIN Roles B ON A.RoleId = B.RoleId WHERE A.UserName = '{UserName}'";
+                    string sqlpermission = $"SELECT  C.PermissionName FROM Users A INNER JOIN RolePermissions B ON A.RoleId = B.RoleId INNER JOIN permissions C ON B.PermissionId = C.PermissionId WHERE A.UserName = '{UserName}'";
+                    using (DatabaseHelper db = new DatabaseHelper(connectionStr))
                     {
-                        GlobalViewModelSingleton.Instance.Currentusers = new Users { ID = DataRowHelper.GetValue<int>(row, "UserId", 0), RoleName = DataRowHelper.GetValue<string>(row, "RoleName", null), UserName = DataRowHelper.GetValue<string>(row, "UserName", null) };
-                    }
-                    //为当前用户赋值权限列表
-                    GlobalViewModelSingleton.Instance.Permissions.Clear();
-                    foreach (DataRow row in per_dt.Rows)
-                    {
+                        DataTable dt = db.ExecuteQuery(sql);
+                        DataTable per_dt = db.ExecuteQuery(sqlpermission);
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            GlobalViewModelSingleton.Instance.Currentusers = new Users { ID = DataRowHelper.GetValue<int>(row, "UserId", 0), RoleName = DataRowHelper.GetValue<string>(row, "RoleName", null), UserName = DataRowHelper.GetValue<string>(row, "UserName", null) };
+                        }
+                        //为当前用户赋值权限列表
+                        GlobalViewModelSingleton.Instance.Permissions.Clear();
+                        foreach (DataRow row in per_dt.Rows)
+                        {
 
-                        GlobalViewModelSingleton.Instance.Permissions.Add(DataRowHelper.GetValue<string>(row, "PermissionName", "nullValue"));
+                            GlobalViewModelSingleton.Instance.Permissions.Add(DataRowHelper.GetValue<string>(row, "PermissionName", "nullValue"));
+                        }
+
+
+
+
                     }
-                    
-                    
+
+                    //读取秤台号到IP的映射
+                    connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Devices.db";
+                    sql = "SELECT IP,ScalingID FROM DeviceList";
+
+                    using (DatabaseHelper db = new DatabaseHelper(connectionStr))
+                    {
+                        DataTable dt = db.ExecuteQuery(sql);
+
+
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            //形成映射
+                          
+                            GlobalViewModelSingleton.Instance.IPAdressArr[DataRowHelper.GetValue<int>(row, "ScalingID", 0)] = DataRowHelper.GetValue<string>(row, "IP", null);
+                            
+                        }
+
+                       
+                        
+                    }
+
+                    Window w = new MainWindow();
+                    w.Show();
+
                 }
-
-                //获取秤台列表
-
-                 connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Devices.db";
-                 sql = "SELECT * FROM DeviceList";
-
-                using (DatabaseHelper db = new DatabaseHelper(connectionStr))
-                {
-                    DataTable dt = db.ExecuteQuery(sql);
-
-                    GlobalViewModelSingleton.Instance.Devicelist.Clear();
-                    foreach (DataRow row in dt.Rows)
-                    {
-                        GlobalViewModelSingleton.Instance.Devicelist.Add( new Devices { ID = DataRowHelper.GetValue<int>(row, "ID", 0),
-                            IP = DataRowHelper.GetValue<string>(row, "IP", null),
-                            Port = DataRowHelper.GetValue<int>(row, "Port", 0), 
-                            MaxWeights = DataRowHelper.GetValue<int>(row, "MaxWeights", 0),
-                            Brant = DataRowHelper.GetValue<string>(row, "Brant", null),
-                            DateOfManufature = DataRowHelper.GetValue<string>(row, "DateOfManufature", null),
-                            DeviceName = DataRowHelper.GetValue<string>(row, "DeviceName", null),
-                        });
-                    }
-                }
-
-                Window w = new MainWindow();
-                w.Show();
-
-                // 关闭当前窗口
-                // 发送关闭请求消息
-              //  Messenger.Default.Send(new CloseWindowMessage());
-
             }
-          
-            
+            catch(Exception e)
+            { 
+                MessageBox.Show(e.Message); //后期这部分要改成日志
+            }
+
+
         }
+
 
         //注册
         public void SignUp(object o)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,7 +27,7 @@ namespace Weighting
     {
         public string ScalingName { get; set; }
 
-        public MaterialType materialType { get; set; }
+     //   public MaterialType materialType { get; set; }
 
         public float MaximunWeight { get; set; }
 
@@ -52,6 +53,7 @@ namespace Weighting
 
         public string MaterialName { get; set; }
 
+        //标准重量
         public float weights { get; set; }
 
         //上公差
@@ -180,12 +182,36 @@ namespace Weighting
 
         public string DeviceName { get; set; }
     }
-    public enum MaterialType
+
+    //通过遍历DeviceList
+    public class MeasureResult: PlatformScale
     {
-        //粘合剂
-        Adhesive,
-        //粉末
-        Powder
+        public MeasureResult() { }
+       
+        //设备名
+        
+        public float result { get; set; }
+
+        //秤台单位kg/g
+        public string Unit { get; set; }
+
+        //是否满足
+        public bool IsSatisfied { get; set; }
+
+
+    }
+    public class DataReceivedEventArgs : EventArgs
+    {
+        public byte[] ReceivedData { get; }
+        public string Host { get; }
+        public int Port { get; }
+
+        public DataReceivedEventArgs(byte[] receivedData, string host, int port)
+        {
+            ReceivedData = receivedData;
+            Host = host;
+            Port = port;
+        }
     }
 
 
