@@ -57,9 +57,18 @@ namespace Weighting.Shared
 
 
         //通过遍历DeviceList生成这个,IP到测量结果的映射
-        public Dictionary<string, MeasureResult> IPToMeasureResult = new Dictionary<string, MeasureResult>();
+        private ObservableDictionary<string, MeasureResult> _iPToMeasureResult = new ObservableDictionary<string, MeasureResult>();
 
-        
+
+        public ObservableDictionary<string, MeasureResult> IPToMeasureResult
+        {
+            get => _iPToMeasureResult;
+            set
+            {
+                _iPToMeasureResult = value;
+                OnPropertyChanged();
+            }
+        }
 
         //最大IP地址数也是最大秤台数，最大支持35个秤台
         public static int IPNum = 35;

@@ -6,10 +6,102 @@
     xmlns:local="clr-namespace:Weighting.Views"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:Weighting.Shared"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <!--  卡片样式模板  -->
+        <DataTemplate x:Key="CardTemplate">
+            <Border
+                Width="150"
+                Height="150"
+                Margin="10"
+                Background="Gray"
+                CornerRadius="5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!--  标题与红点  -->
+                    <StackPanel
+                        Grid.Row="0"
+                        Margin="5"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <TextBlock
+                            FontWeight="Bold"
+                            Foreground="White"
+                            Text="{Binding Value.ScalingName}" />
+                        <Ellipse
+                            Width="20"
+                            Height="20"
+                            Margin="10,0,0,0"
+                            Fill="Red" />
+                    </StackPanel>
+
+                    <!--  内容区域  -->
+                    <Grid Grid.Row="1" Margin="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Margin="0,5"
+                            Foreground="White"
+                            Text="重量" />
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Margin="5,5,0,0"
+                            Background="White"
+                            Text="{Binding Value.Result}" />
+
+                        <TextBlock
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Margin="0,5"
+                            Foreground="White"
+                            Text="单位" />
+                        <TextBlock
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Margin="5,5,0,0"
+                            Background="White"
+                            Text="{Binding Value.Unit}" />
+                    </Grid>
+                </Grid>
+            </Border>
+        </DataTemplate>
+        <vm:GlobalViewModelSingleton x:Key="GlobalViewModelSingleton" />
+
+    </UserControl.Resources>
     <Grid>
-        <Button Width="100" Command="{Binding ConnectionCommand}">连接测试</Button>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <ScrollViewer Grid.Row="1">
+            <ListBox
+                Background="Transparent"
+                ItemTemplate="{StaticResource CardTemplate}"
+                ItemsSource="{Binding Instance.IPToMeasureResult, Source={StaticResource GlobalViewModelSingleton}}"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+        </ScrollViewer>
     </Grid>
 </UserControl>

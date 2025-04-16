@@ -43,37 +43,196 @@ namespace Weighting
     }
 
     //单个成分描述:
-    public class PlatformScale
+    //public class PlatformScale
+    //{
+    //    //数据库中的ID
+    //    public int ID { get; set; }
+    //    //秤台名
+    //    public string ScalingName { get; set; }
+    //    //物料名
+
+    //    public string MaterialName { get; set; }
+
+    //    //标准重量
+    //    public float weights { get; set; }
+
+    //    //上公差
+    //    public float UpperTolerance { get; set; }
+
+    //    public float LowerTolerance { get; set; }
+
+    //    //使用秤台号
+    //    public string ScalingNum { get; set; }
+
+    //    public int ScalingID {  get; set; }
+
+    //    //配料单位
+    //    public string MaterialUnit {  get; set; }
+
+    //    //公差单位
+    //    public string ToleranceUnit { get; set; }
+
+    //}
+    public class PlatformScale : INotifyPropertyChanged
     {
-        //数据库中的ID
-        public int ID { get; set; }
-        //秤台名
-        public string ScalingName { get; set; }
-        //物料名
+        // 数据库中的ID
+        private int _id;
+        public int ID
+        {
+            get => _id;
+            set
+            {
+                if (_id != value)
+                {
+                    _id = value;
+                    OnPropertyChanged(nameof(ID));
+                }
+            }
+        }
 
-        public string MaterialName { get; set; }
+        // 秤台名
+        private string _scalingName;
+        public string ScalingName
+        {
+            get => _scalingName;
+            set
+            {
+                if (_scalingName != value)
+                {
+                    _scalingName = value;
+                    OnPropertyChanged(nameof(ScalingName));
+                }
+            }
+        }
 
-        //标准重量
-        public float weights { get; set; }
+        // 物料名
+        private string _materialName;
+        public string MaterialName
+        {
+            get => _materialName;
+            set
+            {
+                if (_materialName != value)
+                {
+                    _materialName = value;
+                    OnPropertyChanged(nameof(MaterialName));
+                }
+            }
+        }
 
-        //上公差
-        public float UpperTolerance { get; set; }
+        // 标准重量
+        private float _weights;
+        public float weights
+        {
+            get => _weights;
+            set
+            {
+                if (_weights != value)
+                {
+                    _weights = value;
+                    OnPropertyChanged(nameof(weights));
+                }
+            }
+        }
 
-        public float LowerTolerance { get; set; }
+        // 上公差
+        private float _upperTolerance;
+        public float UpperTolerance
+        {
+            get => _upperTolerance;
+            set
+            {
+                if (_upperTolerance != value)
+                {
+                    _upperTolerance = value;
+                    OnPropertyChanged(nameof(UpperTolerance));
+                }
+            }
+        }
 
-        //使用秤台号
-        public string ScalingNum { get; set; }
+        // 下公差
+        private float _lowerTolerance;
+        public float LowerTolerance
+        {
+            get => _lowerTolerance;
+            set
+            {
+                if (_lowerTolerance != value)
+                {
+                    _lowerTolerance = value;
+                    OnPropertyChanged(nameof(LowerTolerance));
+                }
+            }
+        }
 
-        public int ScalingID {  get; set; }
+        // 使用秤台号
+        private string _scalingNum;
+        public string ScalingNum
+        {
+            get => _scalingNum;
+            set
+            {
+                if (_scalingNum != value)
+                {
+                    _scalingNum = value;
+                    OnPropertyChanged(nameof(ScalingNum));
+                }
+            }
+        }
 
-        //配料单位
-        public string MaterialUnit {  get; set; }
+        // 秤台ID
+        private int _scalingID;
+        public int ScalingID
+        {
+            get => _scalingID;
+            set
+            {
+                if (_scalingID != value)
+                {
+                    _scalingID = value;
+                    OnPropertyChanged(nameof(ScalingID));
+                }
+            }
+        }
 
-        //公差单位
-        public string ToleranceUnit { get; set; }
+        // 配料单位
+        private string _materialUnit;
+        public string MaterialUnit
+        {
+            get => _materialUnit;
+            set
+            {
+                if (_materialUnit != value)
+                {
+                    _materialUnit = value;
+                    OnPropertyChanged(nameof(MaterialUnit));
+                }
+            }
+        }
 
+        // 公差单位
+        private string _toleranceUnit;
+        public string ToleranceUnit
+        {
+            get => _toleranceUnit;
+            set
+            {
+                if (_toleranceUnit != value)
+                {
+                    _toleranceUnit = value;
+                    OnPropertyChanged(nameof(ToleranceUnit));
+                }
+            }
+        }
+
+        // 实现 INotifyPropertyChanged 接口
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
-
 
     //绑定查询界面用
     public class MixedMaterial
@@ -83,6 +242,8 @@ namespace Weighting
         public string Creator {  get; set; }
 
         public string Name {  get; set; }
+
+        public bool isStimulated {  get; set; }
 
        
     }
@@ -188,16 +349,40 @@ namespace Weighting
     public class MeasureResult: PlatformScale
     {
         public MeasureResult() { }
-       
+
         //设备名
-        
-        public float result { get; set; }
+
+        private float _result;
+        public float Result 
+        { 
+            get => _result; 
+            set 
+            {
+                _result = value;
+                OnPropertyChanged(nameof(Result));
+            }
+         }
 
         //秤台单位kg/g
-        public string Unit { get; set; }
+        private string _unit;
+        public string Unit { get => _unit; 
+            set 
+            { 
+                _unit = value;
+                OnPropertyChanged(nameof(Unit));
+            }
+         }
 
         //是否满足
-        public bool IsSatisfied { get; set; }
+        private bool _isSatisfied;
+        public bool IsSatisfied
+        {
+            get => _isSatisfied; set
+            {
+                _isSatisfied = value;
+                OnPropertyChanged(nameof(IsSatisfied));
+            }
+        }
 
 
     }

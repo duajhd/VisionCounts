@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -11,6 +12,13 @@ using Weighting.Shared;
 
 namespace Weighting.ViewModels
 {
+    public class CardViewModel
+    {
+        public string Title { get; set; }
+        public string Weight { get; set; }
+        public string Unit { get; set; }
+    }
+
     //获取数据2.将数据写入到
     public class WeightingManagementViewModel : INotifyPropertyChanged,IDisposable
     {
@@ -24,6 +32,7 @@ namespace Weighting.ViewModels
 
 
         private List<DeviceClient> devices = new List<DeviceClient>();
+        public ObservableCollection<CardViewModel> Cards { get; set; }
 
         private string filePath = "example.txt";
         private FileStream fs = new FileStream("example.txt", FileMode.OpenOrCreate, FileAccess.Write, FileShare.None);
@@ -33,6 +42,17 @@ namespace Weighting.ViewModels
            
             ConnectionCommand = new RelayCommand(ConnectionCommandExecute);
             writer = new StreamWriter(fs);
+
+            Cards = new ObservableCollection<CardViewModel>
+        {
+            new CardViewModel { Title = "1号甲", Weight = "", Unit = "" },
+            new CardViewModel { Title = "2号甲", Weight = "", Unit = "" },
+            new CardViewModel { Title = "3号甲", Weight = "", Unit = "" },
+            new CardViewModel { Title = "4号甲", Weight = "", Unit = "" },
+            new CardViewModel { Title = "5号甲", Weight = "", Unit = "" },
+            new CardViewModel { Title = "6号甲", Weight = "", Unit = "" },
+            new CardViewModel { Title = "7号甲", Weight = "", Unit = "" }
+        };
 
         }
 
@@ -78,15 +98,31 @@ namespace Weighting.ViewModels
             {
                 writer.WriteLine(BitConverter.ToString(e.ReceivedData)+"--"+e.Host);
                 //如果校验通过
-                if (Validate(e.ReceivedData))
+                if(e.ReceivedData.Length == 17)
                 {
-                    //
-                    byte[] valuesPart = new byte[8];
-                    Array.Copy(e.ReceivedData,7, valuesPart, 0,7);
+                    if (Validate(e.ReceivedData))
+                    {
+                        //
+                        byte[] valuesPart = new byte[8];
+                        Array.Copy(e.ReceivedData, 7, valuesPart, 0, 7);
 
-                    //提取值并转换到10进制
-                    float values = Parse(valuesPart);
+                        //提取值并转换到10进制
+                        float values = parseg(valuesPart);
+                    }
                 }
+                else if(e.ReceivedData.Length == 18)
+                {
+                    if (Validate(e.ReceivedData))
+                    {
+                        //
+                        byte[] valuesPart = new byte[8];
+                        Array.Copy(e.ReceivedData, 7, valuesPart, 0, 7);
+
+                        //提取值并转换到10进制
+                        float values = ParseKg(valuesPart);
+                    }
+                }
+                
                
             }//20-20-30-2E-32-38-30-6B-67
         }//32-37-39    30-30-30"53-54-2C-4E-54-2C-2B-20-20-30-2E-30-30-30-6B-67-0D-0A"  "53-54-2C-4E-54-2C-2B-20-20-30-2E-30-30-30-6B-67-0D-0A"
@@ -104,8 +140,8 @@ namespace Weighting.ViewModels
 
            
         }
-        //获取真实数值
-        private float Parse(byte[] buffer)
+        //获取真实数值,单位为kg时
+        private float ParseKg(byte[] buffer)
         {
             int result = 0;
             //8-14位是数据位下标
@@ -130,7 +166,24 @@ namespace Weighting.ViewModels
 
             return (float)(result * Math.Pow(10, pow));
         }
-        //private float Parse(byte[] buffer)
+
+        private float parseg(byte[] buffer)
+        {
+            int result = 0;
+            //8-14位是数据位下标
+
+            for (int i = 0; i < buffer.Length; i++)
+            {
+                byte lowFourBits = (byte)(buffer[i] & 0x0F); // 取出低四位
+
+                result += lowFourBits * (int)Math.Pow(lowFourBits, buffer.Length - (i+1));
+               //0000279  =>279 7-4 = 3
+
+            }
+
+            return (float)result;
+        }
+        //private float ParseKg(byte[] buffer)
         //{
         //    List<int> digits = new List<int>();
         //    int decimalPos = -1;
@@ -181,10 +234,12 @@ namespace Weighting.ViewModels
         // CRC校验，传入从串口读进来的数据
         public static bool Validate(byte[] dataWithCRC)
         {
-            if (dataWithCRC.Length < 3) return false;
+            if (dataWithCRC.Length < 17) return false;
 
             int len = dataWithCRC.Length;
+
             ushort crcCalculated = ComputeCRC(dataWithCRC, len - 2);
+
             ushort crcInData = BitConverter.ToUInt16(dataWithCRC, len - 2);
 
             return crcCalculated == crcInData;

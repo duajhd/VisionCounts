@@ -16,8 +16,125 @@ using Weighting.Views;
 
 using System.Text.RegularExpressions;
 using System.Data.SQLite;
+using System.Collections.Specialized;
+using System.Collections;
 namespace Weighting
 {
+
+    //响应式Dictionary<>
+    public class ObservableDictionary<TKey, TValue> : IDictionary<TKey, TValue>,
+                                                   INotifyCollectionChanged,
+                                                   INotifyPropertyChanged
+    {
+        private readonly Dictionary<TKey, TValue> _dictionary = new();
+
+        public event NotifyCollectionChangedEventHandler CollectionChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyCountChanged() =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Count)));
+
+        private void NotifyIndexerChanged() =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Item[]"));
+
+        private void NotifyKeysChanged() =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Keys)));
+
+        private void NotifyValuesChanged() =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Values)));
+
+        private void RaiseReset()
+        {
+            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            NotifyCountChanged();
+            NotifyIndexerChanged();
+            NotifyKeysChanged();
+            NotifyValuesChanged();
+        }
+
+        public TValue this[TKey key]
+        {
+            get => _dictionary[key];
+            set
+            {
+                var existing = _dictionary.TryGetValue(key, out var oldValue);
+                _dictionary[key] = value;
+                if (existing)
+                {
+                    CollectionChanged?.Invoke(this,
+                        new NotifyCollectionChangedEventArgs(
+                            NotifyCollectionChangedAction.Replace,
+                            new KeyValuePair<TKey, TValue>(key, value),
+                            new KeyValuePair<TKey, TValue>(key, oldValue)));
+                }
+                else
+                {
+                    CollectionChanged?.Invoke(this,
+                        new NotifyCollectionChangedEventArgs(
+                            NotifyCollectionChangedAction.Add,
+                            new KeyValuePair<TKey, TValue>(key, value)));
+                    NotifyCountChanged();
+                    NotifyKeysChanged();
+                    NotifyValuesChanged();
+                }
+                NotifyIndexerChanged();
+            }
+        }
+
+        public ICollection<TKey> Keys => _dictionary.Keys;
+        public ICollection<TValue> Values => _dictionary.Values;
+        public int Count => _dictionary.Count;
+        public bool IsReadOnly => false;
+
+        public void Add(TKey key, TValue value)
+        {
+            _dictionary.Add(key, value);
+            CollectionChanged?.Invoke(this,
+                new NotifyCollectionChangedEventArgs(
+                    NotifyCollectionChangedAction.Add,
+                    new KeyValuePair<TKey, TValue>(key, value)));
+            NotifyCountChanged();
+            NotifyIndexerChanged();
+            NotifyKeysChanged();
+            NotifyValuesChanged();
+        }
+
+        public bool Remove(TKey key)
+        {
+            if (_dictionary.TryGetValue(key, out var value) && _dictionary.Remove(key))
+            {
+                CollectionChanged?.Invoke(this,
+                    new NotifyCollectionChangedEventArgs(
+                        NotifyCollectionChangedAction.Remove,
+                        new KeyValuePair<TKey, TValue>(key, value)));
+                NotifyCountChanged();
+                NotifyIndexerChanged();
+                NotifyKeysChanged();
+                NotifyValuesChanged();
+                return true;
+            }
+            return false;
+        }
+
+        public bool ContainsKey(TKey key) => _dictionary.ContainsKey(key);
+        public bool TryGetValue(TKey key, out TValue value) => _dictionary.TryGetValue(key, out value);
+
+        public void Add(KeyValuePair<TKey, TValue> item) => Add(item.Key, item.Value);
+        public void Clear()
+        {
+            _dictionary.Clear();
+            RaiseReset();
+        }
+
+        public bool Contains(KeyValuePair<TKey, TValue> item) => _dictionary.ContainsKey(item.Key);
+        public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex) =>
+            ((IDictionary<TKey, TValue>)_dictionary).CopyTo(array, arrayIndex);
+
+        public bool Remove(KeyValuePair<TKey, TValue> item) => Remove(item.Key);
+
+        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() => _dictionary.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    }
     public static class DataRowHelper
     {
         public static T GetValue<T>(DataRow row, string columnName, T defaultValue = default)

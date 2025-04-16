@@ -106,7 +106,7 @@ namespace Weighting.ViewModels
 
                     //读取秤台号到IP的映射
                     connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Devices.db";
-                    sql = "SELECT IP,ScalingID FROM DeviceList";
+                    sql = "SELECT * FROM DeviceList";
 
                     using (DatabaseHelper db = new DatabaseHelper(connectionStr))
                     {
@@ -140,6 +140,7 @@ namespace Weighting.ViewModels
                                 Brant = DataRowHelper.GetValue<string>(row, "Brant", null),
                                 DateOfManufature = DataRowHelper.GetValue<string>(row, "DateOfManufature", null),
                                 DeviceName = DataRowHelper.GetValue<string>(row, "DeviceName", null),
+                                ScalingID = DataRowHelper.GetValue<int>(row, "ScalingID", 0),
                             });
 
                         }
@@ -172,33 +173,8 @@ namespace Weighting.ViewModels
                     ////公差单位
                     //public string ToleranceUnit { get; set; }
 
-                    //生成IP到测量结果的映射（切换配方时，需要重新生成这个映射）
-                    GlobalViewModelSingleton.Instance.IPToMeasureResult.Clear();
-                    foreach (PlatformScale item1 in GlobalViewModelSingleton.Instance.CuurentFormula.ScalesData)
-                    {
-                        foreach (Devices item2 in GlobalViewModelSingleton.Instance.AllScales)
-                        {
-                            if(item1.ScalingID == item2.ScalingID)
-                            {
-                                GlobalViewModelSingleton.Instance.IPToMeasureResult.Add(item2.IP, new MeasureResult
-                                {
-                                    ID = item1.ScalingID,
-                                    ScalingName = item1.ScalingName,
-                                    MaterialName = item1.ScalingName,
-                                    weights = item1.weights,
-                                    UpperTolerance = item1.UpperTolerance,
-                                    LowerTolerance = item1.LowerTolerance,
-                                    ScalingNum = item1.ScalingNum,
-                                    ScalingID = item1.ScalingID,
-                                    MaterialUnit = item1.MaterialUnit,
-                                    ToleranceUnit = item1.ToleranceUnit,
-                                    IsSatisfied = false,
-
-
-                                }) ;
-                            }
-                        }
-                    }
+                  
+                   
 
                     Window w = new MainWindow();
                     w.Show();

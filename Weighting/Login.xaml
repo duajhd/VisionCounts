@@ -32,20 +32,9 @@
                         Height="40"
                         VerticalAlignment="Center"
                         local:PasswordBoxHelper.BoundPassword="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    <Button
-                        Width="100"
-                        Command="{Binding SignUpCommand}"
-                        Content="注册"
-                        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
-                        Style="{StaticResource MaterialDesignRaisedLightButton}"
-                        ToolTip="Resource name: MaterialDesignRaisedLightButton" />
-                    <Button
-                        Width="100"
-                        Margin="20,0,0,0"
-                        Command="{Binding LoginCommand}"
-                        Content="登录"
-                        Style="{StaticResource MaterialDesignRaisedLightButton}"
-                        ToolTip="Resource name: MaterialDesignRaisedLightButton" />
+                    <Button Width="100">退出</Button>
+                    <Button Width="100" Command="{Binding LoginCommand}">登录</Button>
+
 
                 </UniformGrid>
             </Border>

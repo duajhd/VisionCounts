@@ -113,4 +113,25 @@ namespace Weighting.Shared
             return string.Empty; // 如果值不是整数，返回空字符串
         }
     }
+
+    //bool =》已激活
+    public class ActivationConverter : IValueConverter
+    {
+        // 从源到目标的转换（Source -> Target）
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            // 检查输入值是否为布尔类型
+            if (value is bool boolValue)
+            {
+                return boolValue ? "已激活" : "激活";
+            }
+            return "未知"; // 如果值不是布尔类型，返回默认值
+        }
+
+        // 从目标到源的转换（Target -> Source，通常不需要实现）
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException(); // 如果不需要双向绑定，可以抛出异常
+        }
+    }
 }
