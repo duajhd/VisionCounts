@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "/LIgIYSXyNGA04tgQ44I0ePEa7xWiWYoHv3vsTluHQhqyCtZbfJVzn9lxyKUIoZx5fTJCxnaytAv8LaGOkM38A==",
+  "dgSpecHash": "jCn2z4vNIb6HsQeZ6zFZySUzKMzYcyBFr18JDLgWPYJJkKJ5r8YMjIA1KYn5wj8l0K3Xm17UFLOwNdFLfHQulw==",
   "success": true,
   "projectFilePath": "D:\\Quadrant\\Weighting\\Weighting\\Weighting.csproj",
   "expectedPackageFiles": [
@@ -50,7 +50,8 @@
     "C:\\Users\\26672\\.nuget\\packages\\system.security.cryptography.protecteddata\\4.7.0\\system.security.cryptography.protecteddata.4.7.0.nupkg.sha512",
     "C:\\Users\\26672\\.nuget\\packages\\system.security.permissions\\4.7.0\\system.security.permissions.4.7.0.nupkg.sha512",
     "C:\\Users\\26672\\.nuget\\packages\\system.security.principal.windows\\4.7.0\\system.security.principal.windows.4.7.0.nupkg.sha512",
-    "C:\\Users\\26672\\.nuget\\packages\\system.windows.extensions\\4.7.0\\system.windows.extensions.4.7.0.nupkg.sha512"
+    "C:\\Users\\26672\\.nuget\\packages\\system.windows.extensions\\4.7.0\\system.windows.extensions.4.7.0.nupkg.sha512",
+    "C:\\Users\\26672\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.19041.31\\microsoft.windows.sdk.net.ref.10.0.19041.31.nupkg.sha512"
   ],
   "logs": []
 }

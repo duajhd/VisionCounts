@@ -276,6 +276,8 @@ namespace Weighting.ViewModels
             if(Register(UserName, Password, out message))
             {
                 MessageBox.Show(message);
+                UserName = "";
+                Password = "";
             }
            
 

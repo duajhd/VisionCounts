@@ -38,8 +38,20 @@
                         <Ellipse
                             Width="20"
                             Height="20"
-                            Margin="10,0,0,0"
-                            Fill="Red" />
+                            Margin="10,0,0,0">
+                            <Ellipse.Style>
+                                <Style TargetType="Ellipse">
+                                    <!--  默认填充色为红色  -->
+                                    <Setter Property="Fill" Value="Red" />
+                                    <Style.Triggers>
+                                        <!--  当绑定的 IsGreenFill 属性为 true 时，改变填充颜色  -->
+                                        <DataTrigger Binding="{Binding Value.IsSatisfied}" Value="True">
+                                            <Setter Property="Fill" Value="Green" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Ellipse.Style>
+                        </Ellipse>
                     </StackPanel>
 
                     <!--  内容区域  -->
@@ -77,7 +89,7 @@
                             Grid.Column="1"
                             Margin="5,5,0,0"
                             Background="White"
-                            Text="{Binding Value.Unit}" />
+                            Text="{Binding Value.MaterialUnit}" />
                     </Grid>
                 </Grid>
             </Border>

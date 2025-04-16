@@ -377,7 +377,8 @@ namespace Weighting
         private bool _isSatisfied;
         public bool IsSatisfied
         {
-            get => _isSatisfied; set
+            get => _isSatisfied;
+            set
             {
                 _isSatisfied = value;
                 OnPropertyChanged(nameof(IsSatisfied));

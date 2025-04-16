@@ -12,12 +12,7 @@ using Weighting.Shared;
 
 namespace Weighting.ViewModels
 {
-    public class CardViewModel
-    {
-        public string Title { get; set; }
-        public string Weight { get; set; }
-        public string Unit { get; set; }
-    }
+   
 
     //获取数据2.将数据写入到
     public class WeightingManagementViewModel : INotifyPropertyChanged,IDisposable
@@ -32,7 +27,7 @@ namespace Weighting.ViewModels
 
 
         private List<DeviceClient> devices = new List<DeviceClient>();
-        public ObservableCollection<CardViewModel> Cards { get; set; }
+    
 
         private string filePath = "example.txt";
         private FileStream fs = new FileStream("example.txt", FileMode.OpenOrCreate, FileAccess.Write, FileShare.None);
@@ -43,16 +38,7 @@ namespace Weighting.ViewModels
             ConnectionCommand = new RelayCommand(ConnectionCommandExecute);
             writer = new StreamWriter(fs);
 
-            Cards = new ObservableCollection<CardViewModel>
-        {
-            new CardViewModel { Title = "1号甲", Weight = "", Unit = "" },
-            new CardViewModel { Title = "2号甲", Weight = "", Unit = "" },
-            new CardViewModel { Title = "3号甲", Weight = "", Unit = "" },
-            new CardViewModel { Title = "4号甲", Weight = "", Unit = "" },
-            new CardViewModel { Title = "5号甲", Weight = "", Unit = "" },
-            new CardViewModel { Title = "6号甲", Weight = "", Unit = "" },
-            new CardViewModel { Title = "7号甲", Weight = "", Unit = "" }
-        };
+           
 
         }
 
@@ -82,11 +68,7 @@ namespace Weighting.ViewModels
             }
          
         }
-        private  bool InitializeAllWeightings()
-        {
-
-            return true;
-        }
+      
         //在这个函数里校验数据、获取数据、比较数据、设置状态
         private void HandleDataReceived(object sender, DataReceivedEventArgs e)
         {
