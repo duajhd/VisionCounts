@@ -13,6 +13,7 @@ using System.Security.Cryptography;
 using Weighting.Shared;
 using static MaterialDesignThemes.Wpf.Theme.ToolBar;
 using System.Data;
+using System.Collections.ObjectModel;
 
 namespace Weighting.ViewModels
 {
@@ -24,6 +25,32 @@ namespace Weighting.ViewModels
         {
             LoginCommand = new RelayCommand(LoginCommandExecute);
             SignUpCommand = new RelayCommand(SignUp);
+
+            //读取所有角色名
+            string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Permission.db";
+            string sql = "SELECT  * FROM Roles";
+
+            using (DatabaseHelper db = new DatabaseHelper(connectionStr))
+            {
+                DataTable dt = db.ExecuteQuery(sql);
+                foreach (DataRow row in dt.Rows)
+                {
+                    //RoleName = DataRowHelper.GetValue<string>(row, "RoleName", null),
+                    //        UserName = DataRowHelper.GetValue<string>(row, "UserName", null),
+                    //        ID = DataRowHelper.GetValue<int>(row, "UserId", 0)
+
+                    AllRoles.Add(
+
+                          new Roles
+                          {
+                              RoleName = DataRowHelper.GetValue<string>(row, "RoleName", null),
+
+                              ID = DataRowHelper.GetValue<int>(row, "RoleId", 0)
+                          }
+                        );
+
+                }
+            }
 
         }
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -54,6 +81,10 @@ namespace Weighting.ViewModels
                 OnPropertyChanged(nameof(Password));
             }
         }
+
+        public ObservableCollection<Roles> AllRoles { get; set; } = new();
+        //添加用户绑定的角色
+        public Roles SelectedRole { get; set; }
 
         private RelayCommand _loginCommand;
         public RelayCommand LoginCommand
@@ -113,10 +144,10 @@ namespace Weighting.ViewModels
            if (Register(UserName, Password, out message))
             {
                 MessageBox.Show(message);
-                UserName = "";
-                Password = "";
+                
             }
-            
+            UserName = "";
+            Password = string.Empty;
 
 
         }

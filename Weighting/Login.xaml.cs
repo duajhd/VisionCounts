@@ -31,6 +31,13 @@ namespace Weighting
             //{
             //    Close();
             //});
+            // 订阅关闭请求事件
+            vm.RequestClose += CloseWindow;
+        }
+
+        private void CloseWindow()
+        {
+            this.Close(); // 关闭窗口
         }
     }
 }

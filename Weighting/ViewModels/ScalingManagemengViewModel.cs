@@ -13,6 +13,7 @@ using System.Windows;
 using System.Printing;
 using System.Data;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
+using Weighting.Shared;
 
 namespace Weighting.ViewModels
 {
@@ -250,10 +251,12 @@ namespace Weighting.ViewModels
             string sql = "INSERT INTO PlatformScale( MaterialName, weights, UpperTolerance, LowerTolerance,Name, Code, ScalingName, ScalingNum,MaterialUnit,ToleranceUnit,ScalingID) VALUES( @materialName, @weights, @upperTolerance, @lowerTolerance,@name, @code, @scalingName, @scalingNum,@materialUnit,@toleranceUnit,@scalingID)";
             using (DatabaseHelper db = new DatabaseHelper(connectionStr))
             {
-                db.ExecuteNonQuery("INSERT INTO  ProductFormula(Code,Name) VALUES(@code,@name)",new Dictionary<string, object>
+                db.ExecuteNonQuery("INSERT INTO  ProductFormula(Code,Name,Creator,DateOfCreation) VALUES(@code,@name,@creator,@dateOfCreation)", new Dictionary<string, object>
                 {
                     {"@code",Code },
-                    {"@name", FormulaName}
+                    {"@name", FormulaName},
+                    { "@creator",GlobalViewModelSingleton.Instance.Currentusers.UserName},
+                    {"@dateOfCreation",DateTime.Now.ToString() }
                 });
                
 

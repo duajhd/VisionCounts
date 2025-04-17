@@ -146,38 +146,13 @@ namespace Weighting.ViewModels
                         }
                     }
 
-                    //数据库中的ID
-                    //public int ID { get; set; }
-                    ////秤台名
-                    //public string ScalingName { get; set; }
-                    ////物料名
-
-                    //public string MaterialName { get; set; }
-
-                    ////标准重量
-                    //public float weights { get; set; }
-
-                    ////上公差
-                    //public float UpperTolerance { get; set; }
-
-                    //public float LowerTolerance { get; set; }
-
-                    ////使用秤台号
-                    //public string ScalingNum { get; set; }
-
-                    //public int ScalingID { get; set; }
-
-                    ////配料单位
-                    //public string MaterialUnit { get; set; }
-
-                    ////公差单位
-                    //public string ToleranceUnit { get; set; }
-
+                 
                   
                    
 
                     Window w = new MainWindow();
                     w.Show();
+                    RequestClose?.Invoke();
 
                 }
             }
@@ -256,6 +231,9 @@ namespace Weighting.ViewModels
 
 
         }
+
+        // 定义关闭请求事件
+        public event Action RequestClose;
 
         public static string HashPassword(string password)
         {

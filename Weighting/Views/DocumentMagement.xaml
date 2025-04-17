@@ -6,10 +6,123 @@
     xmlns:local="clr-namespace:Weighting.Views"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:tool="clr-namespace:Weighting.Shared"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <tool:BindingProxy x:Key="proxy" Data="{Binding}" />
+    </UserControl.Resources>
     <Grid>
-        <Button Width="100" Command="{Binding ConnectionCommand}">测试通讯</Button>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80" />
+            <RowDefinition Height="50" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <!--  第一行  -->
+        <Border Padding="0,20,0,0">
+            <WrapPanel Grid.Row="0">
+                <Label
+                    Width="100"
+                    Margin="0,0,10,0"
+                    HorizontalContentAlignment="Right"
+                    Content="批次号:"
+                    DockPanel.Dock="Left"
+                    FontSize="14" />
+                <TextBox
+                    Name="txtBatchNumber"
+                    Width="200"
+                    FontSize="14" />
+                <Label
+                    Width="100"
+                    Margin="10,0,10,0"
+                    HorizontalContentAlignment="Right"
+                    Content="方案名称:"
+                    DockPanel.Dock="Left"
+                    FontSize="14" />
+                <TextBox
+                    Name="txtPlanName"
+                    Width="200"
+                    FontSize="14" />
+                <Label
+                    Width="100"
+                    Margin="10,0,10,0"
+                    HorizontalContentAlignment="Right"
+                    Content="创建时间:"
+                    DockPanel.Dock="Left"
+                    FontSize="14" />
+                <TextBox Width="200" FontSize="14" />
+                <Label
+                    Width="100"
+                    Margin="10,0,10,0"
+                    HorizontalContentAlignment="Right"
+                    Content="打印状态:"
+                    DockPanel.Dock="Left"
+                    FontSize="14" />
+                <ComboBox
+                    Name="cmbPrintStatus"
+                    Width="200"
+                    FontSize="14">
+
+                    <ComboBoxItem Content="已完成" />
+                    <ComboBoxItem Content="未完成" />
+                </ComboBox>
+                <Button Margin="30,0,0,0">搜索</Button>
+            </WrapPanel>
+        </Border>
+        <DataGrid Grid.Row="2">
+            <DataGrid.Columns>
+                <!--  by default a DataGridCheckBoxColumn will have the MaterialDesignDataGridCheckBoxColumnStyle and MaterialDesignDataGridCheckBoxColumnEditingStyle applied. See DataGridAssist.ApplyMaterialDesignColumnStyles attached property  -->
+                <DataGridCheckBoxColumn Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}">
+                    <DataGridCheckBoxColumn.Header>
+                        <Border Background="Transparent">
+                            <CheckBox IsChecked="{Binding Source={StaticResource proxy}, Path=Data.IsAllItems1Selected}" />
+                        </Border>
+                        <!--  IsChecked="{Binding RelativeSource={RelativeSource AncestorType=Page}, Path=DataContext.IsAllItems1Selected  -->
+                    </DataGridCheckBoxColumn.Header>
+                    <DataGridCheckBoxColumn.HeaderStyle>
+                        <Style BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}" TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        </Style>
+                    </DataGridCheckBoxColumn.HeaderStyle>
+                </DataGridCheckBoxColumn>
+                <!--  by default a DataGridTextColumn will have the MaterialDesignDataGridTextColumnStyle and MaterialDesignDataGridTextColumnEditingStyle applied. See DataGridAssist.ApplyMaterialDesignColumnStyles attached property  -->
+
+                <!--  if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn  -->
+
+
+                <!--  set a max length to get an indicator in the editor  -->
+                <DataGridTextColumn Width="150" Header="批次号" />
+
+                <DataGridTextColumn Width="120" Header="方案名称" />
+
+
+                <DataGridTextColumn Width="100" Header="打印状态" />
+                <DataGridTextColumn Width="150" Header="创建时间" />
+
+
+                <DataGridTemplateColumn Width="*" Header="操作">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button
+                                    Width="100"
+                                    Command="{Binding DataContext.DeleteRowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    CommandParameter="{Binding}"
+                                    Content="打印"
+                                    Style="{StaticResource MaterialDesignFlatButton}" />
+                                <Button
+                                    Width="100"
+                                    Command="{Binding DataContext.DeleteRowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    CommandParameter="{Binding}"
+                                    Content="删除物料"
+                                    Style="{StaticResource MaterialDesignFlatButton}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>

@@ -33,26 +33,27 @@ namespace Weighting.ViewModels
             AddUserCommand = new RelayCommand(AddUserCommandExecute);
 
 
+
             //读取所有角色名
             string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Permission.db";
             string sql = "SELECT  * FROM Roles";
 
             using (DatabaseHelper db = new DatabaseHelper(connectionStr))
             {
-               DataTable dt = db.ExecuteQuery(sql);
+                DataTable dt = db.ExecuteQuery(sql);
                 foreach (DataRow row in dt.Rows)
                 {
                     //RoleName = DataRowHelper.GetValue<string>(row, "RoleName", null),
                     //        UserName = DataRowHelper.GetValue<string>(row, "UserName", null),
                     //        ID = DataRowHelper.GetValue<int>(row, "UserId", 0)
-                  
+
                     AllRoles.Add(
 
                           new Roles
                           {
                               RoleName = DataRowHelper.GetValue<string>(row, "RoleName", null),
 
-                              ID = DataRowHelper.GetValue<int>(row, "ID", 0)
+                              ID = DataRowHelper.GetValue<int>(row, "RoleId", 0)
                           }
                         );
 
@@ -82,7 +83,7 @@ namespace Weighting.ViewModels
             set
             {
                 _password = value;
-                OnPropertyChanged(nameof(Password));
+                OnPropertyChanged();
             }
         }
 
@@ -157,13 +158,12 @@ namespace Weighting.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        //添加用户绑定的角色
+        public ObservableCollection<Roles> AllRoles { get; set; } = new();
         public Roles SelectedRole { get; set; }
 
         //编辑用户绑定的角色
         public Roles SelectedRoleForEditing { get; set; }
-        public ObservableCollection<Roles> AllRoles { get; set; } = new();
+       
         public Dictionary<string, bool> SelectedItemsBinding { get; set; } = new();
 
         public string SelectedItemsDisplay =>
@@ -204,7 +204,7 @@ namespace Weighting.ViewModels
         //用户模块搜索命令执行
         private void SearchCommandExecute(object o)
         {
-            
+            //1234@abcD
             
             string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Permission.db";
             string sql = $"SELECT A.UserName, B.RoleName FROM Users A INNER JOIN Roles B ON A.RoleId = B.RoleId WHERE A.UserName = '{UserNameForSearch}'";
@@ -276,10 +276,14 @@ namespace Weighting.ViewModels
             if(Register(UserName, Password, out message))
             {
                 MessageBox.Show(message);
-                UserName = "";
-                Password = "";
+              
             }
-           
+            else
+            {
+                MessageBox.Show(message);
+            }
+            UserName = "";
+            Password = string.Empty;
 
 
         }
@@ -311,6 +315,12 @@ namespace Weighting.ViewModels
                 message = "用户名或密码不能为空！";
                 return false;
             }
+            if(SelectedRole == null)
+            {
+                message = "至少选择一个角色！";
+                MessageBox.Show("至少选择一个角色！");
+                return false;
+            }
             string sql = "INSERT INTO Users (UserName, PasswordHash,RoleId) VALUES (@username, @password_hash,@roleid)";
             if (!IsValidUsername(username))
             {
@@ -321,6 +331,7 @@ namespace Weighting.ViewModels
             if (!IsValidPassword(password))
             {
                 message = "密码至少8位，必须包含大小写字母、数字和特殊字符";
+                
                 return false;
             }
 
@@ -334,7 +345,7 @@ namespace Weighting.ViewModels
                     {
                         {"@username",username },
                         {"@password_hash", hash},
-                        {"@roleid" ,1}
+                        {"@roleid" ,SelectedRole.ID}
                     });
                     message = "注册成功";
                     return true;

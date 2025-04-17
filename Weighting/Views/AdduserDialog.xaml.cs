@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Weighting.ViewModels;
 
 namespace Weighting.Views
 {
@@ -20,9 +21,12 @@ namespace Weighting.Views
     /// </summary>
     public partial class AdduserDialog : UserControl
     {
+        AddUserDialogViewModel vm;
         public AdduserDialog()
         {
             InitializeComponent();
+            vm = new AddUserDialogViewModel();
+            this.DataContext = vm;
         }
     }
 }

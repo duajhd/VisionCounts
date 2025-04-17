@@ -12,8 +12,11 @@ namespace Weighting
     public static class PasswordBoxHelper
     {
         public static readonly DependencyProperty BoundPasswordProperty =
-            DependencyProperty.RegisterAttached("BoundPassword", typeof(string), typeof(PasswordBoxHelper),
-                new PropertyMetadata(string.Empty, OnBoundPasswordChanged));
+            DependencyProperty.RegisterAttached(
+                "BoundPassword",
+                typeof(string),
+                typeof(PasswordBoxHelper),
+                new FrameworkPropertyMetadata(string.Empty, OnBoundPasswordChanged));
 
         public static string GetBoundPassword(DependencyObject obj)
         {
@@ -31,24 +34,41 @@ namespace Weighting
             {
                 passwordBox.PasswordChanged -= PasswordBox_PasswordChanged;
 
-                if (!_isUpdating)
+                if (!GetIsUpdating(passwordBox))
                 {
-                    passwordBox.Password = (string)e.NewValue;
+                    passwordBox.Password = e.NewValue as string;
                 }
 
                 passwordBox.PasswordChanged += PasswordBox_PasswordChanged;
             }
         }
 
-        private static bool _isUpdating;
+        private static readonly DependencyProperty IsUpdatingProperty =
+            DependencyProperty.RegisterAttached("IsUpdating", typeof(bool), typeof(PasswordBoxHelper));
+
+        private static bool GetIsUpdating(DependencyObject obj)
+        {
+            return (bool)obj.GetValue(IsUpdatingProperty);
+        }
+
+        private static void SetIsUpdating(DependencyObject obj, bool value)
+        {
+            obj.SetValue(IsUpdatingProperty, value);
+        }
 
         private static void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
             if (sender is PasswordBox passwordBox)
             {
-                _isUpdating = true;
-                SetBoundPassword(passwordBox, passwordBox.Password);
-                _isUpdating = false;
+                SetIsUpdating(passwordBox, true);
+                try
+                {
+                    SetBoundPassword(passwordBox, passwordBox.Password);
+                }
+                finally
+                {
+                    SetIsUpdating(passwordBox, false);
+                }
             }
         }
     }
