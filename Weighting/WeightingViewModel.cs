@@ -27,114 +27,170 @@ namespace Weighting
                                                    INotifyPropertyChanged
     {
         private readonly Dictionary<TKey, TValue> _dictionary = new();
+        private readonly object _syncRoot = new();
 
         public event NotifyCollectionChangedEventHandler CollectionChanged;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void NotifyCountChanged() =>
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Count)));
-
-        private void NotifyIndexerChanged() =>
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Item[]"));
-
-        private void NotifyKeysChanged() =>
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Keys)));
-
-        private void NotifyValuesChanged() =>
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Values)));
+        private void Notify(string propertyName) =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         private void RaiseReset()
         {
             CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-            NotifyCountChanged();
-            NotifyIndexerChanged();
-            NotifyKeysChanged();
-            NotifyValuesChanged();
+            Notify(nameof(Count));
+            Notify("Item[]");
+            Notify(nameof(Keys));
+            Notify(nameof(Values));
         }
 
         public TValue this[TKey key]
         {
-            get => _dictionary[key];
+            get
+            {
+                lock (_syncRoot)
+                    return _dictionary[key];
+            }
             set
             {
-                var existing = _dictionary.TryGetValue(key, out var oldValue);
-                _dictionary[key] = value;
-                if (existing)
+                KeyValuePair<TKey, TValue> oldItem;
+                bool existed;
+
+                lock (_syncRoot)
+                {
+                    existed = _dictionary.TryGetValue(key, out var oldValue);
+                    oldItem = new KeyValuePair<TKey, TValue>(key, oldValue);
+                    _dictionary[key] = value;
+                }
+
+                var newItem = new KeyValuePair<TKey, TValue>(key, value);
+                if (existed)
                 {
                     CollectionChanged?.Invoke(this,
-                        new NotifyCollectionChangedEventArgs(
-                            NotifyCollectionChangedAction.Replace,
-                            new KeyValuePair<TKey, TValue>(key, value),
-                            new KeyValuePair<TKey, TValue>(key, oldValue)));
+                        new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Replace, newItem, oldItem));
                 }
                 else
                 {
                     CollectionChanged?.Invoke(this,
-                        new NotifyCollectionChangedEventArgs(
-                            NotifyCollectionChangedAction.Add,
-                            new KeyValuePair<TKey, TValue>(key, value)));
-                    NotifyCountChanged();
-                    NotifyKeysChanged();
-                    NotifyValuesChanged();
+                        new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, newItem));
+                    Notify(nameof(Count));
+                    Notify(nameof(Keys));
+                    Notify(nameof(Values));
                 }
-                NotifyIndexerChanged();
+
+                Notify("Item[]");
             }
         }
 
-        public ICollection<TKey> Keys => _dictionary.Keys;
-        public ICollection<TValue> Values => _dictionary.Values;
-        public int Count => _dictionary.Count;
+        public ICollection<TKey> Keys
+        {
+            get { lock (_syncRoot) return _dictionary.Keys.ToList(); }
+        }
+
+        public ICollection<TValue> Values
+        {
+            get { lock (_syncRoot) return _dictionary.Values.ToList(); }
+        }
+
+        public int Count
+        {
+            get { lock (_syncRoot) return _dictionary.Count; }
+        }
+
         public bool IsReadOnly => false;
 
         public void Add(TKey key, TValue value)
         {
-            _dictionary.Add(key, value);
+            lock (_syncRoot)
+            {
+                _dictionary.Add(key, value);
+            }
+
             CollectionChanged?.Invoke(this,
-                new NotifyCollectionChangedEventArgs(
-                    NotifyCollectionChangedAction.Add,
-                    new KeyValuePair<TKey, TValue>(key, value)));
-            NotifyCountChanged();
-            NotifyIndexerChanged();
-            NotifyKeysChanged();
-            NotifyValuesChanged();
+                new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, new KeyValuePair<TKey, TValue>(key, value)));
+            Notify(nameof(Count));
+            Notify("Item[]");
+            Notify(nameof(Keys));
+            Notify(nameof(Values));
         }
 
         public bool Remove(TKey key)
         {
-            if (_dictionary.TryGetValue(key, out var value) && _dictionary.Remove(key))
+            KeyValuePair<TKey, TValue> removedItem;
+
+            lock (_syncRoot)
             {
-                CollectionChanged?.Invoke(this,
-                    new NotifyCollectionChangedEventArgs(
-                        NotifyCollectionChangedAction.Remove,
-                        new KeyValuePair<TKey, TValue>(key, value)));
-                NotifyCountChanged();
-                NotifyIndexerChanged();
-                NotifyKeysChanged();
-                NotifyValuesChanged();
-                return true;
+                if (_dictionary.TryGetValue(key, out var value))
+                {
+                    if (_dictionary.Remove(key))
+                    {
+                        removedItem = new KeyValuePair<TKey, TValue>(key, value);
+                    }
+                    else return false;
+                }
+                else return false;
             }
-            return false;
+
+            CollectionChanged?.Invoke(this,
+                new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, removedItem));
+            Notify(nameof(Count));
+            Notify("Item[]");
+            Notify(nameof(Keys));
+            Notify(nameof(Values));
+            return true;
         }
 
-        public bool ContainsKey(TKey key) => _dictionary.ContainsKey(key);
-        public bool TryGetValue(TKey key, out TValue value) => _dictionary.TryGetValue(key, out value);
+        public bool ContainsKey(TKey key)
+        {
+            lock (_syncRoot)
+                return _dictionary.ContainsKey(key);
+        }
+
+        public bool TryGetValue(TKey key, out TValue value)
+        {
+            lock (_syncRoot)
+                return _dictionary.TryGetValue(key, out value);
+        }
 
         public void Add(KeyValuePair<TKey, TValue> item) => Add(item.Key, item.Value);
+
         public void Clear()
         {
-            _dictionary.Clear();
+            lock (_syncRoot)
+            {
+                _dictionary.Clear();
+            }
+
             RaiseReset();
         }
 
-        public bool Contains(KeyValuePair<TKey, TValue> item) => _dictionary.ContainsKey(item.Key);
-        public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex) =>
-            ((IDictionary<TKey, TValue>)_dictionary).CopyTo(array, arrayIndex);
+        public bool Contains(KeyValuePair<TKey, TValue> item)
+        {
+            lock (_syncRoot)
+                return _dictionary.TryGetValue(item.Key, out var val) && EqualityComparer<TValue>.Default.Equals(val, item.Value);
+        }
+
+        public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
+        {
+            lock (_syncRoot)
+            {
+                ((IDictionary<TKey, TValue>)_dictionary).CopyTo(array, arrayIndex);
+            }
+        }
 
         public bool Remove(KeyValuePair<TKey, TValue> item) => Remove(item.Key);
 
-        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() => _dictionary.GetEnumerator();
+        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
+        {
+            lock (_syncRoot)
+            {
+                return _dictionary.ToList().GetEnumerator(); // ToList() for snapshot
+            }
+        }
+
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
+
     public static class DataRowHelper
     {
         public static T GetValue<T>(DataRow row, string columnName, T defaultValue = default)

@@ -1,15 +1,11 @@
 ﻿using MaterialDesignThemes.Wpf;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using Weighting.Shared;
+using static MaterialDesignThemes.Wpf.Theme.ToolBar;
+
 
 namespace Weighting.ViewModels
 {
@@ -25,6 +21,8 @@ namespace Weighting.ViewModels
             AddRowCommand = new RelayCommand(AddRowCommandExecute);
 
             ChangeRowCommand = new RelayCommand(ChangeRowCommandExecute);
+
+            DeleteRowCommand = new RelayCommand(DeleteRowCommandExecute);
 
 
             Devicelist = new ObservableCollection<Devices>();
@@ -156,10 +154,12 @@ namespace Weighting.ViewModels
         public RelayCommand AddRowCommand { get; set; }
 
         public RelayCommand ChangeRowCommand { get; set; }
-        //1.如何获取数据?获取数据保存在哪里才能进行比较?。
-        //思路1.我要比较重量首先我要获取各个秤台的重量（形成配方》秤台设备列表的映射，通过遍历配方列表获取数据）
-        //数据获取比较思路1.设置秤台2.设置通讯3.稳定传输后接收到数据4.写入到一个结果列表5.根据配方进行比较
-        public ObservableCollection<Devices> Devicelist { get; set; }
+
+        public RelayCommand DeleteRowCommand { get; set; }
+    //1.如何获取数据?获取数据保存在哪里才能进行比较?。
+    //思路1.我要比较重量首先我要获取各个秤台的重量（形成配方》秤台设备列表的映射，通过遍历配方列表获取数据）
+    //数据获取比较思路1.设置秤台2.设置通讯3.稳定传输后接收到数据4.写入到一个结果列表5.根据配方进行比较
+    public ObservableCollection<Devices> Devicelist { get; set; }
 
         private Devices _addedDevices = new Devices();
         public Devices AddedDevices
@@ -207,6 +207,33 @@ namespace Weighting.ViewModels
                 MessageBox.Show(ex.Message);
             }
         }
+       private void  DeleteRowCommandExecute(object parameter)
+        {
+            string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Devices.db";
+            // SQL 删除语句
+            string sql = "DELETE FROM DeviceList WHERE ID = @id";
+
+            MessageBoxResult result = MessageBox.Show(
+               "将要删除用户，确定要继续吗？",
+               "提示",
+               MessageBoxButton.YesNo,
+               MessageBoxImage.Question);
+
+
+            if (parameter is Devices && result == MessageBoxResult.Yes)
+            {
+                Devices row = (Devices)parameter;
+                using (DatabaseHelper db = new DatabaseHelper(connectionStr))
+                {
+                    db.ExecuteNonQuery(sql, new Dictionary<string, object>
+                    {
+                        {"@id",row.ID}
+                    });
+
+                    Devicelist.Remove(row);
+                }
+            }
+        }
 
         private async void AddRowCommandExecute(object parameter)
         {
@@ -224,19 +251,6 @@ namespace Weighting.ViewModels
                     using (DatabaseHelper db = new DatabaseHelper(connectionStr))
                     {
                         string sql = "INSERT INTO DeviceList( IP, Port, ScalingID, MaxWeights,Brant, DateOfManufature, DeviceName,Unit) VALUES(@iP, @port, @scalingID, @maxWeights,@brant, @dateOfManufature, @deviceName,@unit)";
-
-                        //public string IP { get; set; }
-                        // public int Port { get; set; }
-
-                        // public int ScalingID { get; set; }
-
-                        // public int MaxWeights { get; set; }
-
-                        // public string Brant { get; set; }
-
-                        // public string DateOfManufature { get; set; }
-
-                        // public string DeviceName { get; set; }
 
                         db.ExecuteNonQuery(sql, new Dictionary<string, object>
                         {

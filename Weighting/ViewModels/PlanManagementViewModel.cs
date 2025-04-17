@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
 using Weighting.Shared;
+using static MaterialDesignThemes.Wpf.Theme.ToolBar;
 
 namespace Weighting.ViewModels
 {
@@ -181,8 +182,10 @@ namespace Weighting.ViewModels
         }
 
         //激活配方
-
-        private void StimulateCommandExceute(object parameter)
+        //客户端配置、应该放在这里
+        //激活配方前，首先应该停止采集
+        //1.点击激活配方2.读取配料表3.形成IP=>measureresult的映射4.创建客户端5.开始采集并将采集结果存到字典
+        private async void StimulateCommandExceute(object parameter)
         {
             GlobalViewModelSingleton.Instance.CuurentFormula.ScalesData.Clear();
 
@@ -239,6 +242,7 @@ namespace Weighting.ViewModels
 
             }
             //生成IP到测量结果的映射（切换配方时，需要重新生成这个映射）
+            GlobalViewModelSingleton.Instance.deviceClients.Clear();
             GlobalViewModelSingleton.Instance.IPToMeasureResult.Clear();
             foreach (PlatformScale item1 in GlobalViewModelSingleton.Instance.CuurentFormula.ScalesData)
             {
@@ -259,13 +263,20 @@ namespace Weighting.ViewModels
                             MaterialUnit = item1.MaterialUnit,
                             ToleranceUnit = item1.ToleranceUnit,
                             IsSatisfied = false,
-
-
                         });
+
+                        //同步初始化秤台
+                        GlobalViewModelSingleton.Instance.deviceClients.Add(new DeviceClient(item2.IP, item2.Port));
                     }
                 }
             }
 
+            //连接后立即开始采集
+            foreach (DeviceClient item in GlobalViewModelSingleton.Instance.deviceClients)
+            {
+              
+                await item.ConnectAsync();
+            }
 
 
 

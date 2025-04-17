@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Weighting.Shared
 {
@@ -81,11 +75,12 @@ namespace Weighting.Shared
         //所有秤台，用来创建连接
         public List<Devices> AllScales = new List<Devices>();
 
+
+        //秤台访问客户端
+        public List<DeviceClient> deviceClients = new List<DeviceClient>();
+
     }
 
-
-
-   
     public class GlobalViewModelSingleton
     {
         private static readonly GlobalViewModel instance = new GlobalViewModel();
