@@ -52,7 +52,7 @@ namespace Weighting.ViewModels
             {
                 foreach (Devices item in GlobalViewModelSingleton.Instance.AllScales)
                 {
-                    deviceClients.Add(new DeviceClient(item.IP,23));
+                    deviceClients.Add(new DeviceClient(item.IP,item.Port));
                 }
 
                 //绑定数据获取事件
@@ -73,13 +73,13 @@ namespace Weighting.ViewModels
         private void HandleDataReceived(object sender, DataReceivedEventArgs e)
         {
             var device = sender as DeviceClient;
-           
+            string IP = e.Host;
             
            
             if (device != null)
             {
                 writer.WriteLine(BitConverter.ToString(e.ReceivedData)+"--"+e.Host);
-                //如果校验通过
+                //如果单位是g
                 if(e.ReceivedData.Length == 17)
                 {
                     if (Validate(e.ReceivedData))
@@ -90,8 +90,17 @@ namespace Weighting.ViewModels
 
                         //提取值并转换到10进制
                         float values = parseg(valuesPart);
+
+                        string unit = GlobalViewModelSingleton.Instance.IPToMeasureResult[IP].MaterialUnit;
+
+                        //如果目标秤台是kg，则需要单位转化成kg
+                        if(unit == "kg")
+                        {
+                            GlobalViewModelSingleton.Instance.IPToMeasureResult[IP].Result = values/1000;
+                        }
                     }
                 }
+                //如果单位是kg
                 else if(e.ReceivedData.Length == 18)
                 {
                     if (Validate(e.ReceivedData))
@@ -102,6 +111,14 @@ namespace Weighting.ViewModels
 
                         //提取值并转换到10进制
                         float values = ParseKg(valuesPart);
+
+                        string unit = GlobalViewModelSingleton.Instance.IPToMeasureResult[IP].MaterialUnit;
+
+                        //如果目标秤台是g，则需要单位转化成g
+                        if (unit == "g")
+                        {
+                            GlobalViewModelSingleton.Instance.IPToMeasureResult[IP].Result = values * 1000;
+                        }
                     }
                 }
                 

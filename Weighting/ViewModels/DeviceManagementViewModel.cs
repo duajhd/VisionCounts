@@ -37,7 +37,120 @@ namespace Weighting.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        private string _deviceName;
+        public string DeviceName
+        {
+            get => _deviceName;
+            set
+            {
+                if (_deviceName != value)
+                {
+                    _deviceName = value;
+                    OnPropertyChanged(nameof(DeviceName));
+                }
+            }
+        }
 
+        private string _maxWeight;
+        public string MaxWeight
+        {
+            get => _maxWeight;
+            set
+            {
+                if (_maxWeight != value)
+                {
+                    _maxWeight = value;
+                    OnPropertyChanged(nameof(MaxWeight));
+                }
+            }
+        }
+
+        private string _brand;
+        public string Brand
+        {
+            get => _brand;
+            set
+            {
+                if (_brand != value)
+                {
+                    _brand = value;
+                    OnPropertyChanged(nameof(Brand));
+                }
+            }
+        }
+
+        private string _ipAddress;
+        public string IPAddress
+        {
+            get => _ipAddress;
+            set
+            {
+                if (_ipAddress != value)
+                {
+                    _ipAddress = value;
+                    OnPropertyChanged(nameof(IPAddress));
+                }
+            }
+        }
+
+        private string _port;
+        public string Port
+        {
+            get => _port;
+            set
+            {
+                if (_port != value)
+                {
+                    _port = value;
+                    OnPropertyChanged(nameof(Port));
+                }
+            }
+        }
+
+        private DateTime _productionDate = DateTime.Now;
+        public DateTime ProductionDate
+        {
+            get => _productionDate;
+            set
+            {
+                if (_productionDate != value)
+                {
+                    _productionDate = value;
+                    OnPropertyChanged(nameof(ProductionDate));
+                }
+            }
+        }
+
+        private int _scalingID;
+        public int ScalingID
+        {
+            get => _scalingID;
+            set
+            {
+                if (_scalingID != value)
+                {
+                    _scalingID = value;
+                    OnPropertyChanged(nameof(ScalingID));
+                }
+            }
+        }
+
+        private string _unit;
+        public string Unit
+        {
+            get => _unit;
+            set
+            {
+                if (_unit != value)
+                {
+                    _unit = value;
+                    OnPropertyChanged(nameof(Unit));
+                }
+            }
+        }
+        public IEnumerable<string> ScalingNumsStr => new[] { "1号秤台", "2号秤台", "3号秤台", "4号秤台", "5号秤台", "6号秤台", "7号秤台", "8号秤台", "9号秤台" };
+
+        public IEnumerable<string> Units => new[] { "g", "kg" };
         public RelayCommand SearchCommand { get; set; }
 
         public RelayCommand AddRowCommand { get; set; }
@@ -71,7 +184,6 @@ namespace Weighting.ViewModels
                 {
                     DataTable dt = db.ExecuteQuery(sql);
 
-
                     foreach (DataRow row in dt.Rows)
                     {
                         Devicelist.Add(new Devices
@@ -83,6 +195,7 @@ namespace Weighting.ViewModels
                             Brant = DataRowHelper.GetValue<string>(row, "Brant", null),
                             DateOfManufature = DataRowHelper.GetValue<string>(row, "DateOfManufature", null),
                             DeviceName = DataRowHelper.GetValue<string>(row, "DeviceName", null),
+                            Unit = DataRowHelper.GetValue<string>(row, "Unit", null),
                         });
 
                     }
@@ -98,10 +211,52 @@ namespace Weighting.ViewModels
         private async void AddRowCommandExecute(object parameter)
         {
 
-            AddedDevices.DeviceName = "23";
+           
             var dialog = new Views.AddDeviceDialog();
             //await DialogHost.Show(dialog, "RootDialog");
-            await DialogHost.Show(dialog, "DeviceManagementDialog");
+           var result =  await DialogHost.Show(dialog, "DeviceManagementDialog");
+            try
+            {
+                if (result?.ToString() == "True")
+                {
+                    string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Devices.db";
+
+                    using (DatabaseHelper db = new DatabaseHelper(connectionStr))
+                    {
+                        string sql = "INSERT INTO DeviceList( IP, Port, ScalingID, MaxWeights,Brant, DateOfManufature, DeviceName,Unit) VALUES(@iP, @port, @scalingID, @maxWeights,@brant, @dateOfManufature, @deviceName,@unit)";
+
+                        //public string IP { get; set; }
+                        // public int Port { get; set; }
+
+                        // public int ScalingID { get; set; }
+
+                        // public int MaxWeights { get; set; }
+
+                        // public string Brant { get; set; }
+
+                        // public string DateOfManufature { get; set; }
+
+                        // public string DeviceName { get; set; }
+
+                        db.ExecuteNonQuery(sql, new Dictionary<string, object>
+                        {
+                            { "@iP",IPAddress},
+                            {"@port",Port},
+                            { "@scalingID",ScalingID },
+                            { "@maxWeights",MaxWeight},
+                            { "@brant",Brand},
+                            { "@dateOfManufature",ProductionDate.ToString()}, //在combox写入数据时浪费了很多事件
+                            { "@deviceName",ScalingID.ToString() + "号秤台"},
+                            {"@unit",Unit}
+                        });
+
+                    }
+                }
+            } catch (Exception ex)
+            { 
+                MessageBox.Show($"发生{ex.Message}异常，数据添加失败！");
+            }
+           
         }
 
         private  void ChangeRowCommandExecute(object parameter)

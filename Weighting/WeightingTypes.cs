@@ -339,6 +339,7 @@ namespace Weighting
 
         public string Brant { get; set; }
 
+        public  string Unit {  get; set; }
         public string DateOfManufature { get; set; }
 
         public string DeviceName { get; set; }

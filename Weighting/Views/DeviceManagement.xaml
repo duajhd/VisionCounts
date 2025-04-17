@@ -39,8 +39,9 @@
                     Margin="40,0,0,0"
                     Command="{Binding AddRowCommand}"
                     Content="新增"
+                    Cursor="Hand"
                     Style="{StaticResource MaterialDesignPaperButton}"
-                    ToolTip="Resource name: MaterialDesignPaperButton" Cursor="Hand" />
+                    ToolTip="Resource name: MaterialDesignPaperButton" />
                 <Button
                     Margin="50,0,0,0"
                     Content="重置"
@@ -90,6 +91,12 @@
                         </DataGridTextColumn.Binding>
                     </DataGridTextColumn>
 
+                    <DataGridTextColumn Header="单位">
+                        <DataGridTextColumn.Binding>
+                            <Binding Path="Unit" />
+                        </DataGridTextColumn.Binding>
+                    </DataGridTextColumn>
+
                     <DataGridTemplateColumn Width="*" Header="操作">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -105,11 +112,7 @@
                                         CommandParameter="{Binding}"
                                         Content="删除"
                                         Style="{StaticResource MaterialDesignFlatButton}" />
-                                    <Button
-                                        Command="{Binding DataContext.StimulateCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                        CommandParameter="{Binding}"
-                                        Content="激活"
-                                        Style="{StaticResource MaterialDesignFlatButton}" />
+
                                 </StackPanel>
 
                             </DataTemplate>
