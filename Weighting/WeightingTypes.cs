@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -235,15 +236,33 @@ namespace Weighting
     }
 
     //绑定查询界面用
-    public class MixedMaterial
+    public class MixedMaterial : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler? PropertyChanged;
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         public int ID { get; set; }
         public string Code {  get; set; }
         public string Creator {  get; set; }
 
         public string Name {  get; set; }
 
-        public bool isStimulated {  get; set; }
+        private bool _isStimulated;
+        public bool IsStimulated 
+        {
+            get => _isStimulated;
+            set 
+            {
+                if (_isStimulated != value) {
+
+                    _isStimulated = value;
+                    OnPropertyChanged(nameof(IsStimulated));
+                }
+            } 
+        }
 
        
     }

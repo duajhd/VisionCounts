@@ -102,6 +102,13 @@
             <RowDefinition Height="60" />
             <RowDefinition />
         </Grid.RowDefinitions>
+        <Button
+            Width="100"
+            Margin="40,0,0,0"
+            HorizontalAlignment="Left"
+            Command="{Binding GenerateRecordsCommand}">
+            生成记录
+        </Button>
         <ScrollViewer Grid.Row="1">
             <ListBox
                 Background="Transparent"

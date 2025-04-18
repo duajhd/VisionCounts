@@ -40,15 +40,6 @@
                             </TextBlock>
                             <TextBox Text="{Binding FormulaName}" />
                         </UniformGrid>
-                        <UniformGrid Grid.Column="1" Columns="2">
-                            <TextBlock
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                FontSize="14">
-                                配方编码：
-                            </TextBlock>
-                            <TextBox Text="{Binding Code}" />
-                        </UniformGrid>
                         <Button
                             Grid.Column="2"
                             Command="{Binding AddRowCommand}"
@@ -89,16 +80,7 @@
                                 Header="配料名"
                                 IsEditable="True"
                                 ItemsSourceBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Path=DataContext.MaterialNames}"
-                                SelectedValueBinding="{Binding Item.MaterialName}">
-
-                                <!--Setting the editing element style allows access to all of the combo box's properties
-<materialDesign:MaterialDataGridComboBoxColumn.EditingElementStyle>
-    <Style TargetType="ComboBox" BasedOn="{StaticResource {ComponentResourceKey TypeInTargetAssembly={x:Type ComboBox}, ResourceId=MaterialDataGridComboBoxColumnEditingStyle}}" >
-        <Setter Property="IsEditable" Value="True" />
-    </Style>
-</materialDesign:MaterialDataGridComboBoxColumn.EditingElementStyle>
-                                -->
-                            </materialDesign:DataGridComboBoxColumn>
+                                SelectedValueBinding="{Binding Item.MaterialName}" />
                             <!--  set a max length to get an indicator in the editor  -->
                             <DataGridTextColumn Header="标准重量">
                                 <DataGridTextColumn.Binding>
@@ -114,16 +96,7 @@
                                 Header="单位"
                                 IsEditable="True"
                                 ItemsSourceBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Path=DataContext.Units}"
-                                SelectedValueBinding="{Binding Item.MaterialUnit}">
-
-                                <!--Setting the editing element style allows access to all of the combo box's properties
-<materialDesign:MaterialDataGridComboBoxColumn.EditingElementStyle>
-    <Style TargetType="ComboBox" BasedOn="{StaticResource {ComponentResourceKey TypeInTargetAssembly={x:Type ComboBox}, ResourceId=MaterialDataGridComboBoxColumnEditingStyle}}" >
-        <Setter Property="IsEditable" Value="True" />
-    </Style>
-</materialDesign:MaterialDataGridComboBoxColumn.EditingElementStyle>
-                                -->
-                            </materialDesign:DataGridComboBoxColumn>
+                                SelectedValueBinding="{Binding Item.MaterialUnit}" />
                             <DataGridTextColumn Header="上公差">
                                 <DataGridTextColumn.Binding>
                                     <Binding Path="Item.UpperTolerance" StringFormat="{}{0:F2}">
@@ -157,16 +130,7 @@
                                 Header="公差单位"
                                 IsEditable="True"
                                 ItemsSourceBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Path=DataContext.Units}"
-                                SelectedValueBinding="{Binding Item.ToleranceUnit}">
-
-                                <!--Setting the editing element style allows access to all of the combo box's properties
-<materialDesign:MaterialDataGridComboBoxColumn.EditingElementStyle>
-    <Style TargetType="ComboBox" BasedOn="{StaticResource {ComponentResourceKey TypeInTargetAssembly={x:Type ComboBox}, ResourceId=MaterialDataGridComboBoxColumnEditingStyle}}" >
-        <Setter Property="IsEditable" Value="True" />
-    </Style>
-</materialDesign:MaterialDataGridComboBoxColumn.EditingElementStyle>
-                                -->
-                            </materialDesign:DataGridComboBoxColumn>
+                                SelectedValueBinding="{Binding Item.ToleranceUnit}" />
                             <!--<materialDesign:DataGridComboBoxColumn
                                 Width="100"
                                 Header="秤台号"

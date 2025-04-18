@@ -232,7 +232,7 @@ namespace Weighting.ViewModels
         private void SaveFormula(object obj)
         {
             //保存数据的验证原则：1.string数据不能为空2.数值要换成整数
-            if (string.IsNullOrEmpty(FormulaName)   || string.IsNullOrEmpty(Code))
+            if (string.IsNullOrEmpty(FormulaName))
             {
                 MessageBox.Show("配方编码或配方名称不能为空!");
                
@@ -249,6 +249,8 @@ namespace Weighting.ViewModels
 
             string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\formula.db";
             string sql = "INSERT INTO PlatformScale( MaterialName, weights, UpperTolerance, LowerTolerance,Name, Code, ScalingName, ScalingNum,MaterialUnit,ToleranceUnit,ScalingID) VALUES( @materialName, @weights, @upperTolerance, @lowerTolerance,@name, @code, @scalingName, @scalingNum,@materialUnit,@toleranceUnit,@scalingID)";
+            Code = FormulaName+"-"+ DateTime.Today.ToString("yyyy-MM-dd");
+
             using (DatabaseHelper db = new DatabaseHelper(connectionStr))
             {
                 db.ExecuteNonQuery("INSERT INTO  ProductFormula(Code,Name,Creator,DateOfCreation) VALUES(@code,@name,@creator,@dateOfCreation)", new Dictionary<string, object>

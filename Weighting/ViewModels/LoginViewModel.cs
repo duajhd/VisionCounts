@@ -186,7 +186,7 @@ namespace Weighting.ViewModels
             }
             if (!IsValidUsername(username))
             {
-                message = "用户名必须为 6-16 位字母和数字组合，请重新输入！";
+                message = "用户名必须为 2-20位的中文和英文，不能包含数字和特殊字符，请重新输入！";
                 return false;
             }
 
@@ -246,7 +246,7 @@ namespace Weighting.ViewModels
         // 用户名格式验证：字母 + 数字，6-16位
         public static bool IsValidUsername(string username)
         {
-            return Regex.IsMatch(username, @"^[a-zA-Z0-9]{6,16}$");
+            return Regex.IsMatch(username, @"^[\u4e00-\u9fa5a-zA-Z]{2,20}$");
         }
 
         // 密码格式验证：包含大写、小写、数字、特殊字符，至少8位

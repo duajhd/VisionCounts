@@ -36,6 +36,7 @@ namespace Weighting.ViewModels
         {
            
             ConnectionCommand = new RelayCommand(ConnectionCommandExecute);
+            GenerateRecordsCommand = new RelayCommand(GenerateRecordsCommandExecute);
             writer = new StreamWriter(fs);
 
            
@@ -43,6 +44,7 @@ namespace Weighting.ViewModels
         }
 
         public RelayCommand ConnectionCommand { get; set; }
+        public RelayCommand GenerateRecordsCommand { get; set; }
 
         //初始化连接，来获取数据
         private async  void ConnectionCommandExecute(Object parameter)
@@ -68,7 +70,10 @@ namespace Weighting.ViewModels
             }
          
         }
-      
+      private void GenerateRecordsCommandExecute(object parameter)
+        {
+            
+        }
         //在这个函数里校验数据、获取数据、比较数据、设置状态
         private void HandleDataReceived(object sender, DataReceivedEventArgs e)
         {

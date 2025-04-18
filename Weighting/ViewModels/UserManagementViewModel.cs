@@ -29,7 +29,7 @@ namespace Weighting.ViewModels
             SearchCommand = new RelayCommand(SearchCommandExecute);
             DeleteRowCommand = new RelayCommand(DeleteRowExecute);
             ChangeRowCommand = new RelayCommand(ChangeRowCommandExecute);
-            SignUpCommand = new RelayCommand(SignUp);
+            //SignUpCommand = new RelayCommand(SignUp);
             AddUserCommand = new RelayCommand(AddUserCommandExecute);
 
 
@@ -148,16 +148,16 @@ namespace Weighting.ViewModels
 
         public RelayCommand DeleteRowCommand { get; set; }
 
-        private RelayCommand _signUpCommand;
-        public RelayCommand SignUpCommand
-        {
-            get => _signUpCommand;
-            set
-            {
-                _signUpCommand = value;
-                OnPropertyChanged();
-            }
-        }
+        //private RelayCommand _signUpCommand;
+        //public RelayCommand SignUpCommand
+        //{
+        //    get => _signUpCommand;
+        //    set
+        //    {
+        //        _signUpCommand = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
         public ObservableCollection<Roles> AllRoles { get; set; } = new();
         public Roles SelectedRole { get; set; }
 
@@ -270,23 +270,23 @@ namespace Weighting.ViewModels
 
 
 
-        public void SignUp(object o)
-        {
-            string message;
-            if(Register(UserName, Password, out message))
-            {
-                MessageBox.Show(message);
+        //public void SignUp(object o)
+        //{
+        //    string message;
+        //    if(Register(UserName, Password, out message))
+        //    {
+        //        MessageBox.Show(message);
               
-            }
-            else
-            {
-                MessageBox.Show(message);
-            }
-            UserName = "";
-            Password = string.Empty;
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show(message);
+        //    }
+        //    UserName = "";
+        //    Password = string.Empty;
 
 
-        }
+        //}
         public static string HashPassword(string password)
         {
             using var sha = SHA256.Create();
@@ -298,7 +298,7 @@ namespace Weighting.ViewModels
         // 用户名格式验证：字母 + 数字，6-16位
         public static bool IsValidUsername(string username)
         {
-            return Regex.IsMatch(username, @"^[a-zA-Z0-9]{6,16}$");
+            return Regex.IsMatch(username, @"^[\u4e00-\u9fa5a-zA-Z]{2,20}$");
         }
 
         // 密码格式验证：包含大写、小写、数字、特殊字符，至少8位
@@ -307,64 +307,64 @@ namespace Weighting.ViewModels
             return Regex.IsMatch(password, @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$");
         }
 
-        public bool Register(string username, string password, out string message)
-        {
-            if (username == null || password == null)
-            {
-                MessageBox.Show("用户名或密码不能为空!");
-                message = "用户名或密码不能为空！";
-                return false;
-            }
-            if(SelectedRole == null)
-            {
-                message = "至少选择一个角色！";
-                MessageBox.Show("至少选择一个角色！");
-                return false;
-            }
-            string sql = "INSERT INTO Users (UserName, PasswordHash,RoleId) VALUES (@username, @password_hash,@roleid)";
-            if (!IsValidUsername(username))
-            {
-                message = "用户名必须为 6-16 位字母和数字组合";
-                return false;
-            }
+        //public bool Register(string username, string password, out string message)
+        //{
+        //    if (username == null || password == null)
+        //    {
+        //        MessageBox.Show("用户名或密码不能为空!");
+        //        message = "用户名或密码不能为空！";
+        //        return false;
+        //    }
+        //    if(SelectedRole == null)
+        //    {
+        //        message = "至少选择一个角色！";
+        //        MessageBox.Show("至少选择一个角色！");
+        //        return false;
+        //    }
+        //    string sql = "INSERT INTO Users (UserName, PasswordHash,RoleId) VALUES (@username, @password_hash,@roleid)";
+        //    if (!IsValidUsername(username))
+        //    {
+        //        message = "用户名必须为 6-16 位字母和数字组合";
+        //        return false;
+        //    }
 
-            if (!IsValidPassword(password))
-            {
-                message = "密码至少8位，必须包含大小写字母、数字和特殊字符";
+        //    if (!IsValidPassword(password))
+        //    {
+        //        message = "密码至少8位，必须包含大小写字母、数字和特殊字符";
                 
-                return false;
-            }
+        //        return false;
+        //    }
 
-            string hash = HashPassword(password);
+        //    string hash = HashPassword(password);
 
-            try
-            {
-                using (DatabaseHelper db = new DatabaseHelper("Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Permission.db"))
-                {
-                    db.ExecuteNonQuery(sql, new Dictionary<string, object>
-                    {
-                        {"@username",username },
-                        {"@password_hash", hash},
-                        {"@roleid" ,SelectedRole.ID}
-                    });
-                    message = "注册成功";
-                    return true;
-                }
-            }
-            catch (SQLiteException ex) when (ex.ErrorCode == (int)SQLiteErrorCode.Constraint)
-            {
-                message = "用户名已存在";
-                return false;
-            }
-            catch (Exception ex)
-            {
-                message = $"注册失败: {ex.Message}";
-                return false;
-            }
-
-
+        //    try
+        //    {
+        //        using (DatabaseHelper db = new DatabaseHelper("Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Permission.db"))
+        //        {
+        //            db.ExecuteNonQuery(sql, new Dictionary<string, object>
+        //            {
+        //                {"@username",username },
+        //                {"@password_hash", hash},
+        //                {"@roleid" ,SelectedRole.ID}
+        //            });
+        //            message = "注册成功";
+        //            return true;
+        //        }
+        //    }
+        //    catch (SQLiteException ex) when (ex.ErrorCode == (int)SQLiteErrorCode.Constraint)
+        //    {
+        //        message = "用户名已存在";
+        //        return false;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        message = $"注册失败: {ex.Message}";
+        //        return false;
+        //    }
 
 
-        }
+
+
+        //}
     }
 }

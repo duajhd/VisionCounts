@@ -123,7 +123,7 @@ namespace Weighting.Shared
             // 检查输入值是否为布尔类型
             if (value is bool boolValue)
             {
-                return boolValue ? "已激活" : "激活";
+                return boolValue ? "断开" : "激活";
             }
             return "未知"; // 如果值不是布尔类型，返回默认值
         }

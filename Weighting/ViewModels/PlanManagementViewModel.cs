@@ -1,16 +1,10 @@
 ﻿using MaterialDesignColors;
 using MaterialDesignThemes.Wpf;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Documents;
 using Weighting.Shared;
 using static MaterialDesignThemes.Wpf.Theme.ToolBar;
 
@@ -41,6 +35,8 @@ namespace Weighting.ViewModels
             }
         }
 
+
+        private bool isStimulated = false;
         public bool? IsAllItems1Selected
         {
             get
@@ -71,7 +67,6 @@ namespace Weighting.ViewModels
         public IEnumerable<string> MaterialNames => new[] { "Binder A", "Binder B", "Binder C", " 粉末（10-1）", "粉末（10 - 2）" };
         public MixedMaterial SelectedFormulaName { get; set; }
 
-
         //1.读取
         public PlanManagementViewModel()
         {
@@ -89,7 +84,6 @@ namespace Weighting.ViewModels
             StimulateCommand = new RelayCommand(StimulateCommandExceute);
 
             DelateFormulaCommand = new RelayCommand(DelateFormulaCommandExecute);
-
 
         }
 
@@ -159,10 +153,7 @@ namespace Weighting.ViewModels
 
 
                 // 给每一行赋值
-                for (int i = 0; i < dt.Rows.Count; i++)
-                {
-                    dt.Rows[i]["ID"] = i + 1;
-                }
+                
                 foreach (DataRow row in dt.Rows)
                 {
                     Items1.Add(
@@ -173,7 +164,7 @@ namespace Weighting.ViewModels
                             Code = DataRowHelper.GetValue<string>(row, "Code", null),
                             Name = DataRowHelper.GetValue<string>(row, "Name", null),
                             Creator = DataRowHelper.GetValue<string>(row, "Creator", null),
-                            isStimulated = false
+                            IsStimulated = false
                         }
                         );
 
@@ -185,7 +176,7 @@ namespace Weighting.ViewModels
         //客户端配置、应该放在这里
         //激活配方前，首先应该停止采集
         //1.点击激活配方2.读取配料表3.形成IP=>measureresult的映射4.创建客户端5.开始采集并将采集结果存到字典
-        private async void StimulateCommandExceute(object parameter)
+        private  void StimulateCommandExceute(object parameter)
         {
             GlobalViewModelSingleton.Instance.CuurentFormula.ScalesData.Clear();
 
@@ -209,6 +200,8 @@ namespace Weighting.ViewModels
 
 
             //读取新配方
+            GlobalViewModelSingleton.Instance.CuurentFormula.FormulaName = rowforstimulation.Name;
+            GlobalViewModelSingleton.Instance.CuurentFormula.Code = rowforstimulation.Code;
             using (DatabaseHelper db = new DatabaseHelper(connectionStr))
             {
                 DataTable dt = db.ExecuteQuery(sql);
@@ -272,31 +265,42 @@ namespace Weighting.ViewModels
             }
 
             //连接后立即开始采集
-            foreach (DeviceClient item in GlobalViewModelSingleton.Instance.deviceClients)
-            {
-              
-                await item.ConnectAsync();
-            }
+            //foreach (DeviceClient item in GlobalViewModelSingleton.Instance.deviceClients)
+            //{
+
+            //    await item.ConnectAsync();
+            //}
 
 
 
             //先把所有置为false//数据上下文变了//当前选择的ID是否与本身的ID相同
-            foreach (MixedMaterial item in Items1)
-            {
-                item.isStimulated = false;
-            }
 
-            foreach (MixedMaterial item in Items1)
+            //如果有激活的，
+            if (isStimulated)
             {
-                if (item.ID == rowforstimulation.ID)
+                foreach (MixedMaterial item in Items1)
                 {
-                    item.isStimulated = true;
-                }
-                else
-                {
-                    item.isStimulated = false;
+                    if (item.ID == rowforstimulation.ID)
+                    {
+                        item.IsStimulated = false;
+                    }
+
+                    isStimulated = false;
                 }
             }
+            else
+            {
+                foreach (MixedMaterial item in Items1)
+                {
+                    if (item.ID == rowforstimulation.ID)
+                    {
+                        item.IsStimulated = true;
+                    }
+
+                    isStimulated = true;
+                }
+            }
+           
         }
 
 

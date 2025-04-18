@@ -89,8 +89,10 @@
                                     <Button
                                         Command="{Binding DataContext.StimulateCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                         CommandParameter="{Binding}"
-                                        Content="{Binding isStimulated, Converter={StaticResource ActivationConverter}}"
+                                        Content="{Binding IsStimulated, Converter={StaticResource ActivationConverter}}"
                                         Style="{StaticResource MaterialDesignFlatButton}" />
+
+
                                 </StackPanel>
 
                             </DataTemplate>
