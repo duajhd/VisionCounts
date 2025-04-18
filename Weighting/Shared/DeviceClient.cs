@@ -36,11 +36,19 @@ namespace Weighting.Shared
             // 启动异步读取任务
             _ = StartReceivingAsync();
         }
+        private static string ByteArrayToHexString(byte[] bytes)
+        {
+            if (bytes == null) throw new ArgumentNullException("bytes");
+            return string.Join("-", Array.ConvertAll(bytes, b => b.ToString("X2")));
+        }
 
-        
         private async Task StartReceivingAsync()
         {
             byte[] buffer = new byte[18];
+
+            float lowValue = 0.0f;
+            float upValue = 0.0f;
+            float standard = 0.0f;
             try
             {
                 while (true)
@@ -53,16 +61,15 @@ namespace Weighting.Shared
 
                     // 触发事件并传递设备信息
                     //或许不需要发出事件，直接写到Dictionary即可
-                    //如果单位是g
-                    if (receivedData.Length == 17 && Validate(receivedData))
+                    //如果单位是g  && Validate(receivedData)
+                    if (receivedData.Length == 17 )
                     {
                       
                             //
-                            byte[] valuesPart = new byte[8];
+                            byte[] valuesPart = new byte[7];
                             Array.Copy(receivedData, 7, valuesPart, 0, 7);
-
-                            //提取值并转换到10进制
-                            float values = parseg(valuesPart);
+                           //提取值并转换到10进制
+                            float values = ParseValue(valuesPart);
 
                             string unit = GlobalViewModelSingleton.Instance.IPToMeasureResult[_host].MaterialUnit;
 
@@ -72,17 +79,29 @@ namespace Weighting.Shared
                                  values = values / 1000;
                             }
                         GlobalViewModelSingleton.Instance.IPToMeasureResult[_host].Result = values;
+                        standard = GlobalViewModelSingleton.Instance.IPToMeasureResult[_host].weights;
+                        lowValue = GlobalViewModelSingleton.Instance.IPToMeasureResult[_host].LowerTolerance+ standard;
+                         upValue = GlobalViewModelSingleton.Instance.IPToMeasureResult[_host].UpperTolerance+standard;
+                         
+                        if ((values > lowValue) && (values < upValue))
+                        {
+                            GlobalViewModelSingleton.Instance.IPToMeasureResult[_host].IsSatisfied = true;
+                        }
+                        else
+                        {
+                            GlobalViewModelSingleton.Instance.IPToMeasureResult[_host].IsSatisfied = false;
+                        }
                     }
                     //如果单位是kg
-                    else if (receivedData.Length == 18 && Validate(receivedData))
+                    else if (receivedData.Length == 18)
                     {
                        
                             //
-                            byte[] valuesPart = new byte[8];
+                            byte[] valuesPart = new byte[7];
                             Array.Copy(receivedData, 7, valuesPart, 0, 7);
 
                             //提取值并转换到10进制
-                            float values = ParseKg(valuesPart);
+                            float values = ParseValue(valuesPart);
 
                             string unit = GlobalViewModelSingleton.Instance.IPToMeasureResult[_host].MaterialUnit;
 
@@ -92,6 +111,18 @@ namespace Weighting.Shared
                                  values = values * 1000;
                             }
                           GlobalViewModelSingleton.Instance.IPToMeasureResult[_host].Result = values;
+                          standard = GlobalViewModelSingleton.Instance.IPToMeasureResult[_host].weights;
+                          lowValue = GlobalViewModelSingleton.Instance.IPToMeasureResult[_host].LowerTolerance + standard;
+                          upValue = GlobalViewModelSingleton.Instance.IPToMeasureResult[_host].UpperTolerance + standard;
+
+                          if ((values > lowValue) && (values < upValue))
+                         {
+                             GlobalViewModelSingleton.Instance.IPToMeasureResult[_host].IsSatisfied = true;
+                          }
+                          else
+                          {
+                            GlobalViewModelSingleton.Instance.IPToMeasureResult[_host].IsSatisfied = false;
+                          }
                     }
 
 
@@ -158,36 +189,36 @@ namespace Weighting.Shared
 
             return (float)result;
         }
-        //private float ParseKg(byte[] buffer)
-        //{
-        //    List<int> digits = new List<int>();
-        //    int decimalPos = -1;
+        private float ParseValue(byte[] buffer)
+        {
+            List<int> digits = new List<int>();
+            int decimalPos = -1;
 
-        //    for (int i = 0; i < buffer.Length; i++)
-        //    {
-        //        if (buffer[i] == 0x46)
-        //        {
-        //            decimalPos = digits.Count; // 小数点前的位数
-        //        }
-        //        else
-        //        {
-        //            digits.Add(buffer[i] & 0x0F); // 取低四位数字
-        //        }
-        //    }
+            for (int i = 0; i < buffer.Length; i++)
+            {
+                if (buffer[i] == 0x2e)
+                {
+                    decimalPos = digits.Count; // 小数点前的位数
+                }
+                else
+                {
+                    digits.Add(buffer[i] & 0x0F); // 取低四位数字
+                }
+            }
 
-        //    double result = 0;
-        //    for (int i = 0; i < digits.Count; i++)
-        //    {
-        //        result = result * 10 + digits[i];
-        //    }
+            double result = 0;
+            for (int i = 0; i < digits.Count; i++)
+            {
+                result = result * 10 + digits[i];
+            }
 
-        //    if (decimalPos >= 0)
-        //    {
-        //        result /= Math.Pow(10, digits.Count - decimalPos);
-        //    }
+            if (decimalPos >= 0)
+            {
+                result /= Math.Pow(10, digits.Count - decimalPos);
+            }
 
-        //    return (float)result;
-        //}
+            return (float)result;
+        }
         //计算CRC
         public static ushort ComputeCRC(byte[] data, int length)
         {

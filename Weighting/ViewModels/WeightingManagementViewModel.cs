@@ -72,8 +72,36 @@ namespace Weighting.ViewModels
         }
       private void GenerateRecordsCommandExecute(object parameter)
         {
-            
+            string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Devices.db";
+            string sql = "INSERT INTO MeasureResults( FormulaName, DateOfCreation, Operator, BatchNumber) VALUES( @formulaName, @dateOfCreation, @operator, @batchNumber)";
+            string BatchNumber = GlobalViewModelSingleton.Instance.CuurentFormula.FormulaName + "/" + DateTime.Today.ToString("yyyy-MM-dd");
+            string FormulaName = GlobalViewModelSingleton.Instance.CuurentFormula.FormulaName;
+            string Operator = GlobalViewModelSingleton.Instance.Currentusers.UserName;
+            string OperatorDateStr = DateTime.Today.ToString("yyyy-MM-dd");
+
+            try
+            {
+                using (DatabaseHelper db = new DatabaseHelper(connectionStr))
+                {
+                    db.ExecuteNonQuery(sql, new Dictionary<string, object>
+                     {
+                        {"@formulaName", FormulaName},
+                        {"@dateOfCreation",OperatorDateStr },
+                        {"@operator", Operator},
+                        {"@batchNumber", BatchNumber}
+                     });
+                }
+            } 
+            catch(Exception ex)
+            {
+                MessageBox.Show($"记录生成失败！ERROR:{ex.Message}");
+            }
+
+           
+
         }
+
+      
         //在这个函数里校验数据、获取数据、比较数据、设置状态
         private void HandleDataReceived(object sender, DataReceivedEventArgs e)
         {
@@ -114,6 +142,7 @@ namespace Weighting.ViewModels
                         byte[] valuesPart = new byte[8];
                         Array.Copy(e.ReceivedData, 7, valuesPart, 0, 7);
 
+                       
                         //提取值并转换到10进制
                         float values = ParseKg(valuesPart);
 

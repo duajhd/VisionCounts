@@ -176,13 +176,45 @@ namespace Weighting.ViewModels
         //客户端配置、应该放在这里
         //激活配方前，首先应该停止采集
         //1.点击激活配方2.读取配料表3.形成IP=>measureresult的映射4.创建客户端5.开始采集并将采集结果存到字典
-        private  void StimulateCommandExceute(object parameter)
+        private async void StimulateCommandExceute(object parameter)
         {
+
+
+
             GlobalViewModelSingleton.Instance.CuurentFormula.ScalesData.Clear();
 
             MixedMaterial rowforstimulation = (MixedMaterial)parameter;
+            //关闭
+            if (isStimulated)
+            {
+                foreach (MixedMaterial item in Items1)
+                {
+                    if (item.ID == rowforstimulation.ID)
+                    {
+                        item.IsStimulated = false;
+                    }
 
-
+                }
+                isStimulated = false;
+                foreach (DeviceClient item in GlobalViewModelSingleton.Instance.deviceClients)
+                {
+                    //关闭秤台连接
+                     item.Disconnect();
+                }
+                return;//断开直接返回，不检索
+            }
+            //打开
+            else
+            {
+                foreach (MixedMaterial item in Items1)
+                {
+                    if (item.ID == rowforstimulation.ID)
+                    {
+                        item.IsStimulated = true;
+                    }
+                }
+                isStimulated = true;
+            }
 
 
             if (string.IsNullOrEmpty(rowforstimulation.Name))
@@ -234,6 +266,7 @@ namespace Weighting.ViewModels
 
 
             }
+            MessageBox.Show(GlobalViewModelSingleton.Instance.CuurentFormula.FormulaName+ GlobalViewModelSingleton.Instance.CuurentFormula.ScalesData.Count.ToString());
             //生成IP到测量结果的映射（切换配方时，需要重新生成这个映射）
             GlobalViewModelSingleton.Instance.deviceClients.Clear();
             GlobalViewModelSingleton.Instance.IPToMeasureResult.Clear();
@@ -276,30 +309,7 @@ namespace Weighting.ViewModels
             //先把所有置为false//数据上下文变了//当前选择的ID是否与本身的ID相同
 
             //如果有激活的，
-            if (isStimulated)
-            {
-                foreach (MixedMaterial item in Items1)
-                {
-                    if (item.ID == rowforstimulation.ID)
-                    {
-                        item.IsStimulated = false;
-                    }
-
-                    isStimulated = false;
-                }
-            }
-            else
-            {
-                foreach (MixedMaterial item in Items1)
-                {
-                    if (item.ID == rowforstimulation.ID)
-                    {
-                        item.IsStimulated = true;
-                    }
-
-                    isStimulated = true;
-                }
-            }
+            
            
         }
 

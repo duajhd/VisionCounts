@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xaml.Behaviors.Media;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -421,6 +422,17 @@ namespace Weighting
         }
     }
 
+    //打印记录
+    public class Record 
+    {
+        public string FormulaName { get; set; }
+
+        public string DateOfCreation {  get; set; }
+
+        public string Operator { get; set; }
+
+        public string BatchNumber { get; set; }
+    }
 
 
 }

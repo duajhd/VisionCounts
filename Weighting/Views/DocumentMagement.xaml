@@ -67,7 +67,7 @@
                     <ComboBoxItem Content="已完成" />
                     <ComboBoxItem Content="未完成" />
                 </ComboBox>
-                <Button Margin="30,0,0,0">搜索</Button>
+                <Button Margin="30,0,0,0" Command="{Binding SearchCommand}">搜索</Button>
             </WrapPanel>
         </Border>
         <DataGrid Grid.Row="2">
