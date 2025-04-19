@@ -32,6 +32,9 @@ namespace Weighting.ViewModels
         private string filePath = "example.txt";
         private FileStream fs = new FileStream("example.txt", FileMode.OpenOrCreate, FileAccess.Write, FileShare.None);
         private StreamWriter writer;
+
+        //批次序号
+        private int batchnumber = 0;
         public WeightingManagementViewModel() 
         {
            
@@ -74,7 +77,7 @@ namespace Weighting.ViewModels
         {
             string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Devices.db";
             string sql = "INSERT INTO MeasureResults( FormulaName, DateOfCreation, Operator, BatchNumber) VALUES( @formulaName, @dateOfCreation, @operator, @batchNumber)";
-            string BatchNumber = GlobalViewModelSingleton.Instance.CuurentFormula.FormulaName + "/" + DateTime.Today.ToString("yyyy-MM-dd");
+            string BatchNumber =$"{GlobalViewModelSingleton.Instance.CuurentFormula.FormulaName} /{DateTime.Now.ToString("yyyy-MM-dd")}-{batchnumber}";
             string FormulaName = GlobalViewModelSingleton.Instance.CuurentFormula.FormulaName;
             string Operator = GlobalViewModelSingleton.Instance.Currentusers.UserName;
             string OperatorDateStr = DateTime.Today.ToString("yyyy-MM-dd");

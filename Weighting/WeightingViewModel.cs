@@ -1,21 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Data;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using Weighting.Views;
-
-
-
-using System.Text.RegularExpressions;
-using System.Data.SQLite;
 using System.Collections.Specialized;
 using System.Collections;
 namespace Weighting

@@ -434,5 +434,9 @@ namespace Weighting
         public string BatchNumber { get; set; }
     }
 
-
+    public class PrintState
+    {
+        public int id { get; set; }
+        public string printstate { get; set; }
+    }
 }

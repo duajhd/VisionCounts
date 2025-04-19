@@ -32,7 +32,8 @@
                 <TextBox
                     Name="txtBatchNumber"
                     Width="200"
-                    FontSize="14" />
+                    FontSize="14"
+                    Text="{Binding BatchNumber}" />
                 <Label
                     Width="100"
                     Margin="10,0,10,0"
@@ -43,7 +44,8 @@
                 <TextBox
                     Name="txtPlanName"
                     Width="200"
-                    FontSize="14" />
+                    FontSize="14"
+                    Text="{Binding FormulaName}" />
                 <Label
                     Width="100"
                     Margin="10,0,10,0"
@@ -51,7 +53,13 @@
                     Content="创建时间:"
                     DockPanel.Dock="Left"
                     FontSize="14" />
-                <TextBox Width="200" FontSize="14" />
+                <DatePicker
+                    Name="dpProductionDate"
+                    Grid.Row="5"
+                    Grid.Column="1"
+                    Margin="3,10,3,3"
+                    Language="zh-cn"
+                    SelectedDate="{Binding CreationDate}" />
                 <Label
                     Width="100"
                     Margin="10,0,10,0"
@@ -62,14 +70,21 @@
                 <ComboBox
                     Name="cmbPrintStatus"
                     Width="200"
-                    FontSize="14">
-
-                    <ComboBoxItem Content="已完成" />
-                    <ComboBoxItem Content="未完成" />
-                </ComboBox>
+                    DisplayMemberPath="printstate"
+                    FontSize="14"
+                    ItemsSource="{Binding PrintStates}"
+                    SelectedItem="{Binding SelectedItem}" />
                 <Button Margin="30,0,0,0" Command="{Binding SearchCommand}">搜索</Button>
             </WrapPanel>
         </Border>
+        <Button
+            Grid.Row="1"
+            Width="100"
+            Margin="20,0,0,0"
+            HorizontalAlignment="Left"
+            Command="{Binding PrintCommand}">
+            打印
+        </Button>
         <DataGrid Grid.Row="2">
             <DataGrid.Columns>
                 <!--  by default a DataGridCheckBoxColumn will have the MaterialDesignDataGridCheckBoxColumnStyle and MaterialDesignDataGridCheckBoxColumnEditingStyle applied. See DataGridAssist.ApplyMaterialDesignColumnStyles attached property  -->

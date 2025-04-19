@@ -68,6 +68,10 @@
             "System.IO.Ports": {
               "target": "Package",
               "version": "[9.0.4, )"
+            },
+            "Zebra.Printer.SDK": {
+              "target": "Package",
+              "version": "[3.0.3337, )"
             }
           },
           "imports": [
