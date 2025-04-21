@@ -60,6 +60,7 @@
                     <Button
                         Width="70"
                         Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                        CommandParameter="True"
                         Content="确定" />
 
 

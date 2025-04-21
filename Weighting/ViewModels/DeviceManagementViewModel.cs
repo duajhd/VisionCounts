@@ -49,8 +49,8 @@ namespace Weighting.ViewModels
             }
         }
 
-        private string _maxWeight;
-        public string MaxWeight
+        private int _maxWeight;
+        public int MaxWeight
         {
             get => _maxWeight;
             set
@@ -91,8 +91,8 @@ namespace Weighting.ViewModels
             }
         }
 
-        private string _port;
-        public string Port
+        private int _port;
+        public int Port
         {
             get => _port;
             set
@@ -196,6 +196,7 @@ namespace Weighting.ViewModels
                             DateOfManufature = DataRowHelper.GetValue<string>(row, "DateOfManufature", null),
                             DeviceName = DataRowHelper.GetValue<string>(row, "DeviceName", null),
                             Unit = DataRowHelper.GetValue<string>(row, "Unit", null),
+                            ScalingID = DataRowHelper.GetValue<int>(row, "ScalingID", 0)
                         });
 
                     }
@@ -273,11 +274,54 @@ namespace Weighting.ViewModels
            
         }
 
-        private  void ChangeRowCommandExecute(object parameter)
+        private async  void ChangeRowCommandExecute(object parameter)
         {
             Devices row = (Devices)parameter;
 
+            DeviceName = row.DeviceName;
+            MaxWeight = row.MaxWeights;
+            Brand = row.Brant;
+            IPAddress = row.IP;
+            ScalingID = row.ScalingID;
+            Port = row.Port;
+            Unit = row.Unit;
+            ProductionDate = DateTime.Now;
+            
 
+
+            var dialog = new Views.AddDeviceDialog();
+            //await DialogHost.Show(dialog, "RootDialog");
+            var result = await DialogHost.Show(dialog, "DeviceManagementDialog");
+
+            try
+            {
+                if (result?.ToString() == "True")
+                {
+                    string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Devices.db";
+
+                    using (DatabaseHelper db = new DatabaseHelper(connectionStr))
+                    {
+                        string sql = $"UPDATE DeviceList SET  IP=@iP, Port=@port, MaxWeights=@maxWeights, Brant=@brant,  DateOfManufature=@dateOfManufature, DeviceName=@deviceName,Unit=@unit,ScalingID=@scalingID WHERE ID = '{row.ID}'";
+
+                        db.ExecuteNonQuery(sql, new Dictionary<string, object>
+                        {
+                            { "@iP",IPAddress},
+                            {"@port",Port},
+                            { "@scalingID",ScalingID },
+                            { "@maxWeights",MaxWeight},
+                            { "@brant",Brand},
+                            { "@dateOfManufature",ProductionDate.ToString()}, 
+                            { "@deviceName",ScalingID.ToString() + "号秤台"},
+                            {"@unit",Unit}
+                        });
+
+                    }
+                }
+            }
+            catch
+            {
+
+            }
         }
     }
 }

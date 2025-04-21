@@ -83,7 +83,7 @@ namespace Weighting.Shared
                         lowValue = GlobalViewModelSingleton.Instance.IPToMeasureResult[_host].LowerTolerance+ standard;
                          upValue = GlobalViewModelSingleton.Instance.IPToMeasureResult[_host].UpperTolerance+standard;
                          
-                        if ((values > lowValue) && (values < upValue))
+                        if ((values >= lowValue) && (values <= upValue))
                         {
                             GlobalViewModelSingleton.Instance.IPToMeasureResult[_host].IsSatisfied = true;
                         }
@@ -115,7 +115,7 @@ namespace Weighting.Shared
                           lowValue = GlobalViewModelSingleton.Instance.IPToMeasureResult[_host].LowerTolerance + standard;
                           upValue = GlobalViewModelSingleton.Instance.IPToMeasureResult[_host].UpperTolerance + standard;
 
-                          if ((values > lowValue) && (values < upValue))
+                          if ((values >= lowValue) && (values <= upValue))
                          {
                              GlobalViewModelSingleton.Instance.IPToMeasureResult[_host].IsSatisfied = true;
                           }

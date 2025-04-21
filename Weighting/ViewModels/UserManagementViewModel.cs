@@ -8,6 +8,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Security.Cryptography;
+using Windows.Services.Maps;
+using static MaterialDesignThemes.Wpf.Theme.ToolBar;
 
 namespace Weighting.ViewModels
 {
@@ -162,7 +164,16 @@ namespace Weighting.ViewModels
         public Roles SelectedRole { get; set; }
 
         //编辑用户绑定的角色
-        public Roles SelectedRoleForEditing { get; set; }
+        private Roles _selectedRoleForEditing;
+        public Roles SelectedRoleForEditing
+        {
+            get => _selectedRoleForEditing; 
+            set
+            {
+                _selectedRoleForEditing = value;
+                OnPropertyChanged();
+            }
+        }
        
         public Dictionary<string, bool> SelectedItemsBinding { get; set; } = new();
 
@@ -211,7 +222,7 @@ namespace Weighting.ViewModels
             if (string.IsNullOrEmpty(UserNameForSearch))
             {
                 //不填用户名，查出所有用户
-                sql = $"SELECT A.UserId, A.UserName, B.RoleName FROM Users A INNER JOIN Roles B ON A.RoleId = B.RoleId ";
+                sql = $"SELECT A.UserId, A.UserName, A.RoleId,B.RoleName FROM Users A INNER JOIN Roles B ON A.RoleId = B.RoleId ";
             }
             using (DatabaseHelper db = new DatabaseHelper(connectionStr))
             {
@@ -232,7 +243,8 @@ namespace Weighting.ViewModels
                             
                             RoleName = DataRowHelper.GetValue<string>(row, "RoleName", null),
                             UserName  = DataRowHelper.GetValue<string>(row, "UserName", null),
-                            ID = DataRowHelper.GetValue<int>(row, "UserId",0)
+                            ID = DataRowHelper.GetValue<int>(row, "UserId",0),
+                            RoleId = DataRowHelper.GetValue<int>(row, "RoleId",0)
                         }
                         );
                     
@@ -247,13 +259,49 @@ namespace Weighting.ViewModels
         /// 修改用户需要知道变更后,选择了哪个用户
         private async void ChangeRowCommandExecute(object obj) 
         {
+            try
+            {
+                //获取选择的用户
+                Users row = (Users)obj;
+             
+                SelectedRoleForEditing = new Roles { ID = row.RoleId, RoleName = row.RoleName };
 
-            //获取选择的用户
-            Users row = (Users)obj;
-            SelectedUserName = row.UserName;
-            var dialog = new Views.ChangeUserDialog();
-            //await DialogHost.Show(dialog, "RootDialog");
-            await DialogHost.Show(dialog, "RootDialog");
+                SelectedUserName = row.UserName;
+
+                var dialog = new Views.ChangeUserDialog();
+                //await DialogHost.Show(dialog, "RootDialog");
+                var result = await DialogHost.Show(dialog, "RootDialog");
+                if (result.ToString() == "True")
+                {
+                    string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Permission.db";
+
+                    if (string.IsNullOrEmpty(SelectedUserName))
+                    {
+                        MessageBox.Show($"用户名不能为空！");
+                    }
+                    using (DatabaseHelper db = new DatabaseHelper(connectionStr))
+                    {
+                        string sql = $"UPDATE Users SET  UserName=@userName,RoleId=@roleId WHERE UserId = '{row.ID}'";
+                        db.ExecuteNonQuery(sql, new Dictionary<string, object>
+                        {
+                            { "@userName",SelectedUserName},
+
+                                { "@roleId",SelectedRoleForEditing.ID}
+
+
+                        });
+                    }
+                }
+
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"用户变更失败！请再次尝试.ERROR:{ex.Message}");
+
+            }
+
+
+
 
         }
 
