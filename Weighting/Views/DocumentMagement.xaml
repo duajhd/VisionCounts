@@ -85,7 +85,10 @@
             Command="{Binding PrintCommand}">
             打印
         </Button>
-        <DataGrid Grid.Row="2">
+        <DataGrid
+            Grid.Row="2"
+            AutoGenerateColumns="False"
+            ItemsSource="{Binding Items1}">
             <DataGrid.Columns>
                 <!--  by default a DataGridCheckBoxColumn will have the MaterialDesignDataGridCheckBoxColumnStyle and MaterialDesignDataGridCheckBoxColumnEditingStyle applied. See DataGridAssist.ApplyMaterialDesignColumnStyles attached property  -->
                 <DataGridCheckBoxColumn Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}">
@@ -107,13 +110,22 @@
 
 
                 <!--  set a max length to get an indicator in the editor  -->
-                <DataGridTextColumn Width="150" Header="批次号" />
+                <DataGridTextColumn
+                    Width="150"
+                    Binding="{Binding BatchNumber}"
+                    Header="批次号" />
 
-                <DataGridTextColumn Width="120" Header="方案名称" />
+                <DataGridTextColumn
+                    Width="120"
+                    Binding="{Binding FormulaName}"
+                    Header="方案名称" />
 
 
                 <DataGridTextColumn Width="100" Header="打印状态" />
-                <DataGridTextColumn Width="150" Header="创建时间" />
+                <DataGridTextColumn
+                    Width="150"
+                    Binding="{Binding DateOfCreation}"
+                    Header="创建时间" />
 
 
                 <DataGridTemplateColumn Width="*" Header="操作">
@@ -130,7 +142,7 @@
                                     Width="100"
                                     Command="{Binding DataContext.DeleteRowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                     CommandParameter="{Binding}"
-                                    Content="删除物料"
+                                    Content="详情"
                                     Style="{StaticResource MaterialDesignFlatButton}" />
                             </StackPanel>
                         </DataTemplate>

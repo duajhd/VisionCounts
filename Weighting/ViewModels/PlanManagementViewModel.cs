@@ -265,6 +265,7 @@ namespace Weighting.ViewModels
                         ToleranceUnit = DataRowHelper.GetValue<string>(row, "ToleranceUnit", null),
 
                         ScalingID = DataRowHelper.GetValue<int>(row, "ScalingID", 0),
+                        ScalingName = DataRowHelper.GetValue<string>(row, "ScalingName", null),
 
                     });
 
@@ -304,21 +305,21 @@ namespace Weighting.ViewModels
                 }
             }
 
-            MessageBox.Show(GlobalViewModelSingleton.Instance.deviceClients.Count.ToString());
-            //连接后立即开始采集
-            //foreach (DeviceClient item in GlobalViewModelSingleton.Instance.deviceClients)
-            //{
 
-            //    await item.ConnectAsync();
-            //}
+            //连接后立即开始采集
+            foreach (DeviceClient item in GlobalViewModelSingleton.Instance.deviceClients)
+            {
+
+                await item.ConnectAsync();
+            }
 
 
 
             //先把所有置为false//数据上下文变了//当前选择的ID是否与本身的ID相同
 
             //如果有激活的，
-            
-           
+
+
         }
 
 

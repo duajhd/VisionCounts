@@ -448,6 +448,8 @@ namespace Weighting
         public string Operator { get; set; }
 
         public string BatchNumber { get; set; }
+
+        public int IsPrint {  get; set; }
     }
 
     public class PrintState

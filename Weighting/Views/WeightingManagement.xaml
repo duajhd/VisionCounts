@@ -31,10 +31,7 @@
                         Margin="5"
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
-                        <TextBlock
-                            FontWeight="Bold"
-                            Foreground="White"
-                            Text="{Binding Value.ScalingName}" />
+
                         <Ellipse
                             Width="20"
                             Height="20"
@@ -52,6 +49,10 @@
                                 </Style>
                             </Ellipse.Style>
                         </Ellipse>
+                        <TextBlock
+                            FontWeight="Bold"
+                            Foreground="White"
+                            Text="{Binding Value.ScalingName}" />
                     </StackPanel>
 
                     <!--  内容区域  -->
@@ -59,6 +60,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
+
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -90,6 +92,7 @@
                             Margin="5,5,0,0"
                             Background="White"
                             Text="{Binding Value.MaterialUnit}" />
+
                     </Grid>
                 </Grid>
             </Border>

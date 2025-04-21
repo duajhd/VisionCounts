@@ -172,11 +172,11 @@ namespace Weighting.ViewModels
                     Items1.Add(
                         new Record
                         {
-
                             FormulaName = DataRowHelper.GetValue<string>(row, "FormulaName", null),
                             DateOfCreation = DataRowHelper.GetValue<string>(row, "DateOfCreation", null),
                             Operator = DataRowHelper.GetValue<string>(row, "Operator", null),
-                            BatchNumber = DataRowHelper.GetValue<string>(row, "BatchNumber",null)
+                            BatchNumber = DataRowHelper.GetValue<string>(row, "BatchNumber",null),
+                            IsPrint = DataRowHelper.GetValue<int>(row, "IsPrint", 0)
                         }
                         );
 
