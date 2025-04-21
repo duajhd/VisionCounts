@@ -128,11 +128,18 @@ namespace Weighting.ViewModels
 
                     using (DatabaseHelper db = new DatabaseHelper(connectionStr))
                     {
+                        //删除方案和对应的配料
                         db.ExecuteNonQuery(sql);
 
                         Items1.Remove(row);
+
+                        sql = $"DELETE FROM PlatformScale WHERE Name = '{row.Name}'";
+
+                        db.ExecuteNonQuery(sql);
                     }
                 }
+
+               
             }
         }
         //使用这个搜索逻辑需确保所有方案均在未激活状态
@@ -266,7 +273,7 @@ namespace Weighting.ViewModels
 
 
             }
-            MessageBox.Show(GlobalViewModelSingleton.Instance.CuurentFormula.FormulaName+ GlobalViewModelSingleton.Instance.CuurentFormula.ScalesData.Count.ToString());
+           
             //生成IP到测量结果的映射（切换配方时，需要重新生成这个映射）
             GlobalViewModelSingleton.Instance.deviceClients.Clear();
             GlobalViewModelSingleton.Instance.IPToMeasureResult.Clear();
@@ -291,12 +298,13 @@ namespace Weighting.ViewModels
                             IsSatisfied = false,
                         });
 
-                        //同步初始化秤台
+                        //同步初始化秤台客户端
                         GlobalViewModelSingleton.Instance.deviceClients.Add(new DeviceClient(item2.IP, item2.Port));
                     }
                 }
             }
 
+            MessageBox.Show(GlobalViewModelSingleton.Instance.deviceClients.Count.ToString());
             //连接后立即开始采集
             //foreach (DeviceClient item in GlobalViewModelSingleton.Instance.deviceClients)
             //{
@@ -318,7 +326,7 @@ namespace Weighting.ViewModels
         {
             MixedMaterial row = (MixedMaterial)obj;
 
-            SelectedFormulaName = row;
+           // SelectedFormulaName = row;
 
 
             if (string.IsNullOrEmpty(row.Name))
@@ -334,7 +342,8 @@ namespace Weighting.ViewModels
            var result =   await DialogHost.Show(dialog, "changeFormulaDialog");
             if(result?.ToString() == "True")
             {
-                ChangeFormula();
+                //传递方案名，用先把对应方案名删除再写入
+                ChangeFormula(row.Name);
             }
         }
         //修改配方时根据选定的配方名，从数据库读取配料列表
@@ -381,6 +390,12 @@ namespace Weighting.ViewModels
                             ToleranceUnit = DataRowHelper.GetValue<string>(row, "ToleranceUnit", null),
 
                             ScalingID = DataRowHelper.GetValue<int>(row, "ScalingID", 0),
+
+                            ScalingName = DataRowHelper.GetValue<string>(row, "ScalingName", null),
+
+                            ScalingNum = DataRowHelper.GetValue<string>(row, "ScalingNum", null),
+
+                            Code = DataRowHelper.GetValue<string>(row, "Code", null),
 
                         }));
 
@@ -447,7 +462,9 @@ namespace Weighting.ViewModels
             }
 
         }
-        private void ChangeFormula()
+        //先把原来的全删除，再重新写入
+
+        private void ChangeFormula(string formulaname)
         {
             string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\formula.db";
             try
@@ -455,31 +472,44 @@ namespace Weighting.ViewModels
 
                 using (DatabaseHelper db = new DatabaseHelper(connectionStr))
                 {
-                    foreach (SelectableViewModel<PlatformScale> item in EdtingScalingData)
+                    //首选全部删除
+                    string sql  = $"DELETE FROM PlatformScale WHERE Name = '{formulaname}'";
+
+                    List<PlatformScale> _copy = EdtingScalingData.Where(item => item != null && item.Item != null) // 过滤掉空值
+                                                                 .Select(item => (PlatformScale)item.Item.Clone())
+                                                                 .ToList();
+
+
+                    db.ExecuteNonQuery(sql);
+
+
+
+                    foreach (PlatformScale item in _copy)
                     {
-                        string sql = $"UPDATE PlatformScale SET  MaterialName=@materialName, weights=@weights, UpperTolerance=@upperTolerance, LowerTolerance=@lowerTolerance,  ScalingName=@scalingName, ScalingNum=@scalingNum,MaterialUnit=@materialUnit,ToleranceUnit=@toleranceUnit,ScalingID=@scalingID WHERE ID = '{item.Item.ID}'";
+                         sql = "INSERT INTO PlatformScale ( MaterialName, weights, UpperTolerance, LowerTolerance,Name, Code, ScalingName, ScalingNum,MaterialUnit,ToleranceUnit,ScalingID) VALUES( @materialName, @weights, @upperTolerance, @lowerTolerance,@name, @code, @scalingName, @scalingNum,@materialUnit,@toleranceUnit,@scalingID)";
 
                         db.ExecuteNonQuery(sql, new Dictionary<string, object>
                         {
-                            { "@materialName",item.Item.MaterialName},
-                            {"@weights",Math.Round(item.Item.weights,2) },
-                                    { "@upperTolerance", Math.Round(item.Item.UpperTolerance,2) },
-                                    { "@lowerTolerance",Math.Round(item.Item.LowerTolerance,2)},
-                           
-                                    { "@scalingName","test"},
-                                    { "@scalingNum",item.Item.ScalingName}, //在combox写入数据时浪费了很多事件
-                                { "@materialUnit", item.Item.MaterialUnit},
-                                {"@toleranceUnit",item.Item.ToleranceUnit },
-                                { "@scalingID",item.Item.ScalingID}
+                            { "@materialName",item.MaterialName},
+                            {"@weights",Math.Round(item.weights,2) },
+                            { "@upperTolerance", Math.Round(item.UpperTolerance,2) },
+                           { "@lowerTolerance",Math.Round(item.LowerTolerance,2)},
+                          { "@name",formulaname},
+                           { "@code",item.Code},
+                         { "@scalingName",$"{item.ScalingID}号秤台"},
+                         { "@scalingNum",$"{item.ScalingID}" }, //在combox写入数据时浪费了很多事件
+                        { "@materialUnit", item.MaterialUnit},
+                        {"@toleranceUnit",item.ToleranceUnit },
+                        { "@scalingID",item.ScalingID}
 
 
                         });
                     }
                 }
             }
-            catch
+            catch(Exception ex)
             {
-
+                MessageBox.Show(ex.Message);
             }
         }
         //保存更改后的配方（更改配方只ge更改配方内容）

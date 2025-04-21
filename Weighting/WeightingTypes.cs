@@ -75,7 +75,7 @@ namespace Weighting
     //    public string ToleranceUnit { get; set; }
 
     //}
-    public class PlatformScale : INotifyPropertyChanged
+    public class PlatformScale : INotifyPropertyChanged,ICloneable
     {
         // 数据库中的ID
         private int _id;
@@ -226,6 +226,20 @@ namespace Weighting
                 }
             }
         }
+        private string _code;
+        public string Code
+        {
+            get => _code;
+            set
+            {
+                _code = value;
+                OnPropertyChanged(nameof(Code));
+            }
+        }
+        public object Clone()
+        {
+            return new PlatformScale { ID = this.ID, ScalingName = this.ScalingName, MaterialName = this.MaterialName, weights = this.weights, UpperTolerance = this.UpperTolerance, LowerTolerance = this.LowerTolerance , ScalingNum  = this.ScalingNum , ScalingID  = this.ScalingID , MaterialUnit  = this.MaterialUnit, ToleranceUnit = this.ToleranceUnit };
+        }
 
         // 实现 INotifyPropertyChanged 接口
         public event PropertyChangedEventHandler PropertyChanged;
@@ -234,6 +248,8 @@ namespace Weighting
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+
     }
 
     //绑定查询界面用

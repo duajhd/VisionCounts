@@ -272,8 +272,8 @@ namespace Weighting.ViewModels
                             { "@lowerTolerance",Math.Round(item.Item.LowerTolerance,2)},
                             { "@code",Code},
                             { "@name",FormulaName},
-                            { "@scalingName","test"},
-                            { "@scalingNum",item.Item.ScalingName}, //在combox写入数据时浪费了很多事件
+                            { "@scalingName",$"{item.Item.ScalingID}号秤台"},
+                            { "@scalingNum",$"{item.Item.ScalingID}" }, //在combox写入数据时浪费了很多事件
                         { "@materialUnit", item.Item.MaterialUnit},
                         {"@toleranceUnit",item.Item.ToleranceUnit },
                         { "@scalingID",item.Item.ScalingID}
