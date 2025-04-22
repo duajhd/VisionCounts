@@ -134,4 +134,34 @@ namespace Weighting.Shared
             throw new NotImplementedException(); // 如果不需要双向绑定，可以抛出异常
         }
     }
+
+    public class PrintStatusConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+                return "未知状态";
+
+            int status;
+            if (int.TryParse(value.ToString(), out status))
+            {
+                return status == 1 ? "已打印" : "未打印";
+            }
+
+            return "未知状态";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is string str)
+            {
+                if (str == "已打印")
+                    return 1;
+                if (str == "未打印")
+                    return 0;
+            }
+
+            return Binding.DoNothing;
+        }
+    }
 }

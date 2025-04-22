@@ -72,7 +72,7 @@ namespace Weighting.ViewModels
         }
         public void LoginCommandExecute(object o)
         {
-            //  DatabaseHelper dh = new DatabaseHelper("Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\formula.db");
+            //  DatabaseHelper dh = new DatabaseHelper($"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}formula.db");
 
             string message;
 
@@ -80,7 +80,7 @@ namespace Weighting.ViewModels
             {
                 if (Login(UserName, Password, out message))
                 {
-                    string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Permission.db";
+                    string connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}Permission.db";
                     string sql = $"SELECT A.UserName, B.RoleName FROM Users A INNER JOIN Roles B ON A.RoleId = B.RoleId WHERE A.UserName = '{UserName}'";
                     string sqlpermission = $"SELECT  C.PermissionName FROM Users A INNER JOIN RolePermissions B ON A.RoleId = B.RoleId INNER JOIN permissions C ON B.PermissionId = C.PermissionId WHERE A.UserName = '{UserName}'";
                     using (DatabaseHelper db = new DatabaseHelper(connectionStr))
@@ -105,7 +105,7 @@ namespace Weighting.ViewModels
                     }
 
                     //读取秤台号到IP的映射
-                    connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Devices.db";
+                    connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}Devices.db";
                     sql = "SELECT * FROM DeviceList";
 
                     using (DatabaseHelper db = new DatabaseHelper(connectionStr))
@@ -146,9 +146,9 @@ namespace Weighting.ViewModels
                         }
                     }
 
-                 
-                  
-                   
+                    GlobalViewModelSingleton.Instance.CurrentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                    //"D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\net8.0-windows10.0.19041.0\\"
+
 
                     Window w = new MainWindow();
                     w.Show();
@@ -199,7 +199,7 @@ namespace Weighting.ViewModels
 
             try
             {
-                using (DatabaseHelper db = new DatabaseHelper("Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Permission.db"))
+                using (DatabaseHelper db = new DatabaseHelper($"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}Permission.db"))
                 {
 
                     long count = (long)db.ExecuteScalar(sql, new Dictionary<string, object>
@@ -280,7 +280,7 @@ namespace Weighting.ViewModels
 
             try
             {
-                using (DatabaseHelper db = new DatabaseHelper("Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Permission.db"))
+                using (DatabaseHelper db = new DatabaseHelper($"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}Permission.db"))
                 {
                     db.ExecuteNonQuery(sql, new Dictionary<string, object>
                     {

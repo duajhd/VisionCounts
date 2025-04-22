@@ -27,7 +27,7 @@ namespace Weighting.ViewModels
             SignUpCommand = new RelayCommand(SignUp);
 
             //读取所有角色名
-            string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Permission.db";
+            string connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}Permission.db";
             string sql = "SELECT  * FROM Roles";
 
             using (DatabaseHelper db = new DatabaseHelper(connectionStr))
@@ -106,13 +106,13 @@ namespace Weighting.ViewModels
         }
         public void LoginCommandExecute(object o)
         {
-            //  DatabaseHelper dh = new DatabaseHelper("Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\formula.db");
+            //  DatabaseHelper dh = new DatabaseHelper($"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}formula.db");
 
             string message;
 
             if (Login(UserName, Password, out message))
             {
-                string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Permission.db";
+                string connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}Permission.db";
                 string sql = $"SELECT A.UserName, B.RoleName FROM Users A INNER JOIN Roles B ON A.RoleId = B.RoleId WHERE A.UserName = '{UserName}'";
                 using (DatabaseHelper db = new DatabaseHelper(connectionStr))
                 {
@@ -176,7 +176,7 @@ namespace Weighting.ViewModels
 
             try
             {
-                using (DatabaseHelper db = new DatabaseHelper("Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Permission.db"))
+                using (DatabaseHelper db = new DatabaseHelper($"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}Permission.db"))
                 {
 
                     long count = (long)db.ExecuteScalar(sql, new Dictionary<string, object>
@@ -254,7 +254,7 @@ namespace Weighting.ViewModels
 
             try
             {
-                using (DatabaseHelper db = new DatabaseHelper("Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Permission.db"))
+                using (DatabaseHelper db = new DatabaseHelper($"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}Permission.db"))
                 {
                     db.ExecuteNonQuery(sql, new Dictionary<string, object>
                     {

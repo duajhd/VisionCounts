@@ -24,7 +24,7 @@ namespace Weighting.Shared
         }
 
         //当前登录用户的权限列表
-        private List<string> _permission = new List<string> { "PlanManagement", "FormulaManagement", "UserManagement", "DeviceManagementt" , "DocumentManagement" };
+        private List<string> _permission = new List<string> { };
         public List<string> Permissions
         {
             get => _permission;
@@ -78,6 +78,9 @@ namespace Weighting.Shared
 
         //秤台访问客户端
         public List<DeviceClient> deviceClients = new List<DeviceClient>();
+
+        //数据库根目录
+        public string CurrentDirectory { get; set; }
 
     }
 

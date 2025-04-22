@@ -439,7 +439,7 @@ namespace Weighting
     }
 
     //打印记录
-    public class Record 
+    public class Record:INotifyPropertyChanged
     {
         public string FormulaName { get; set; }
 
@@ -450,6 +450,28 @@ namespace Weighting
         public string BatchNumber { get; set; }
 
         public int IsPrint {  get; set; }
+
+        // 是否选中
+        private bool _isSelected;
+        public bool IsSelected
+        {
+            get => _isSelected;
+            set
+            {
+                if (_isSelected != value)
+                {
+                    _isSelected = value;
+                    OnPropertyChanged(nameof(IsSelected));
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 
     public class PrintState

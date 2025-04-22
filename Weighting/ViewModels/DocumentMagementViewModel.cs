@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-
+using Weighting.Shared;
 using System.Collections.ObjectModel;
 using System.Data;
 using static MaterialDesignThemes.Wpf.Theme.ToolBar;
@@ -92,6 +92,7 @@ namespace Weighting.ViewModels
         public DocumentMagementViewModel() 
         {
             Items1 = new ObservableCollection<Record>();
+         
             SearchCommand = new RelayCommand(SearchCommandExecute);
 
             PrintCommand = new RelayCommand(PrintCommandExecute);
@@ -143,13 +144,39 @@ namespace Weighting.ViewModels
             get => _selectedItem;
             set => _selectedItem = value;
         }
+        //
+        public bool? IsAllItems1Selected
+        {
+            get
+            {
+                var selected = Items1.Select(item => item.IsSelected).Distinct().ToList();
+                return selected.Count == 1 ? selected.Single() : (bool?)null;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    SelectAll(value.Value, Items1);
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private static void SelectAll(bool select, IEnumerable<Record> models)
+        {
+            foreach (var model in models)
+            {
+                model.IsSelected = select;
+            }
+        }
         public ObservableCollection<Record> Items1 { get; set; }
+
         public RelayCommand SearchCommand { get; set; }
 
         public RelayCommand PrintCommand { get; set; }
         private void SearchCommandExecute(object parameter)
         {
-            string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Devices.db";
+            string connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}Devices.db";
             string sql = $"SELECT * FROM MeasureResults  WHERE  = '{FormulaName}'";
             if (string.IsNullOrEmpty(FormulaName))
             {
@@ -166,7 +193,10 @@ namespace Weighting.ViewModels
                     return;
                 }
                 //执行到这里说明查询成功
-                if (Items1.Count > 0) Items1.Clear();
+                if (Items1.Count > 0)
+                {
+                    Items1.Clear();
+                }
                 foreach (DataRow row in dt.Rows)
                 {
                     Items1.Add(
@@ -175,11 +205,20 @@ namespace Weighting.ViewModels
                             FormulaName = DataRowHelper.GetValue<string>(row, "FormulaName", null),
                             DateOfCreation = DataRowHelper.GetValue<string>(row, "DateOfCreation", null),
                             Operator = DataRowHelper.GetValue<string>(row, "Operator", null),
-                            BatchNumber = DataRowHelper.GetValue<string>(row, "BatchNumber",null),
+                            BatchNumber = DataRowHelper.GetValue<string>(row, "BatchNumber", null),
                             IsPrint = DataRowHelper.GetValue<int>(row, "IsPrint", 0)
                         }
                         );
 
+                }
+                foreach (var model in Items1)
+                {
+                    model.PropertyChanged += (sender, args) =>
+                    {
+                        if (args.PropertyName == nameof(SelectableViewModel<PlatformScale>.IsSelected))
+
+                            OnPropertyChanged(nameof(IsAllItems1Selected));
+                    };
                 }
             }
         }
@@ -204,11 +243,22 @@ namespace Weighting.ViewModels
             //{
             //    Console.WriteLine("打印失败: " + ex.Message);
             //}
-            string zpl = @"^XA^PW240^LL160^FO70,20^BQN,2,6^FDLA,https://your-url.com/abc123^FS^XZ";
-            string printerName = "ZDesigner ZD888-203dpi ZPL";  // 替换为你的打印机名
+            
+          
+           // Console.WriteLine(result ? "打印成功" : "打印失败");
 
-            bool result = SendStringToPrinter(printerName, zpl);
-            Console.WriteLine(result ? "打印成功" : "打印失败");
+            foreach (Record item in Items1)
+            {
+                string zpl = $"^XA^PW240^LL160^FO70,20^BQN,2,6^FDLA,{item.BatchNumber}^FS^XZ";
+                // = "^XA^WDE:*.*^XZ";
+               // zpl = "^XA^SEE:GB18030.DAT^FS^CWZ,E:SIMSUN.FNT^CI26^JMA^LL200^PW680^MD10^RP2^PON^LRN^LH0,0^FO20,20^AZN,72,72^FD123ABC^FS^PQ1^XZ";
+                string printerName = "ZDesigner 888-DT";  // 替换为你的打印机名
+                if (item.IsSelected == true)
+                {
+                    bool result = SendStringToPrinter(printerName, zpl);
+                }
+               
+            }
         }
         private string ZPLCommand = $"";
      

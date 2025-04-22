@@ -75,7 +75,7 @@ namespace Weighting.ViewModels
         }
       private void GenerateRecordsCommandExecute(object parameter)
         {
-            string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Devices.db";
+            string connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}Devices.db";
             string sql = "INSERT INTO MeasureResults( FormulaName, DateOfCreation, Operator, BatchNumber) VALUES( @formulaName, @dateOfCreation, @operator, @batchNumber)";
             string BatchNumber =$"{GlobalViewModelSingleton.Instance.CuurentFormula.FormulaName} /{DateTime.Now.ToString("yyyy-MM-dd")}-{batchnumber}";
             string FormulaName = GlobalViewModelSingleton.Instance.CuurentFormula.FormulaName;

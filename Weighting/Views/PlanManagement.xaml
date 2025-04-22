@@ -12,6 +12,7 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <converter:ActivationConverter x:Key="ActivationConverter" />
+        <converter:PermissionToVisibilityConverter x:Key="PermissionToVisibilityConverter" />
     </UserControl.Resources>
     <materialDesign:DialogHost Identifier="changeFormulaDialog">
         <Grid>
@@ -80,12 +81,14 @@
                                         CommandParameter="{Binding}"
                                         Content="修改"
                                         Cursor="Hand"
-                                        Style="{StaticResource MaterialDesignFlatButton}" />
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        Visibility="{Binding Instance.Permissions, Source={StaticResource GlobalViewModelSingleton}, Converter={StaticResource PermissionToVisibilityConverter}, ConverterParameter=FormulaManagement}" />
                                     <Button
                                         Command="{Binding DataContext.DelateFormulaCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                         CommandParameter="{Binding}"
                                         Content="删除"
-                                        Style="{StaticResource MaterialDesignFlatButton}" />
+                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                        Visibility="{Binding Instance.Permissions, Source={StaticResource GlobalViewModelSingleton}, Converter={StaticResource PermissionToVisibilityConverter}, ConverterParameter=FormulaManagement}" />
                                     <Button
                                         Command="{Binding DataContext.StimulateCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                         CommandParameter="{Binding}"

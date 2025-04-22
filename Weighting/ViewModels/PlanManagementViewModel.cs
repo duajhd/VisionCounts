@@ -112,7 +112,7 @@ namespace Weighting.ViewModels
             if (!string.IsNullOrEmpty(row.Name))
             {
 
-                string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\formula.db";
+                string connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}formula.db";
                 // SQL 删除语句
                 string sql = $"DELETE FROM ProductFormula WHERE Name = '{row.Name}'";
 
@@ -146,7 +146,7 @@ namespace Weighting.ViewModels
         private void SearchCommandExecute(object obj)
         {
             Items1.Clear();
-            string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\formula.db";
+            string connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}formula.db";
             string sql = $"SELECT * FROM ProductFormula WHERE Name = '{Name}'";
             if (string.IsNullOrEmpty(Name))
             {
@@ -231,7 +231,7 @@ namespace Weighting.ViewModels
                 return;
             }
 
-            string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\formula.db";
+            string connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}formula.db";
             string sql = $"SELECT A.*, B.Name FROM PlatformScale A INNER JOIN ProductFormula B ON A.Name = B.Name  WHERE A.Name = '{rowforstimulation.Name}'";
 
 
@@ -307,11 +307,11 @@ namespace Weighting.ViewModels
 
 
             //连接后立即开始采集
-            foreach (DeviceClient item in GlobalViewModelSingleton.Instance.deviceClients)
-            {
+            //foreach (DeviceClient item in GlobalViewModelSingleton.Instance.deviceClients)
+            //{
 
-                await item.ConnectAsync();
-            }
+            //    await item.ConnectAsync();
+            //}
 
 
 
@@ -353,7 +353,7 @@ namespace Weighting.ViewModels
             EdtingScalingData.Clear();
 
 
-            string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\formula.db";
+            string connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}formula.db";
             string sql = $"SELECT A.*, B.Name FROM PlatformScale A INNER JOIN ProductFormula B ON A.Name = B.Name  WHERE A.Name = '{Name}'";
             //4.08改为INNER JOIN
             //if (string.IsNullOrEmpty(Code_search) || string.IsNullOrEmpty(FormulaName_search))
@@ -467,7 +467,7 @@ namespace Weighting.ViewModels
 
         private void ChangeFormula(string formulaname)
         {
-            string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\formula.db";
+            string connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}formula.db";
             try
             {
 

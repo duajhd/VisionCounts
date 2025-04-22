@@ -247,7 +247,7 @@ namespace Weighting.ViewModels
             }
 
 
-            string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\formula.db";
+            string connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}formula.db";
             string sql = "INSERT INTO PlatformScale( MaterialName, weights, UpperTolerance, LowerTolerance,Name, Code, ScalingName, ScalingNum,MaterialUnit,ToleranceUnit,ScalingID) VALUES( @materialName, @weights, @upperTolerance, @lowerTolerance,@name, @code, @scalingName, @scalingNum,@materialUnit,@toleranceUnit,@scalingID)";
             Code = FormulaName+"-"+ DateTime.Today.ToString("yyyy-MM-dd");
 
@@ -289,7 +289,7 @@ namespace Weighting.ViewModels
 
         private void Search(object obj)
         {
-            string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\formula.db";
+            string connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}formula.db";
             string sql = "SELECT A.*, B.Name FROM PlatformScale A INNER JOIN ProductFormula B ON A.Code = B.Code";
             //4.08改为INNER JOIN
             //if (string.IsNullOrEmpty(Code_search) || string.IsNullOrEmpty(FormulaName_search))

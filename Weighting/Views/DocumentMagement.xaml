@@ -12,6 +12,7 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <tool:BindingProxy x:Key="proxy" Data="{Binding}" />
+        <tool:PrintStatusConverter x:Key="PrintStatusConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -83,20 +84,20 @@
             Margin="20,0,0,0"
             HorizontalAlignment="Left"
             Command="{Binding PrintCommand}">
-            打印
+            批量打印
         </Button>
         <DataGrid
             Grid.Row="2"
             AutoGenerateColumns="False"
+            CanUserAddRows="False"
+            HeadersVisibility="All"
             ItemsSource="{Binding Items1}">
             <DataGrid.Columns>
-                <!--  by default a DataGridCheckBoxColumn will have the MaterialDesignDataGridCheckBoxColumnStyle and MaterialDesignDataGridCheckBoxColumnEditingStyle applied. See DataGridAssist.ApplyMaterialDesignColumnStyles attached property  -->
                 <DataGridCheckBoxColumn Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}">
                     <DataGridCheckBoxColumn.Header>
                         <Border Background="Transparent">
                             <CheckBox IsChecked="{Binding Source={StaticResource proxy}, Path=Data.IsAllItems1Selected}" />
                         </Border>
-                        <!--  IsChecked="{Binding RelativeSource={RelativeSource AncestorType=Page}, Path=DataContext.IsAllItems1Selected  -->
                     </DataGridCheckBoxColumn.Header>
                     <DataGridCheckBoxColumn.HeaderStyle>
                         <Style BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}" TargetType="{x:Type DataGridColumnHeader}">
@@ -104,12 +105,7 @@
                         </Style>
                     </DataGridCheckBoxColumn.HeaderStyle>
                 </DataGridCheckBoxColumn>
-                <!--  by default a DataGridTextColumn will have the MaterialDesignDataGridTextColumnStyle and MaterialDesignDataGridTextColumnEditingStyle applied. See DataGridAssist.ApplyMaterialDesignColumnStyles attached property  -->
 
-                <!--  if you want to use the pop up style (MaterialDesignDataGridTextColumnPopupEditingStyle), you must use MaterialDataGridTextColumn  -->
-
-
-                <!--  set a max length to get an indicator in the editor  -->
                 <DataGridTextColumn
                     Width="150"
                     Binding="{Binding BatchNumber}"
@@ -121,7 +117,10 @@
                     Header="方案名称" />
 
 
-                <DataGridTextColumn Width="100" Header="打印状态" />
+                <DataGridTextColumn
+                    Width="100"
+                    Binding="{Binding IsPrint, Converter={StaticResource PrintStatusConverter}}"
+                    Header="打印状态" />
                 <DataGridTextColumn
                     Width="150"
                     Binding="{Binding DateOfCreation}"

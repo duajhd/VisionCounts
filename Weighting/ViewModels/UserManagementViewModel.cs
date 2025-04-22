@@ -10,7 +10,7 @@ using System.Windows;
 using System.Security.Cryptography;
 using Windows.Services.Maps;
 using static MaterialDesignThemes.Wpf.Theme.ToolBar;
-
+using Weighting.Shared;
 namespace Weighting.ViewModels
 {
    
@@ -37,7 +37,7 @@ namespace Weighting.ViewModels
 
 
             //读取所有角色名
-            string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Permission.db";
+            string connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}Permission.db";
             string sql = "SELECT  * FROM Roles";
 
             using (DatabaseHelper db = new DatabaseHelper(connectionStr))
@@ -186,7 +186,7 @@ namespace Weighting.ViewModels
         //删除后将不可恢复
         private  void DeleteRowExecute(object obj)
         {
-            string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Permission.db";
+            string connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}Permission.db";
             // SQL 删除语句
             string sql = "DELETE FROM Users WHERE UserName = @username";
 
@@ -217,7 +217,7 @@ namespace Weighting.ViewModels
         {
             //1234@abcD
             
-            string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Permission.db";
+            string connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}Permission.db";
             string sql = $"SELECT A.UserName, B.RoleName FROM Users A INNER JOIN Roles B ON A.RoleId = B.RoleId WHERE A.UserName = '{UserNameForSearch}'";
             if (string.IsNullOrEmpty(UserNameForSearch))
             {
@@ -273,7 +273,7 @@ namespace Weighting.ViewModels
                 var result = await DialogHost.Show(dialog, "RootDialog");
                 if (result.ToString() == "True")
                 {
-                    string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Permission.db";
+                    string connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}Permission.db";
 
                     if (string.IsNullOrEmpty(SelectedUserName))
                     {
@@ -387,7 +387,7 @@ namespace Weighting.ViewModels
 
         //    try
         //    {
-        //        using (DatabaseHelper db = new DatabaseHelper("Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Permission.db"))
+        //        using (DatabaseHelper db = new DatabaseHelper($"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}Permission.db"))
         //        {
         //            db.ExecuteNonQuery(sql, new Dictionary<string, object>
         //            {

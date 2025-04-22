@@ -5,7 +5,7 @@ using System.Data;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using static MaterialDesignThemes.Wpf.Theme.ToolBar;
-
+using Weighting.Shared;
 
 namespace Weighting.ViewModels
 {
@@ -175,7 +175,7 @@ namespace Weighting.ViewModels
         {
             //获取秤台列表
 
-            string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Devices.db";
+            string connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}Devices.db";
             string sql = "SELECT * FROM DeviceList";
             Devicelist.Clear();
             try
@@ -210,7 +210,7 @@ namespace Weighting.ViewModels
         }
        private void  DeleteRowCommandExecute(object parameter)
         {
-            string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Devices.db";
+            string connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}Devices.db";
             // SQL 删除语句
             string sql = "DELETE FROM DeviceList WHERE ID = @id";
 
@@ -247,7 +247,7 @@ namespace Weighting.ViewModels
             {
                 if (result?.ToString() == "True")
                 {
-                    string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Devices.db";
+                    string connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}Devices.db";
 
                     using (DatabaseHelper db = new DatabaseHelper(connectionStr))
                     {
@@ -297,7 +297,7 @@ namespace Weighting.ViewModels
             {
                 if (result?.ToString() == "True")
                 {
-                    string connectionStr = "Data Source=D:\\Quadrant\\Weighting\\Weighting\\bin\\Debug\\Devices.db";
+                    string connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}Devices.db";
 
                     using (DatabaseHelper db = new DatabaseHelper(connectionStr))
                     {
