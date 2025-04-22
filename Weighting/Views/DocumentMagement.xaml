@@ -14,141 +14,144 @@
         <tool:BindingProxy x:Key="proxy" Data="{Binding}" />
         <tool:PrintStatusConverter x:Key="PrintStatusConverter" />
     </UserControl.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="80" />
-            <RowDefinition Height="50" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <!--  第一行  -->
-        <Border Padding="0,20,0,0">
-            <WrapPanel Grid.Row="0">
-                <Label
-                    Width="100"
-                    Margin="0,0,10,0"
-                    HorizontalContentAlignment="Right"
-                    Content="批次号:"
-                    DockPanel.Dock="Left"
-                    FontSize="14" />
-                <TextBox
-                    Name="txtBatchNumber"
-                    Width="200"
-                    FontSize="14"
-                    Text="{Binding BatchNumber}" />
-                <Label
-                    Width="100"
-                    Margin="10,0,10,0"
-                    HorizontalContentAlignment="Right"
-                    Content="方案名称:"
-                    DockPanel.Dock="Left"
-                    FontSize="14" />
-                <TextBox
-                    Name="txtPlanName"
-                    Width="200"
-                    FontSize="14"
-                    Text="{Binding FormulaName}" />
-                <Label
-                    Width="100"
-                    Margin="10,0,10,0"
-                    HorizontalContentAlignment="Right"
-                    Content="创建时间:"
-                    DockPanel.Dock="Left"
-                    FontSize="14" />
-                <DatePicker
-                    Name="dpProductionDate"
-                    Grid.Row="5"
-                    Grid.Column="1"
-                    Margin="3,10,3,3"
-                    Language="zh-cn"
-                    SelectedDate="{Binding CreationDate}" />
-                <Label
-                    Width="100"
-                    Margin="10,0,10,0"
-                    HorizontalContentAlignment="Right"
-                    Content="打印状态:"
-                    DockPanel.Dock="Left"
-                    FontSize="14" />
-                <ComboBox
-                    Name="cmbPrintStatus"
-                    Width="200"
-                    DisplayMemberPath="printstate"
-                    FontSize="14"
-                    ItemsSource="{Binding PrintStates}"
-                    SelectedItem="{Binding SelectedItem}" />
-                <Button Margin="30,0,0,0" Command="{Binding SearchCommand}">搜索</Button>
-            </WrapPanel>
-        </Border>
-        <Button
-            Grid.Row="1"
-            Width="100"
-            Margin="20,0,0,0"
-            HorizontalAlignment="Left"
-            Command="{Binding PrintCommand}">
-            批量打印
-        </Button>
-        <DataGrid
-            Grid.Row="2"
-            AutoGenerateColumns="False"
-            CanUserAddRows="False"
-            HeadersVisibility="All"
-            ItemsSource="{Binding Items1}">
-            <DataGrid.Columns>
-                <DataGridCheckBoxColumn Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}">
-                    <DataGridCheckBoxColumn.Header>
-                        <Border Background="Transparent">
-                            <CheckBox IsChecked="{Binding Source={StaticResource proxy}, Path=Data.IsAllItems1Selected}" />
-                        </Border>
-                    </DataGridCheckBoxColumn.Header>
-                    <DataGridCheckBoxColumn.HeaderStyle>
-                        <Style BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}" TargetType="{x:Type DataGridColumnHeader}">
-                            <Setter Property="HorizontalContentAlignment" Value="Center" />
-                        </Style>
-                    </DataGridCheckBoxColumn.HeaderStyle>
-                </DataGridCheckBoxColumn>
+    <materialDesign:DialogHost Identifier="DetailedInDialog">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80" />
+                <RowDefinition Height="50" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <!--  第一行  -->
+            <Border Padding="0,20,0,0">
+                <WrapPanel Grid.Row="0">
+                    <Label
+                        Width="100"
+                        Margin="0,0,10,0"
+                        HorizontalContentAlignment="Right"
+                        Content="批次号:"
+                        DockPanel.Dock="Left"
+                        FontSize="14" />
+                    <TextBox
+                        Name="txtBatchNumber"
+                        Width="200"
+                        FontSize="14"
+                        Text="{Binding BatchNumber}" />
+                    <Label
+                        Width="100"
+                        Margin="10,0,10,0"
+                        HorizontalContentAlignment="Right"
+                        Content="方案名称:"
+                        DockPanel.Dock="Left"
+                        FontSize="14" />
+                    <TextBox
+                        Name="txtPlanName"
+                        Width="200"
+                        FontSize="14"
+                        Text="{Binding FormulaName}" />
+                    <Label
+                        Width="100"
+                        Margin="10,0,10,0"
+                        HorizontalContentAlignment="Right"
+                        Content="创建时间:"
+                        DockPanel.Dock="Left"
+                        FontSize="14" />
+                    <DatePicker
+                        Name="dpProductionDate"
+                        Grid.Row="5"
+                        Grid.Column="1"
+                        Margin="3,10,3,3"
+                        Language="zh-cn"
+                        SelectedDate="{Binding CreationDate}" />
+                    <Label
+                        Width="100"
+                        Margin="10,0,10,0"
+                        HorizontalContentAlignment="Right"
+                        Content="打印状态:"
+                        DockPanel.Dock="Left"
+                        FontSize="14" />
+                    <ComboBox
+                        Name="cmbPrintStatus"
+                        Width="200"
+                        DisplayMemberPath="printstate"
+                        FontSize="14"
+                        ItemsSource="{Binding PrintStates}"
+                        SelectedItem="{Binding SelectedItem}" />
+                    <Button Margin="30,0,0,0" Command="{Binding SearchCommand}">搜索</Button>
+                </WrapPanel>
+            </Border>
+            <Button
+                Grid.Row="1"
+                Width="100"
+                Margin="20,0,0,0"
+                HorizontalAlignment="Left"
+                Command="{Binding AllPrintCommand}">
+                批量打印
+            </Button>
+            <DataGrid
+                Grid.Row="2"
+                AutoGenerateColumns="False"
+                CanUserAddRows="False"
+                HeadersVisibility="All"
+                ItemsSource="{Binding Items1}">
+                <DataGrid.Columns>
+                    <DataGridCheckBoxColumn Binding="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}">
+                        <DataGridCheckBoxColumn.Header>
+                            <Border Background="Transparent">
+                                <CheckBox IsChecked="{Binding Source={StaticResource proxy}, Path=Data.IsAllItems1Selected}" />
+                            </Border>
+                        </DataGridCheckBoxColumn.Header>
+                        <DataGridCheckBoxColumn.HeaderStyle>
+                            <Style BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}" TargetType="{x:Type DataGridColumnHeader}">
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                            </Style>
+                        </DataGridCheckBoxColumn.HeaderStyle>
+                    </DataGridCheckBoxColumn>
 
-                <DataGridTextColumn
-                    Width="150"
-                    Binding="{Binding BatchNumber}"
-                    Header="批次号" />
+                    <DataGridTextColumn
+                        Width="150"
+                        Binding="{Binding BatchNumber}"
+                        Header="批次号" />
 
-                <DataGridTextColumn
-                    Width="120"
-                    Binding="{Binding FormulaName}"
-                    Header="方案名称" />
-
-
-                <DataGridTextColumn
-                    Width="100"
-                    Binding="{Binding IsPrint, Converter={StaticResource PrintStatusConverter}}"
-                    Header="打印状态" />
-                <DataGridTextColumn
-                    Width="150"
-                    Binding="{Binding DateOfCreation}"
-                    Header="创建时间" />
+                    <DataGridTextColumn
+                        Width="120"
+                        Binding="{Binding FormulaName}"
+                        Header="方案名称" />
 
 
-                <DataGridTemplateColumn Width="*" Header="操作">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <Button
-                                    Width="100"
-                                    Command="{Binding DataContext.DeleteRowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                    CommandParameter="{Binding}"
-                                    Content="打印"
-                                    Style="{StaticResource MaterialDesignFlatButton}" />
-                                <Button
-                                    Width="100"
-                                    Command="{Binding DataContext.DeleteRowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                    CommandParameter="{Binding}"
-                                    Content="详情"
-                                    Style="{StaticResource MaterialDesignFlatButton}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                    <DataGridTextColumn
+                        Width="100"
+                        Binding="{Binding IsPrint, Converter={StaticResource PrintStatusConverter}}"
+                        Header="打印状态" />
+                    <DataGridTextColumn
+                        Width="150"
+                        Binding="{Binding DateOfCreation}"
+                        Header="创建时间" />
 
-            </DataGrid.Columns>
-        </DataGrid>
-    </Grid>
+
+                    <DataGridTemplateColumn Width="*" Header="操作">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button
+                                        Width="100"
+                                        Command="{Binding DataContext.SinglePrintCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}"
+                                        Content="打印"
+                                        Style="{StaticResource MaterialDesignFlatButton}" />
+                                    <Button
+                                        Width="100"
+                                        Command="{Binding DataContext.DetailedInformationCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                        CommandParameter="{Binding}"
+                                        Content="详情"
+                                        Style="{StaticResource MaterialDesignFlatButton}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </materialDesign:DialogHost>
+
 </UserControl>

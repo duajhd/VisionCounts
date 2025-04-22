@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "wF8B/xELBaidZgerAkNJXqNZy58jJg8d8AqPyG+uWsO+uuy2C7ivyqE7XjEZAeTG0Lrb3SUPQmbWomAUQW6zMA==",
+  "dgSpecHash": "aroa2IqRlk3eYO7wwPu+6Jp5uoOWj1Ac3KwdsaiiDvSdkIdkoYzbx+JmjNEUu51GC+dUGvBM3xO1vhiUpdEVug==",
   "success": true,
   "projectFilePath": "D:\\Quadrant\\Weighting\\Weighting\\Weighting.csproj",
   "expectedPackageFiles": [
@@ -21,6 +21,7 @@
     "C:\\Users\\26672\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.39\\microsoft.xaml.behaviors.wpf.1.1.39.nupkg.sha512",
     "C:\\Users\\26672\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\26672\\.nuget\\packages\\portable.bouncycastle\\1.9.0\\portable.bouncycastle.1.9.0.nupkg.sha512",
+    "C:\\Users\\26672\\.nuget\\packages\\qrcoder\\1.6.0\\qrcoder.1.6.0.nupkg.sha512",
     "C:\\Users\\26672\\.nuget\\packages\\runtime.android-arm.runtime.native.system.io.ports\\9.0.4\\runtime.android-arm.runtime.native.system.io.ports.9.0.4.nupkg.sha512",
     "C:\\Users\\26672\\.nuget\\packages\\runtime.android-arm64.runtime.native.system.io.ports\\9.0.4\\runtime.android-arm64.runtime.native.system.io.ports.9.0.4.nupkg.sha512",
     "C:\\Users\\26672\\.nuget\\packages\\runtime.android-x64.runtime.native.system.io.ports\\9.0.4\\runtime.android-x64.runtime.native.system.io.ports.9.0.4.nupkg.sha512",

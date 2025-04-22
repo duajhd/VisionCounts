@@ -483,4 +483,12 @@ namespace Weighting
         public int id { get; set; }
         public string printstate { get; set; }
     }
+
+    public class MeasureData
+    {
+        public int  ScalingNum { get; set; }
+        public string MaterialName { get; set; }
+
+        public float ActualWeight { get; set; }
+    }
 }

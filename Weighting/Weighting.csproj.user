@@ -28,6 +28,9 @@
     <Compile Update="Views\ChangeUserDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\DetailedInformationDialog.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\DeviceManagement.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -76,6 +79,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\ChangeUserDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\DetailedInformationDialog.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\DeviceManagement.xaml">

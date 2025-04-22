@@ -101,6 +101,24 @@ namespace Weighting.ViewModels
                      });
                 }
 
+                sql = "INSERT INTO MeasureData(ScalingNum,MaterialName,ActualWeight,FormulaName) VALUES(@scalingNum,@materialName,@actualWeight,@formulaName)";
+                using (DatabaseHelper db = new DatabaseHelper(connectionStr))
+                {
+                    foreach (KeyValuePair<string, MeasureResult> item in GlobalViewModelSingleton.Instance.IPToMeasureResult)
+                    {
+                        MeasureResult measureResult = item.Value;
+
+                        db.ExecuteNonQuery(sql, new Dictionary<string, object>
+                     {
+                        {"@scalingNum", measureResult.ScalingID},
+                        {"@materialName",measureResult.MaterialName },
+                        {"@actualWeight", measureResult.Result},
+                        {"@formulaName", FormulaName}
+                     });
+                    }
+                }
+              
+
                 connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}formula.db";
                 using (DatabaseHelper db = new DatabaseHelper(connectionStr))
                 {
@@ -109,6 +127,8 @@ namespace Weighting.ViewModels
                         {  "@value" ,GlobalViewModelSingleton.Instance.CuurentFormula.BatchNumber}
                     });
                 }
+
+
 
             } 
             catch(Exception ex)
