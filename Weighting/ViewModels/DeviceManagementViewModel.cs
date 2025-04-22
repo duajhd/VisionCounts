@@ -215,7 +215,7 @@ namespace Weighting.ViewModels
             string sql = "DELETE FROM DeviceList WHERE ID = @id";
 
             MessageBoxResult result = MessageBox.Show(
-               "将要删除用户，确定要继续吗？",
+               "将要删除该设备，确定要继续吗？",
                "提示",
                MessageBoxButton.YesNo,
                MessageBoxImage.Question);

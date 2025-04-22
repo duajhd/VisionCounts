@@ -4,6 +4,8 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using System.Collections.Specialized;
 using System.Collections;
+using System.Windows.Threading;
+using System.Globalization;
 namespace Weighting
 {
 
@@ -226,11 +228,52 @@ namespace Weighting
     }
     public  class WeightingViewModel:INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        private DispatcherTimer _timer;
+        private string _currentTime;
         public WeightingViewModel() 
         {
             //ReadDataBaseCommand = new RelayCommand(ReadDataBase);
             //SignUpCommand = new RelayCommand(SignUp);
+
+            // 初始化当前时间
+            UpdateCurrentTime();
+
+             // 设置定时器每秒触发一次
+             _timer = new DispatcherTimer();
+            _timer.Interval = TimeSpan.FromSeconds(1);
+            _timer.Tick += Timer_Tick;
+            _timer.Start();
         }
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            UpdateCurrentTime();
+        }
+        private void UpdateCurrentTime()
+        {
+            // 使用 CultureInfo 设置为中文（中国）
+            var culture = new CultureInfo("zh-CN");
+            CurrentTime = DateTime.Now.ToString("yyyy-MM-dd dddd HH:mm:ss", culture);
+        }
+        public string CurrentTime
+        {
+            get => _currentTime;
+            set
+            {
+                if (_currentTime != value)
+                {
+                    _currentTime = value;
+                    OnPropertyChanged(nameof(CurrentTime));
+                }
+            }
+        }
+    }
 
        
 
@@ -240,13 +283,7 @@ namespace Weighting
 
        
         
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        private void OnPropertyChanged([CallerMemberName] string propertyName=null) 
-        
-        { 
-
-        }
+      
        
 
        
@@ -255,7 +292,7 @@ namespace Weighting
      
        
 
-    }
+    
 
 
 }

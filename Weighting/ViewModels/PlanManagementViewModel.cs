@@ -171,6 +171,7 @@ namespace Weighting.ViewModels
                             Code = DataRowHelper.GetValue<string>(row, "Code", null),
                             Name = DataRowHelper.GetValue<string>(row, "Name", null),
                             Creator = DataRowHelper.GetValue<string>(row, "Creator", null),
+                            BatchNumber = DataRowHelper.GetValue<int>(row, "BatchNumber", 0),
                             IsStimulated = false
                         }
                         );
@@ -203,6 +204,7 @@ namespace Weighting.ViewModels
 
                 }
                 isStimulated = false;
+                GlobalViewModelSingleton.Instance.IPToMeasureResult.Clear();
                 foreach (DeviceClient item in GlobalViewModelSingleton.Instance.deviceClients)
                 {
                     //关闭秤台连接
@@ -241,6 +243,7 @@ namespace Weighting.ViewModels
             //读取新配方
             GlobalViewModelSingleton.Instance.CuurentFormula.FormulaName = rowforstimulation.Name;
             GlobalViewModelSingleton.Instance.CuurentFormula.Code = rowforstimulation.Code;
+            GlobalViewModelSingleton.Instance.CuurentFormula.BatchNumber = rowforstimulation.BatchNumber;
             using (DatabaseHelper db = new DatabaseHelper(connectionStr))
             {
                 DataTable dt = db.ExecuteQuery(sql);

@@ -267,6 +267,8 @@ namespace Weighting
 
         public string Name {  get; set; }
 
+        public int BatchNumber { get; set; }
+
         private bool _isStimulated;
         public bool IsStimulated 
         {
@@ -358,6 +360,8 @@ namespace Weighting
         public string FormulaName;
 
         public List<PlatformScale> ScalesData;
+
+        public int BatchNumber;
 
 
     }

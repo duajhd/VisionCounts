@@ -25,21 +25,39 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="60" />
+            <RowDefinition Height="75" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="75" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <TextBlock
-                Grid.Column="1"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Center"
-                FontSize="20"
-                Text="2025年" />
-        </Grid>
+        <materialDesign:ColorZone Mode="PrimaryLight">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="75" />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Image
+                    Width="75"
+                    Height="75"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Source="pack://application:,,,/Weighting;component/OIP.jpg"
+                    Stretch="Fill" />
+                <TextBlock
+                    Grid.Column="1"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    FontSize="20"
+                    FontWeight="Bold"
+                    Text="{Binding CurrentTime}" />
+                <TextBlock
+                    Grid.Column="3"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="16"
+                    Text="{Binding Instance.Currentusers.UserName, Source={StaticResource GlobalViewModelSingleton}}" />
+            </Grid>
+        </materialDesign:ColorZone>
         <materialDesign:Card Grid.Row="1">
             <TabControl
                 materialDesign:NavigationRailAssist.ShowSelectionBackground="True"
@@ -66,7 +84,7 @@
                             VerticalAlignment="Center"
                             FontSize="30"
                             Style="{StaticResource MaterialDesignHeadline5TextBlock}"
-                            Text="称重系统" />
+                            Text="混料称重系统-杭州智见科技" />
 
 
                     </StackPanel>
