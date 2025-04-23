@@ -21,11 +21,16 @@ using System.Xml.Linq;
 using MaterialDesignThemes.Wpf;
 using System.Drawing.Printing;
 using System.Drawing;
-
+using SkiaSharp;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 
 using System.Globalization;
+using System.Runtime.Intrinsics.Arm;
+using System.Drawing.Text;
+using static System.Net.Mime.MediaTypeNames;
+using Windows.Networking;
+using System.IO;
 namespace Weighting.ViewModels
 {
    
@@ -235,7 +240,7 @@ namespace Weighting.ViewModels
         private void SingleCommandExecute(object parameter)
         {
             Record row = (Record) parameter;
-            // 创建二维码图像
+          
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
             QRCodeData qrCodeData = qrGenerator.CreateQrCode(row.BatchNumber, QRCodeGenerator.ECCLevel.Q);
             QRCode qrCode = new QRCode(qrCodeData);
@@ -248,96 +253,68 @@ namespace Weighting.ViewModels
 
             // 打印二维码
             PrintDocument pd = new PrintDocument();
-           // pd.PrintPage += (sender, g) =>
-           // {
+            // pd.PrintPage += (sender, g) =>
+            // {
 
 
-           //     int height = 37;
-           //     Font font = new Font("黑体", 9f);
-           //     Brush brush = new SolidBrush(Color.Black);
-           //     g.Graphics.SmoothingMode = SmoothingMode.HighQuality;
-           //     int interval = 15;
-           //     int pointX = 5;
-           //     Rectangle destRect = new Rectangle(190, 30, image.Width, image.Height);
-           //     g.Graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel);
-           //     height += 6;
-           //     RectangleF layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
-           //     g.Graphics.DrawString("配方名称:" + row.FormulaName, font, brush, layoutRectangle, format);
+            //     int height = 37;
+            //     Font font = new Font("黑体", 9f);
+            //     Brush brush = new SolidBrush(Color.Black);
+            //     g.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+            //     int interval = 15;
+            //     int pointX = 5;
+            //     Rectangle destRect = new Rectangle(190, 30, image.Width, image.Height);
+            //     g.Graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel);
+            //     height += 6;
+            //     RectangleF layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
+            //     g.Graphics.DrawString("配方名称:" + row.FormulaName, font, brush, layoutRectangle, format);
 
-           //     height += interval;
-           //     /*layoutRectangle = new RectangleF(pointX, height, 230f, 85f);
-           //     g.Graphics.DrawString("混料批号:" + asset.BatchNumber, font, brush, layoutRectangle);*/
+            //     height += interval;
+            //     /*layoutRectangle = new RectangleF(pointX, height, 230f, 85f);
+            //     g.Graphics.DrawString("混料批号:" + asset.BatchNumber, font, brush, layoutRectangle);*/
 
-           //     string text = "混料批号:" + row.BatchNumber;
+            //     string text = "混料批号:" + row.BatchNumber;
 
-           //     // 创建布局矩形，包括位置和大小
-           //     layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
+            //     // 创建布局矩形，包括位置和大小
+            //     layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
 
-           //     // 使用DrawString方法绘制文本，传递StringFormat以控制换行
-           //     g.Graphics.DrawString(text, font, brush, layoutRectangle, format);
+            //     // 使用DrawString方法绘制文本，传递StringFormat以控制换行
+            //     g.Graphics.DrawString(text, font, brush, layoutRectangle, format);
 
-           //     height += interval + 10;
-           //     layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
-               
-           //     string ouputFormat = "yyyy年MM月dd日 HH时mm分";
-           //     //DateTime dateTime = DateTime.ParseExact(createTime,inputFormat,CultureInfo.InvariantCulture);
-           //     string  createTime = row.DateOfCreation;
-           //     g.Graphics.DrawString("称重时间:" + createTime, font, brush, layoutRectangle, format);
+            //     height += interval + 10;
+            //     layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
 
-           //     height += interval + 10;
-           //     layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
-           //     g.Graphics.DrawString("操作人:" + row.DateOfCreation, font, brush, layoutRectangle, format);
-                
-           //};
+            //     string ouputFormat = "yyyy年MM月dd日 HH时mm分";
+            //     //DateTime dateTime = DateTime.ParseExact(createTime,inputFormat,CultureInfo.InvariantCulture);
+            //     string  createTime = row.DateOfCreation;
+            //     g.Graphics.DrawString("称重时间:" + createTime, font, brush, layoutRectangle, format);
+
+            //     height += interval + 10;
+            //     layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
+            //     g.Graphics.DrawString("操作人:" + row.DateOfCreation, font, brush, layoutRectangle, format);
+
+            //};
             // 创建最终图像（白底）
-            int width = 400;
-            int height = 200;
+            // 创建 Skia 图像
+          
+
            
-            Bitmap finalImage = new Bitmap(width, height);
+          
 
-            using (Graphics g = Graphics.FromImage(finalImage))
-            {
-                g.Clear(Color.White);
-                g.SmoothingMode = SmoothingMode.HighQuality;
-
-                // 基本样式
-                Font font = new Font("黑体", 9f);
-                Brush brush = Brushes.Black;
-               
-
-                int offsetY = 10;
-                int interval = 20;
-                int pointX = 10;
-
-                // 绘制二维码
-                Rectangle destRect = new Rectangle(280, 20, qrImage.Width, qrImage.Height);
-                g.DrawImage(qrImage, destRect);
-
-                // 文本区域
-                g.DrawString("配方名称: " + row.FormulaName, font, brush, new RectangleF(pointX, offsetY, 250, 30), format);
-                offsetY += interval;
-                g.DrawString("混料批号: " + row.BatchNumber, font, brush, new RectangleF(pointX, offsetY, 250, 30), format);
-                offsetY += interval;
-                g.DrawString("称重时间: " + row.DateOfCreation, font, brush, new RectangleF(pointX, offsetY, 250, 30), format);
-                offsetY += interval;
-                g.DrawString("操作人: " + row.Operator, font, brush, new RectangleF(pointX, offsetY, 250, 30), format);
-            }
-
-            // 保存到文件
-            finalImage.Save("打印样张.bmp", System.Drawing.Imaging.ImageFormat.Bmp);
             // 创建PrintPreviewDialog对象，并将PrintDocument对象关联到预览对话框
             /*     PrintPreviewDialog previewDialog = new PrintPreviewDialog();
                  previewDialog.Document = pd;
 
                  // 显示打印预览对话框
                  previewDialog.ShowDialog();*/
-            
+
 
             pd.Print(); // 开始打印*/
      
 
         }
-        private void SearchCommandExecute(object parameter)
+        
+            private void SearchCommandExecute(object parameter)
         {
             string connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}Devices.db";
             string sql = $"SELECT * FROM MeasureResults  WHERE  = '{FormulaName}'";
