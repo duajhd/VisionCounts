@@ -363,6 +363,8 @@ namespace Weighting
 
         public int BatchNumber;
 
+        public string Creator {  get; set; }
+
 
     }
 

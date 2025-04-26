@@ -244,6 +244,7 @@ namespace Weighting.ViewModels
             GlobalViewModelSingleton.Instance.CuurentFormula.FormulaName = rowforstimulation.Name;
             GlobalViewModelSingleton.Instance.CuurentFormula.Code = rowforstimulation.Code;
             GlobalViewModelSingleton.Instance.CuurentFormula.BatchNumber = rowforstimulation.BatchNumber;
+            GlobalViewModelSingleton.Instance.CuurentFormula.Creator = rowforstimulation.Creator;
             using (DatabaseHelper db = new DatabaseHelper(connectionStr))
             {
                 DataTable dt = db.ExecuteQuery(sql);

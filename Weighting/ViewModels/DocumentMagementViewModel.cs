@@ -122,8 +122,8 @@ namespace Weighting.ViewModels
             DetailedInformationCommand = new RelayCommand(DetailedInformationCommandExecute);
             PrintStates = new ObservableCollection<PrintState> 
             {
-                new PrintState { id = 1, printstate = "未打印" },
-                new PrintState { id = 2, printstate = "已打印" },
+                new PrintState { id = 0, printstate = "未打印" },
+                new PrintState { id = 1, printstate = "已打印" },
             
             };
             SelectedItem = PrintStates[1]; // 默认选中第二个项
@@ -298,7 +298,7 @@ namespace Weighting.ViewModels
                
             };
             // 创建最终图像（白底）
-          
+
 
 
 
@@ -311,7 +311,31 @@ namespace Weighting.ViewModels
                  // 显示打印预览对话框
                  previewDialog.ShowDialog();*/
 
-
+            //保存称重记录
+            string[] weightRecord = new string[20];
+            float totalWeights = 0.0f; //总重量，单位是kg
+            weightRecord[0] = DateTime.Now.ToString("yyyy-MM-dd");
+             weightRecord[1] = GlobalViewModelSingleton.Instance.CuurentFormula.Creator;
+            weightRecord[2] = GlobalViewModelSingleton.Instance.CuurentFormula.FormulaName;
+            weightRecord[3] = $"{GlobalViewModelSingleton.Instance.CuurentFormula.FormulaName} /{DateTime.Now.ToString("yyyy-MM-dd")}-{GlobalViewModelSingleton.Instance.CuurentFormula.BatchNumber}";
+            int index = 5;
+            foreach (PlatformScale item in GlobalViewModelSingleton.Instance.CuurentFormula.ScalesData)
+            {
+                // detailRecord.Weight + "" + detailRecord.Unit;
+                weightRecord[index] =  $"{item.weights},{item.MaterialUnit}";
+                index += 1;
+                //计算总重量
+                if (item.MaterialUnit=="g")
+                {
+                    totalWeights += (item.weights) / 1000;
+                }
+                else
+                {
+                    totalWeights += item.weights;
+                }
+            }
+            weightRecord[4] = totalWeights.ToString();
+            pushERP(weightRecord);
             pd.Print(); // 开始打印*/
      
 
@@ -326,7 +350,7 @@ namespace Weighting.ViewModels
             if (string.IsNullOrEmpty(FormulaName)&& string.IsNullOrEmpty(BatchNumber))
             {
                 //全为空，查出所有结果
-                sql = $"SELECT * FROM MeasureResults WHERE DATE(DateOfCreation) > '{CreationDate.ToString("yyyy-MM-dd")}'";
+                sql = $"SELECT * FROM MeasureResults WHERE DATE(DateOfCreation) > '{CreationDate.ToString("yyyy-MM-dd")}' AND IsPrint = {SelectedItem.id}";
             }else if (string.IsNullOrEmpty(FormulaName) && !string.IsNullOrEmpty(BatchNumber))
             {//方案名为空且批次号不为空
                 sql = $"SELECT * FROM MeasureResults  WHERE  BatchNumber = '{BatchNumber}' AND DATE(DateOfCreation) > '{CreationDate.ToString("yyyy-MM-dd")}'";
