@@ -16,6 +16,8 @@
           "System.Data.SQLite": "1.0.119",
           "System.IO.Ports": "9.0.4",
           "Zebra.Printer.SDK": "3.0.3337",
+          "Kingdee.BOS.WebApi.Client": "8.0.319.1",
+          "Kingdee.CDP.WebApi.SDK": "9.1.0.0",
           "runtimepack.Microsoft.Windows.SDK.NET.Ref": "10.0.19041.31"
         },
         "runtime": {
@@ -857,6 +859,22 @@
             "fileVersion": "3.0.3337.0"
           }
         }
+      },
+      "Kingdee.BOS.WebApi.Client/8.0.319.1": {
+        "runtime": {
+          "Kingdee.BOS.WebApi.Client.dll": {
+            "assemblyVersion": "8.0.319.1",
+            "fileVersion": "8.0.319.1"
+          }
+        }
+      },
+      "Kingdee.CDP.WebApi.SDK/9.1.0.0": {
+        "runtime": {
+          "Kingdee.CDP.WebApi.SDK.dll": {
+            "assemblyVersion": "9.1.0.0",
+            "fileVersion": "9.1.0.0"
+          }
+        }
       }
     }
   },
@@ -1472,6 +1490,16 @@
       "sha512": "sha512-kALMUcfac0OLxyxgwpE5p/SkfDk9s12eWpcz/rCp+ymgPqsfoGMcptX+t32NLrykAAGkBcJW+Vm/qf+KfxdcaQ==",
       "path": "zebra.printer.sdk/3.0.3337",
       "hashPath": "zebra.printer.sdk.3.0.3337.nupkg.sha512"
+    },
+    "Kingdee.BOS.WebApi.Client/8.0.319.1": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Kingdee.CDP.WebApi.SDK/9.1.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

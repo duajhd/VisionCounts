@@ -31,6 +31,8 @@ using System.Drawing.Text;
 using static System.Net.Mime.MediaTypeNames;
 using Windows.Networking;
 using System.IO;
+using Kingdee.BOS.WebApi.Client;
+using Newtonsoft.Json.Linq;
 namespace Weighting.ViewModels
 {
    
@@ -251,55 +253,56 @@ namespace Weighting.ViewModels
             format.Alignment = StringAlignment.Near; // 水平对齐方式（左对齐）
             format.Trimming = StringTrimming.Word;
 
+            
             // 打印二维码
             PrintDocument pd = new PrintDocument();
-            // pd.PrintPage += (sender, g) =>
-            // {
+            pd.PrintPage += (sender, g) =>
+            {
 
 
-            //     int height = 37;
-            //     Font font = new Font("黑体", 9f);
-            //     Brush brush = new SolidBrush(Color.Black);
-            //     g.Graphics.SmoothingMode = SmoothingMode.HighQuality;
-            //     int interval = 15;
-            //     int pointX = 5;
-            //     Rectangle destRect = new Rectangle(190, 30, image.Width, image.Height);
-            //     g.Graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel);
-            //     height += 6;
-            //     RectangleF layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
-            //     g.Graphics.DrawString("配方名称:" + row.FormulaName, font, brush, layoutRectangle, format);
+                int height = 37;
+                System.Drawing.Font font = new System.Drawing.Font("黑体", 9f);
+                Brush brush = new SolidBrush(Color.Black);
+                g.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+                int interval = 15;
+                int pointX = 5;
+                Rectangle destRect = new Rectangle(190, 30, image.Width, image.Height);
+                g.Graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel);
+                height += 6;
+                RectangleF layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
+                g.Graphics.DrawString("配方名称:" + row.FormulaName, font, brush, layoutRectangle, format);
 
-            //     height += interval;
-            //     /*layoutRectangle = new RectangleF(pointX, height, 230f, 85f);
-            //     g.Graphics.DrawString("混料批号:" + asset.BatchNumber, font, brush, layoutRectangle);*/
+                height += interval;
+                /*layoutRectangle = new RectangleF(pointX, height, 230f, 85f);
+                g.Graphics.DrawString("混料批号:" + asset.BatchNumber, font, brush, layoutRectangle);*/
 
-            //     string text = "混料批号:" + row.BatchNumber;
+                string text = "混料批号:" + row.BatchNumber;
 
-            //     // 创建布局矩形，包括位置和大小
-            //     layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
+                // 创建布局矩形，包括位置和大小
+                layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
 
-            //     // 使用DrawString方法绘制文本，传递StringFormat以控制换行
-            //     g.Graphics.DrawString(text, font, brush, layoutRectangle, format);
+                // 使用DrawString方法绘制文本，传递StringFormat以控制换行
+                g.Graphics.DrawString(text, font, brush, layoutRectangle, format);
 
-            //     height += interval + 10;
-            //     layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
+                height += interval + 10;
+                layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
 
-            //     string ouputFormat = "yyyy年MM月dd日 HH时mm分";
-            //     //DateTime dateTime = DateTime.ParseExact(createTime,inputFormat,CultureInfo.InvariantCulture);
-            //     string  createTime = row.DateOfCreation;
-            //     g.Graphics.DrawString("称重时间:" + createTime, font, brush, layoutRectangle, format);
+                string ouputFormat = "yyyy年MM月dd日 HH时mm分";
+                //DateTime dateTime = DateTime.ParseExact(createTime,inputFormat,CultureInfo.InvariantCulture);
+                string createTime = row.DateOfCreation;
+                g.Graphics.DrawString("称重时间:" + createTime, font, brush, layoutRectangle, format);
 
-            //     height += interval + 10;
-            //     layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
-            //     g.Graphics.DrawString("操作人:" + row.DateOfCreation, font, brush, layoutRectangle, format);
-
-            //};
+                height += interval + 10;
+                layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
+                g.Graphics.DrawString("操作人:" + row.DateOfCreation, font, brush, layoutRectangle, format);
+               
+            };
             // 创建最终图像（白底）
-            // 创建 Skia 图像
           
 
-           
-          
+
+
+
 
             // 创建PrintPreviewDialog对象，并将PrintDocument对象关联到预览对话框
             /*     PrintPreviewDialog previewDialog = new PrintPreviewDialog();
@@ -313,15 +316,27 @@ namespace Weighting.ViewModels
      
 
         }
-        
+        //方案名或批次号为空查出所有记录2.有一个为空，根据其中一个查询3.
             private void SearchCommandExecute(object parameter)
         {
             string connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}Devices.db";
-            string sql = $"SELECT * FROM MeasureResults  WHERE  = '{FormulaName}'";
-            if (string.IsNullOrEmpty(FormulaName))
+            Items1.Clear();
+
+            string sql = $"SELECT * FROM MeasureResults ";
+            if (string.IsNullOrEmpty(FormulaName)&& string.IsNullOrEmpty(BatchNumber))
             {
-                //不填用户名，查出所有用户
-                sql = $"SELECT * FROM MeasureResults ";
+                //全为空，查出所有结果
+                sql = $"SELECT * FROM MeasureResults WHERE DATE(DateOfCreation) > '{CreationDate.ToString("yyyy-MM-dd")}'";
+            }else if (string.IsNullOrEmpty(FormulaName) && !string.IsNullOrEmpty(BatchNumber))
+            {//方案名为空且批次号不为空
+                sql = $"SELECT * FROM MeasureResults  WHERE  BatchNumber = '{BatchNumber}' AND DATE(DateOfCreation) > '{CreationDate.ToString("yyyy-MM-dd")}'";
+            }else if (!string.IsNullOrEmpty(FormulaName)&& string.IsNullOrEmpty(BatchNumber))
+            {
+                //方案名不为空且批次号为空
+                sql = $"SELECT * FROM MeasureResults  WHERE  FormulaName = '{FormulaName}' AND DATE(DateOfCreation) > '{CreationDate.ToString("yyyy-MM-dd")}'";
+            }else if(!string.IsNullOrEmpty(FormulaName) && !string.IsNullOrEmpty(BatchNumber))
+            {
+                sql = $"SELECT * FROM MeasureResults  WHERE  FormulaName = '{FormulaName}' AND BatchNumber = '{BatchNumber}'  DATE(DateOfCreation) > '{CreationDate.ToString("yyyy-MM-dd")}'";
             }
             using (DatabaseHelper db = new DatabaseHelper(connectionStr))
             {
@@ -329,7 +344,7 @@ namespace Weighting.ViewModels
 
                 if (dt.Rows.Count == 0)
                 {
-                    MessageBox.Show("未查找到该配方");
+                    MessageBox.Show("未查找到符合条件的的配方");
                     return;
                 }
                 //执行到这里说明查询成功
@@ -362,7 +377,99 @@ namespace Weighting.ViewModels
                 }
             }
         }
-        
+        public bool pushERP(string[] weightRecord)
+        {
+            //K3CloudApi client = new K3CloudApi("https://erp.quadrant.cn/k3cloud/");
+            K3CloudApiClient client = new K3CloudApiClient("https://erp.quadrant.cn/k3cloud/");
+            //K3CloudApi client = new K3CloudApi("http://115.236.169.2:8181/k3cloud");     zjkjhl0144.
+            try
+            {
+                //659193fec0e84d
+                var loginResult = client.Login("65cb1ca55b2f44", "ERPAPI", "Quadrant2023!#@", 2052);// 正：639691765153c9 659c049e433c9e      测试："650a55d6cf9b51", "ERP-开发", "zj@123456789"           
+                if (loginResult)
+                {
+                    //用于记录结果
+                    StringBuilder Info = new StringBuilder();
+                    //业务对象标识
+                    string formId = "VNVC_HLPH";
+                    //请求参数，要求为json字符串
+                    string jsonString = string.Format(@"
+                {{
+                    ""NeedUpDateFields"": [],
+                    ""NeedReturnFields"": [],
+                    ""IsDeleteEntry"": ""true"",
+                    ""SubSystemId"": """",
+                    ""IsVerifyBaseDataField"": ""false"",
+                    ""IsEntryBatchFill"": ""true"",
+                    ""ValidateFlag"": ""true"",
+                    ""NumberSearch"": ""true"",
+                    ""IsAutoAdjustField"": ""false"",
+                    ""InterationFlags"": """",
+                    ""IgnoreInterationFlag"": """",
+                    ""IsControlPrecision"": ""false"",
+                    ""ValidateRepeatJson"": ""false"",
+                    ""IsAutoSubmitAndAudit"": ""true"",
+                    ""Model"": {{
+                        ""FID"": 0,
+                        ""FNumber"": ""{0}"",
+                        ""FName"": ""{1}"",
+                        ""F_VNVC_OrgId"": {{
+                            ""FNumber"": ""2060""
+                        }},
+                        ""F_VNVC_CreateDate"": ""{2}"",
+                        ""F_VNVC_User"": ""{3}"",
+                        ""F_VNVC_Entity"": [
+                            {{
+                                ""FEntryID"": 0,
+                                ""F_VNVC_FAMC"": ""{1}"",
+                                ""F_VNVC_PCH"": ""{0}"",
+                                ""F_VNVC_ZZL"": ""{4}"",
+                                ""F_VNVC_PF1"": ""{5}"",
+                                ""F_VNVC_PF2"": ""{6}"",
+                                ""F_VNVC_PF3"": ""{7}"",
+                                ""F_VNVC_PF4"": ""{8}"",
+                                ""F_VNVC_PF5"": ""{9}"",
+                                ""F_VNVC_PF6"": ""{10}"",
+                                ""F_VNVC_PF7"": ""{11}"",
+                                ""F_VNVC_PF8"": ""{12}"",
+                                ""F_VNVC_CZ"": ""{13}"",
+                                ""F_VNVC_BZ"": ""{14}""
+                            }}
+                        ]
+                    }}
+                }}", weightRecord[3], weightRecord[2], weightRecord[0], weightRecord[1], weightRecord[4], weightRecord[5], weightRecord[6], weightRecord[7], weightRecord[8], weightRecord[9], weightRecord[10], weightRecord[11], weightRecord[12], weightRecord[13], weightRecord[14]);
+
+
+                    //调用接口
+                    var resultJson = client.Save(formId, jsonString);
+
+                    JObject jsonObject = JObject.Parse((string)resultJson);
+                    bool isSuccess = (bool)jsonObject["Result"]["ResponseStatus"]["IsSuccess"];
+                    if (isSuccess)
+                    {
+                        MessageBox.Show("成功同步一条记录到ERP");
+                        return true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("同步记录到ERP失败!");
+
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("ERP登录校验未通过!");
+
+                }
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("ERP同步异常!" + e);
+
+            }
+            return false;
+        }
         private void PrintCommandExecute(object parameter)
         {
             //try

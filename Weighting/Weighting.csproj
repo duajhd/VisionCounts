@@ -28,4 +28,13 @@
     <PackageReference Include="Zebra.Printer.SDK" Version="3.0.3337" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Kingdee.BOS.WebApi.Client">
+      <HintPath>bin\Debug\net8.0-windows10.0.19041.0\Kingdee.BOS.WebApi.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Kingdee.CDP.WebApi.SDK">
+      <HintPath>bin\Debug\net8.0-windows10.0.19041.0\Kingdee.CDP.WebApi.SDK.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
