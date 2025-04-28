@@ -33,6 +33,8 @@ using Windows.Networking;
 using System.IO;
 using Kingdee.BOS.WebApi.Client;
 using Newtonsoft.Json.Linq;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
+using System.Management;
 namespace Weighting.ViewModels
 {
    
@@ -126,7 +128,7 @@ namespace Weighting.ViewModels
                 new PrintState { id = 1, printstate = "已打印" },
             
             };
-            SelectedItem = PrintStates[1]; // 默认选中第二个项
+            SelectedItem = PrintStates[0]; // 默认选中第二个项
         }
 
         //
@@ -241,6 +243,11 @@ namespace Weighting.ViewModels
         }
         private void SingleCommandExecute(object parameter)
         {
+            if (!isConnectPrint())
+            {
+                MessageBox.Show("请先连接上打印机!");
+                return;
+            }
             Record row = (Record) parameter;
           
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
@@ -336,6 +343,16 @@ namespace Weighting.ViewModels
             }
             weightRecord[4] = totalWeights.ToString();
             pushERP(weightRecord);
+            string connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}Devices.db";
+            string sql = $"UPDATE  MeasureResults SET IsPrint=@isPrint WHERE BatchNumber = '{row.BatchNumber}'";
+            //$"UPDATE Users SET  UserName=@userName,RoleId=@roleId WHERE UserId = '{row.ID}'";
+            using (DatabaseHelper db = new DatabaseHelper(connectionStr))
+            {
+                db.ExecuteNonQuery(sql, new Dictionary<string, object>
+                        {
+                            { "@isPrint",1}
+                        }); ;
+            }
             pd.Print(); // 开始打印*/
      
 
@@ -353,7 +370,7 @@ namespace Weighting.ViewModels
                 sql = $"SELECT * FROM MeasureResults WHERE DATE(DateOfCreation) > '{CreationDate.ToString("yyyy-MM-dd")}' AND IsPrint = {SelectedItem.id}";
             }else if (string.IsNullOrEmpty(FormulaName) && !string.IsNullOrEmpty(BatchNumber))
             {//方案名为空且批次号不为空
-                sql = $"SELECT * FROM MeasureResults  WHERE  BatchNumber = '{BatchNumber}' AND DATE(DateOfCreation) > '{CreationDate.ToString("yyyy-MM-dd")}'";
+                sql = $"SELECT * FROM MeasureResults  WHERE  BatchNumber = '{BatchNumber}' AND DATE(DateOfCreation) > '{CreationDate.ToString("yyyy-MM-dd")}' ";
             }else if (!string.IsNullOrEmpty(FormulaName)&& string.IsNullOrEmpty(BatchNumber))
             {
                 //方案名不为空且批次号为空
@@ -496,6 +513,11 @@ namespace Weighting.ViewModels
         }
         private void PrintCommandExecute(object parameter)
         {
+            if (!isConnectPrint())
+            {
+                MessageBox.Show("请先连接上打印机!");
+                return;
+            }
             //try
             //{
             //    // 寻找 USB 打印机
@@ -514,25 +536,129 @@ namespace Weighting.ViewModels
             //{
             //    Console.WriteLine("打印失败: " + ex.Message);
             //}
-            
-          
-           // Console.WriteLine(result ? "打印成功" : "打印失败");
+
+
+            // Console.WriteLine(result ? "打印成功" : "打印失败");
 
             foreach (Record item in Items1)
             {
-                string zpl = $"^XA^PW240^LL160^FO70,20^BQN,2,6^FDLA,{item.BatchNumber}^FS^XZ";
-                // = "^XA^WDE:*.*^XZ";
-               // zpl = "^XA^SEE:GB18030.DAT^FS^CWZ,E:SIMSUN.FNT^CI26^JMA^LL200^PW680^MD10^RP2^PON^LRN^LH0,0^FO20,20^AZN,72,72^FD123ABC^FS^PQ1^XZ";
-                string printerName = "ZDesigner 888-DT";  // 替换为你的打印机名
-                if (item.IsSelected == true)
+                if (item.IsSelected) 
                 {
-                    bool result = SendStringToPrinter(printerName, zpl);
+                    QRCodeGenerator qrGenerator = new QRCodeGenerator();
+                    QRCodeData qrCodeData = qrGenerator.CreateQrCode(item.BatchNumber, QRCodeGenerator.ECCLevel.Q);
+                    QRCode qrCode = new QRCode(qrCodeData);
+                    Bitmap image = qrCode.GetGraphic(3);
+
+                    Bitmap qrImage = qrCode.GetGraphic(3);
+                    StringFormat format = new StringFormat();
+                    format.Alignment = StringAlignment.Near; // 水平对齐方式（左对齐）
+                    format.Trimming = StringTrimming.Word;
+
+
+                    // 打印二维码
+                    PrintDocument pd = new PrintDocument();
+                    pd.PrintPage += (sender, g) =>
+                    {
+
+                        //初始写入行坐标
+                        int height = 37;
+                        System.Drawing.Font font = new System.Drawing.Font("黑体", 9f);
+                        Brush brush = new SolidBrush(Color.Black);
+                        g.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+                        int interval = 15;
+                        int pointX = 5;
+                        Rectangle destRect = new Rectangle(190, 30, image.Width, image.Height);
+                        g.Graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel);
+                        height += 6;
+                        RectangleF layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
+                        g.Graphics.DrawString("配方名称:" + item.FormulaName, font, brush, layoutRectangle, format);
+
+                        height += interval;
+                        /*layoutRectangle = new RectangleF(pointX, height, 230f, 85f);
+                        g.Graphics.DrawString("混料批号:" + asset.BatchNumber, font, brush, layoutRectangle);*/
+
+                        string text = "混料批号:" + item.BatchNumber;
+
+                        // 创建布局矩形，包括位置和大小
+                        layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
+
+                        // 使用DrawString方法绘制文本，传递StringFormat以控制换行
+                        g.Graphics.DrawString(text, font, brush, layoutRectangle, format);
+
+                        height += interval + 10;
+                        layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
+
+                        string ouputFormat = "yyyy年MM月dd日 HH时mm分";
+                        //DateTime dateTime = DateTime.ParseExact(createTime,inputFormat,CultureInfo.InvariantCulture);
+                        string createTime = item.DateOfCreation;
+                        g.Graphics.DrawString("称重时间:" + createTime, font, brush, layoutRectangle, format);
+
+                        height += interval + 10;
+                        layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
+                        g.Graphics.DrawString("操作人:" + item.DateOfCreation, font, brush, layoutRectangle, format);
+
+                    };
+
+                    //保存称重记录
+                    string[] weightRecord = new string[20];
+                    float totalWeights = 0.0f; //总重量，单位是kg
+                    weightRecord[0] = DateTime.Now.ToString("yyyy-MM-dd");
+                    weightRecord[1] = GlobalViewModelSingleton.Instance.CuurentFormula.Creator;
+                    weightRecord[2] = GlobalViewModelSingleton.Instance.CuurentFormula.FormulaName;
+                    weightRecord[3] = $"{GlobalViewModelSingleton.Instance.CuurentFormula.FormulaName} /{DateTime.Now.ToString("yyyy-MM-dd")}-{GlobalViewModelSingleton.Instance.CuurentFormula.BatchNumber}";
+                    int index = 5;
+                    foreach (PlatformScale platformScale in GlobalViewModelSingleton.Instance.CuurentFormula.ScalesData)
+                    {
+                        // detailRecord.Weight + "" + detailRecord.Unit;
+                        weightRecord[index] = $"{platformScale.weights},{platformScale.MaterialUnit}";
+                        index += 1;
+                        //计算总重量
+                        if (platformScale.MaterialUnit == "g")
+                        {
+                            totalWeights += (platformScale.weights) / 1000;
+                        }
+                        else
+                        {
+                            totalWeights += platformScale.weights;
+                        }
+                    }
+                    weightRecord[4] = totalWeights.ToString();
+                   // pushERP(weightRecord);
+                    pd.Print(); // 开始打印*/
+                    item.IsPrint = 1;
+                    string connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}Devices.db";
+                    string sql = $"UPDATE  MeasureResults SET IsPrint=@isPrint WHERE BatchNumber = '{item.BatchNumber}'";
+                    //$"UPDATE Users SET  UserName=@userName,RoleId=@roleId WHERE UserId = '{row.ID}'";
+                    using (DatabaseHelper db = new DatabaseHelper(connectionStr))
+                    {
+                        db.ExecuteNonQuery(sql,new Dictionary<string, object>
+                        {
+                            { "@isPrint",1}
+                        });;
+                    }
                 }
                
+
             }
         }
-        private string ZPLCommand = $"";
-     
+        //检查是否有打印机连接成功
+        public bool isConnectPrint()
+        {
+
+            ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_Printer");
+            ManagementObjectCollection printers = searcher.Get();
+
+            foreach (ManagementObject printer in printers)
+            {
+                if (printer != null)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
 
 
 
