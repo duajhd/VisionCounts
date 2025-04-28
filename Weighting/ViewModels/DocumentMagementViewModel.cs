@@ -243,13 +243,30 @@ namespace Weighting.ViewModels
         }
         private void SingleCommandExecute(object parameter)
         {
-            if (!isConnectPrint())
+           
+            Record row = (Record) parameter;
+
+            // 创建PrintDocument对象
+            PrintDocument pd = new PrintDocument();
+
+            // 设置打印机名称（如果有多台打印机，确保指定正确的打印机）
+            pd.PrinterSettings.PrinterName = "ZDesigner ZD888-203dpi ZPL";
+
+            // 检查打印机是否可用
+            if (!pd.PrinterSettings.IsValid)
             {
-                MessageBox.Show("请先连接上打印机!");
+                Console.WriteLine("指定的打印机无效或未安装！");
                 return;
             }
-            Record row = (Record) parameter;
-          
+
+            // 设置纸张大小为8cm x 7cm（单位转换为百ths of an inch，1cm = 39.37 hundredths of an inch）
+            PaperSize labelSize = new PaperSize("Custom", (int)(8 * 39.37), (int)(7 * 39.37));
+            pd.DefaultPageSettings.PaperSize = labelSize;
+
+            // 设置页面边距为0
+            pd.DefaultPageSettings.Margins = new Margins(0, 0, 0, 0);
+
+
             QRCodeGenerator qrGenerator = new QRCodeGenerator();
             QRCodeData qrCodeData = qrGenerator.CreateQrCode(row.BatchNumber, QRCodeGenerator.ECCLevel.Q);
             QRCode qrCode = new QRCode(qrCodeData);
@@ -262,7 +279,7 @@ namespace Weighting.ViewModels
 
             
             // 打印二维码
-            PrintDocument pd = new PrintDocument();
+           
             pd.PrintPage += (sender, g) =>
             {
 
