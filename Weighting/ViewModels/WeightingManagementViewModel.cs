@@ -73,6 +73,7 @@ namespace Weighting.ViewModels
             }
          
         }
+        //生成一条称重记录
       private void GenerateRecordsCommandExecute(object parameter)
         {
             if (GlobalViewModelSingleton.Instance.IPToMeasureResult.Count == 0)
@@ -82,7 +83,7 @@ namespace Weighting.ViewModels
             }
             GlobalViewModelSingleton.Instance.CuurentFormula.BatchNumber += 1;
             string connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}Devices.db";
-            string sql = "INSERT INTO MeasureResults( FormulaName, DateOfCreation, Operator, BatchNumber) VALUES( @formulaName, @dateOfCreation, @operator, @batchNumber)";
+            string sql = "INSERT INTO MeasureResults( FormulaName, DateOfCreation, Operator, BatchNumber,IsPrint) VALUES( @formulaName, @dateOfCreation, @operator, @batchNumber,@isPrint)";
             string BatchNumber =$"{GlobalViewModelSingleton.Instance.CuurentFormula.FormulaName} /{DateTime.Now.ToString("yyyy-MM-dd")}-{GlobalViewModelSingleton.Instance.CuurentFormula.BatchNumber}";
             string FormulaName = GlobalViewModelSingleton.Instance.CuurentFormula.FormulaName;
             string Operator = GlobalViewModelSingleton.Instance.Currentusers.UserName;
@@ -97,11 +98,12 @@ namespace Weighting.ViewModels
                         {"@formulaName", FormulaName},
                         {"@dateOfCreation",OperatorDateStr },
                         {"@operator", Operator},
-                        {"@batchNumber", BatchNumber}
+                        {"@batchNumber", BatchNumber},
+                        { "@isPrint",0}
                      });
                 }
 
-                sql = "INSERT INTO MeasureData(ScalingNum,MaterialName,ActualWeight,FormulaName) VALUES(@scalingNum,@materialName,@actualWeight,@formulaName)";
+                sql = "INSERT INTO MeasureData(ScalingNum,MaterialName,ActualWeight,FormulaName,BatchNumber) VALUES(@scalingNum,@materialName,@actualWeight,@formulaName,@batchNumber)";
                 using (DatabaseHelper db = new DatabaseHelper(connectionStr))
                 {
                     foreach (KeyValuePair<string, MeasureResult> item in GlobalViewModelSingleton.Instance.IPToMeasureResult)
@@ -113,7 +115,8 @@ namespace Weighting.ViewModels
                         {"@scalingNum", measureResult.ScalingID},
                         {"@materialName",measureResult.MaterialName },
                         {"@actualWeight", measureResult.Result},
-                        {"@formulaName", FormulaName}
+                        {"@formulaName", FormulaName},
+                        {"@batchNumber" ,BatchNumber}
                      });
                     }
                 }

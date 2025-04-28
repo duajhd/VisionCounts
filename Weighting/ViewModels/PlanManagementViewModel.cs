@@ -292,7 +292,7 @@ namespace Weighting.ViewModels
                         {
                             ID = item1.ScalingID,
                             ScalingName = item1.ScalingName,
-                            MaterialName = item1.ScalingName,
+                            MaterialName = item1.MaterialName,
                             weights = item1.weights,
                             UpperTolerance = item1.UpperTolerance,
                             LowerTolerance = item1.LowerTolerance,
@@ -311,11 +311,11 @@ namespace Weighting.ViewModels
 
 
             //连接后立即开始采集
-            foreach (DeviceClient item in GlobalViewModelSingleton.Instance.deviceClients)
-            {
+            //foreach (DeviceClient item in GlobalViewModelSingleton.Instance.deviceClients)
+            //{
 
-                await item.ConnectAsync();
-            }
+            //    await item.ConnectAsync();
+            //}
 
 
 

@@ -61,12 +61,13 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
 
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
+
 
                         </Grid.ColumnDefinitions>
 
@@ -108,7 +109,18 @@
                             Margin="5,5,0,0"
                             Background="White"
                             Text="{Binding Value.weights}" />
-
+                        <TextBlock
+                            Grid.Row="3"
+                            Grid.Column="0"
+                            Margin="0,5"
+                            Foreground="White"
+                            Text="物料名称" />
+                        <TextBlock
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            Margin="5,5,0,0"
+                            Background="White"
+                            Text="{Binding Value.MaterialName}" />
 
                     </Grid>
                 </Grid>

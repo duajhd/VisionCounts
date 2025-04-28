@@ -11,10 +11,12 @@
 
   <ItemGroup>
     <None Remove="OIP.jpg" />
+    <None Remove="Q.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="OIP.jpg" />
+    <Resource Include="Q.png" />
   </ItemGroup>
 
   <ItemGroup>

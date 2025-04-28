@@ -37,11 +37,11 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Image
-                    Width="75"
-                    Height="75"
+                    Width="65"
+                    Height="65"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Source="pack://application:,,,/Weighting;component/OIP.jpg"
+                    Source="pack://application:,,,/Weighting;component/Q.png"
                     Stretch="Fill" />
                 <TextBlock
                     Grid.Column="1"
@@ -84,7 +84,7 @@
                             VerticalAlignment="Center"
                             FontSize="30"
                             Style="{StaticResource MaterialDesignHeadline5TextBlock}"
-                            Text="混料称重系统-杭州智见科技" />
+                            Text="混料称重系统" />
 
 
                     </StackPanel>

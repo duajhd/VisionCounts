@@ -214,9 +214,9 @@ namespace Weighting.ViewModels
             DetailedLists.Clear();
             Record record = (Record)parameter;
 
-            string  formulaName = record.FormulaName;
+            string batchNumber = record.BatchNumber;
             string connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}Devices.db";
-            string sql = $"SELECT * FROM MeasureData WHERE FormulaName = '{formulaName}'"; 
+            string sql = $"SELECT * FROM MeasureData WHERE BatchNumber = '{batchNumber}'"; 
 
             using (DatabaseHelper db = new DatabaseHelper(connectionStr))
             {

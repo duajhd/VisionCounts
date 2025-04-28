@@ -16,5 +16,5 @@ D:\Quadrant\Weighting\Weighting\App.xaml
 2291749576211
 Login.xaml;MainWindow.xaml;Pages\SignUpPage.xaml;ViewModels\ScalingResults.xaml;Views\AddDeviceDialog.xaml;Views\AdduserDialog.xaml;Views\ChangeFormulaDialog.xaml;Views\ChangeUserDialog.xaml;Views\DetailedInformationDialog.xaml;Views\DeviceManagement.xaml;Views\DocumentMagement.xaml;Views\PlanManagement.xaml;Views\RoleManagement.xaml;Views\ScalingMagement.xaml;Views\SignUpView.xaml;Views\UserManagement.xaml;Views\WeightingManagement.xaml;
 
-False
+True
 
