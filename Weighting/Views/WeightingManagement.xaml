@@ -60,11 +60,14 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
 
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+
                         </Grid.ColumnDefinitions>
 
                         <TextBlock
@@ -72,7 +75,7 @@
                             Grid.Column="0"
                             Margin="0,5"
                             Foreground="White"
-                            Text="重量" />
+                            Text="当前重量" />
                         <TextBlock
                             Grid.Row="0"
                             Grid.Column="1"
@@ -92,6 +95,20 @@
                             Margin="5,5,0,0"
                             Background="White"
                             Text="{Binding Value.MaterialUnit}" />
+
+                        <TextBlock
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Margin="0,5"
+                            Foreground="White"
+                            Text="标准重量" />
+                        <TextBlock
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Margin="5,5,0,0"
+                            Background="White"
+                            Text="{Binding Value.weights}" />
+
 
                     </Grid>
                 </Grid>

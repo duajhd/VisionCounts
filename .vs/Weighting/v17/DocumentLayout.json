@@ -3,6 +3,22 @@
   "WorkspaceRootPath": "D:\\Quadrant\\Weighting\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|D:\\Quadrant\\Weighting\\weighting\\viewmodels\\planmanagementviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\viewmodels\\planmanagementviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|D:\\Quadrant\\Weighting\\weighting\\views\\weightingmanagement.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\views\\weightingmanagement.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|D:\\Quadrant\\Weighting\\weighting\\weightingtypes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\weightingtypes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|D:\\Quadrant\\Weighting\\weighting\\shared\\globalviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\shared\\globalviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\quadrant\\weighting\\weighting\\viewmodels\\documentmagementviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\viewmodels\\documentmagementviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -15,20 +31,8 @@
       "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\viewmodels\\usermanagementviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|D:\\Quadrant\\Weighting\\weighting\\viewmodels\\planmanagementviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\viewmodels\\planmanagementviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|D:\\Quadrant\\Weighting\\weighting\\weightingtypes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\weightingtypes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|D:\\Quadrant\\Weighting\\weighting\\viewmodels\\weightingmanagementviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\viewmodels\\weightingmanagementviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|D:\\Quadrant\\Weighting\\weighting\\shared\\globalviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\shared\\globalviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|D:\\Quadrant\\Weighting\\weighting\\weightingviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -80,10 +84,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|D:\\Quadrant\\Weighting\\weighting\\views\\changeformuladialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\views\\changeformuladialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|D:\\Quadrant\\Weighting\\weighting\\views\\weightingmanagement.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\views\\weightingmanagement.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|D:\\Quadrant\\Weighting\\weighting\\views\\adddevicedialog.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -153,11 +153,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 12,
+          "SelectedChildIndex": 34,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "RecordPage.xaml.cs",
               "DocumentMoniker": "D:\\Quadrant\\Weighing_Consumer_System\\Weighing_Consumer_System\\page\\RecordPage.xaml.cs",
               "RelativeDocumentMoniker": "..\\Weighing_Consumer_System\\Weighing_Consumer_System\\page\\RecordPage.xaml.cs",
@@ -181,7 +181,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "DetailedInformationDialog.xaml.cs",
               "DocumentMoniker": "D:\\Quadrant\\Weighting\\Weighting\\Views\\DetailedInformationDialog.xaml.cs",
               "RelativeDocumentMoniker": "Weighting\\Views\\DetailedInformationDialog.xaml.cs",
@@ -193,7 +193,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "DetailedInformationDialog.xaml",
               "DocumentMoniker": "D:\\Quadrant\\Weighting\\Weighting\\Views\\DetailedInformationDialog.xaml",
               "RelativeDocumentMoniker": "Weighting\\Views\\DetailedInformationDialog.xaml",
@@ -211,11 +211,12 @@
               "ToolTip": "D:\\Quadrant\\Weighting\\Weighting\\App.xaml",
               "RelativeToolTip": "Weighting\\App.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-04-22T03:04:13.494Z"
+              "WhenOpened": "2025-04-22T03:04:13.494Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "PermissionToVisibilityConverter .cs",
               "DocumentMoniker": "D:\\Quadrant\\Weighting\\Weighting\\Shared\\PermissionToVisibilityConverter .cs",
               "RelativeDocumentMoniker": "Weighting\\Shared\\PermissionToVisibilityConverter .cs",
@@ -262,7 +263,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "ChangeFormulaDialog.xaml",
               "DocumentMoniker": "D:\\Quadrant\\Weighting\\Weighting\\Views\\ChangeFormulaDialog.xaml",
               "RelativeDocumentMoniker": "Weighting\\Views\\ChangeFormulaDialog.xaml",
@@ -297,13 +298,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
               "Title": "DocumentMagementViewModel.cs",
               "DocumentMoniker": "D:\\Quadrant\\Weighting\\Weighting\\ViewModels\\DocumentMagementViewModel.cs",
               "RelativeDocumentMoniker": "Weighting\\ViewModels\\DocumentMagementViewModel.cs",
               "ToolTip": "D:\\Quadrant\\Weighting\\Weighting\\ViewModels\\DocumentMagementViewModel.cs",
               "RelativeToolTip": "Weighting\\ViewModels\\DocumentMagementViewModel.cs",
-              "ViewState": "AQIAAAkCAAAAAAAAAAAswH4CAAAQAAAA",
+              "ViewState": "AQIAAE4CAAAAAAAAAAAswHUCAAAUAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-19T03:49:50.559Z",
               "EditorCaption": ""
@@ -344,7 +345,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "ScalingManagemengViewModel.cs",
               "DocumentMoniker": "D:\\Quadrant\\Weighting\\Weighting\\ViewModels\\ScalingManagemengViewModel.cs",
               "RelativeDocumentMoniker": "Weighting\\ViewModels\\ScalingManagemengViewModel.cs",
@@ -352,8 +353,7 @@
               "RelativeToolTip": "Weighting\\ViewModels\\ScalingManagemengViewModel.cs",
               "ViewState": "AQIAAPkAAAAAAAAAAAAAALwAAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-17T00:54:38.003Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-17T00:54:38.003Z"
             },
             {
               "$type": "Document",
@@ -368,7 +368,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "AddDeviceDialog.xaml",
               "DocumentMoniker": "D:\\Quadrant\\Weighting\\Weighting\\Views\\AddDeviceDialog.xaml",
               "RelativeDocumentMoniker": "Weighting\\Views\\AddDeviceDialog.xaml",
@@ -391,7 +391,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "NotEmptyValidationRule.cs",
               "DocumentMoniker": "D:\\Quadrant\\Weighting\\Weighting\\Shared\\NotEmptyValidationRule.cs",
               "RelativeDocumentMoniker": "Weighting\\Shared\\NotEmptyValidationRule.cs",
@@ -403,7 +403,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "DeviceClient.cs",
               "DocumentMoniker": "D:\\Quadrant\\Weighting\\Weighting\\Shared\\DeviceClient.cs",
               "RelativeDocumentMoniker": "Weighting\\Shared\\DeviceClient.cs",
@@ -415,7 +415,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "UserManagement.xaml",
               "DocumentMoniker": "D:\\Quadrant\\Weighting\\Weighting\\Views\\UserManagement.xaml",
               "RelativeDocumentMoniker": "Weighting\\Views\\UserManagement.xaml",
@@ -437,7 +437,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "DocumentMagement.xaml",
               "DocumentMoniker": "D:\\Quadrant\\Weighting\\Weighting\\Views\\DocumentMagement.xaml",
               "RelativeDocumentMoniker": "Weighting\\Views\\DocumentMagement.xaml",
@@ -459,7 +459,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "UserManagementViewModel.cs",
               "DocumentMoniker": "D:\\Quadrant\\Weighting\\Weighting\\ViewModels\\UserManagementViewModel.cs",
               "RelativeDocumentMoniker": "Weighting\\ViewModels\\UserManagementViewModel.cs",
@@ -467,12 +467,11 @@
               "RelativeToolTip": "Weighting\\ViewModels\\UserManagementViewModel.cs",
               "ViewState": "AQIAAAwBAAAAAAAAAAAgwBsBAAB2AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T05:31:21.522Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-16T05:31:21.522Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "LoginViewModel.cs",
               "DocumentMoniker": "D:\\Quadrant\\Weighting\\Weighting\\ViewModels\\LoginViewModel.cs",
               "RelativeDocumentMoniker": "Weighting\\ViewModels\\LoginViewModel.cs",
@@ -484,7 +483,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "Weighting",
               "DocumentMoniker": "D:\\Quadrant\\Weighting\\Weighting\\Weighting.csproj",
               "RelativeDocumentMoniker": "Weighting\\Weighting.csproj",
@@ -495,7 +494,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "WeightingManagementViewModel.cs",
               "DocumentMoniker": "D:\\Quadrant\\Weighting\\Weighting\\ViewModels\\WeightingManagementViewModel.cs",
               "RelativeDocumentMoniker": "Weighting\\ViewModels\\WeightingManagementViewModel.cs",
@@ -518,20 +517,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 2,
               "Title": "WeightingTypes.cs",
               "DocumentMoniker": "D:\\Quadrant\\Weighting\\Weighting\\WeightingTypes.cs",
               "RelativeDocumentMoniker": "Weighting\\WeightingTypes.cs",
               "ToolTip": "D:\\Quadrant\\Weighting\\Weighting\\WeightingTypes.cs",
               "RelativeToolTip": "Weighting\\WeightingTypes.cs",
-              "ViewState": "AQIAAMMBAAAAAAAAAAA9wL8BAAAXAAAA",
+              "ViewState": "AQIAAHwAAAAAAAAAAAAqwH4AAAAcAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-16T05:17:46.972Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "WeightingViewModel.cs",
               "DocumentMoniker": "D:\\Quadrant\\Weighting\\Weighting\\WeightingViewModel.cs",
               "RelativeDocumentMoniker": "Weighting\\WeightingViewModel.cs",
@@ -543,39 +542,41 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 1,
               "Title": "WeightingManagement.xaml",
               "DocumentMoniker": "D:\\Quadrant\\Weighting\\Weighting\\Views\\WeightingManagement.xaml",
               "RelativeDocumentMoniker": "Weighting\\Views\\WeightingManagement.xaml",
               "ToolTip": "D:\\Quadrant\\Weighting\\Weighting\\Views\\WeightingManagement.xaml",
               "RelativeToolTip": "Weighting\\Views\\WeightingManagement.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-04-16T05:12:03.782Z"
+              "WhenOpened": "2025-04-16T05:12:03.782Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "PlanManagementViewModel.cs",
               "DocumentMoniker": "D:\\Quadrant\\Weighting\\Weighting\\ViewModels\\PlanManagementViewModel.cs",
               "RelativeDocumentMoniker": "Weighting\\ViewModels\\PlanManagementViewModel.cs",
               "ToolTip": "D:\\Quadrant\\Weighting\\Weighting\\ViewModels\\PlanManagementViewModel.cs",
               "RelativeToolTip": "Weighting\\ViewModels\\PlanManagementViewModel.cs",
-              "ViewState": "AQIAALcAAAAAAAAAAAAgwPYAAABEAAAA",
+              "ViewState": "AQIAADEBAAAAAAAAAAAkwD0BAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-16T05:09:16.472Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 3,
               "Title": "GlobalViewModel.cs",
               "DocumentMoniker": "D:\\Quadrant\\Weighting\\Weighting\\Shared\\GlobalViewModel.cs",
               "RelativeDocumentMoniker": "Weighting\\Shared\\GlobalViewModel.cs",
               "ToolTip": "D:\\Quadrant\\Weighting\\Weighting\\Shared\\GlobalViewModel.cs",
               "RelativeToolTip": "Weighting\\Shared\\GlobalViewModel.cs",
-              "ViewState": "AQIAACcAAAAAAAAAAAAcwDEAAAAgAAAA",
+              "ViewState": "AQIAACcAAAAAAAAAAAAcwDUAAAA0AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-16T05:09:09.491Z"
+              "WhenOpened": "2025-04-16T05:09:09.491Z",
+              "EditorCaption": ""
             }
           ]
         }
