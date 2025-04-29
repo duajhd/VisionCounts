@@ -84,7 +84,7 @@ namespace Weighting.ViewModels
             GlobalViewModelSingleton.Instance.CuurentFormula.BatchNumber += 1;
             string connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}Devices.db";
             string sql = "INSERT INTO MeasureResults( FormulaName, DateOfCreation, Operator, BatchNumber,IsPrint) VALUES( @formulaName, @dateOfCreation, @operator, @batchNumber,@isPrint)";
-            string BatchNumber =$"{GlobalViewModelSingleton.Instance.CuurentFormula.FormulaName} /{DateTime.Now.ToString("yyyy-MM-dd")}-{GlobalViewModelSingleton.Instance.CuurentFormula.BatchNumber}";
+            string BatchNumber =$"{GlobalViewModelSingleton.Instance.CuurentFormula.FormulaName} /{DateTime.Now.ToString("yyyyMMdd")}-{GlobalViewModelSingleton.Instance.CuurentFormula.BatchNumber}";
             string FormulaName = GlobalViewModelSingleton.Instance.CuurentFormula.FormulaName;
             string Operator = GlobalViewModelSingleton.Instance.Currentusers.UserName;
             string OperatorDateStr = DateTime.Today.ToString("yyyy-MM-dd");

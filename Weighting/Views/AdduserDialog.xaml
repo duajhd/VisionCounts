@@ -31,13 +31,12 @@
                     <TextBox
                         Height="40"
                         VerticalAlignment="Center"
-                        Text="{Binding UserName}" />
+                        Text="{Binding Path=UserName, Mode=TwoWay}" />
                     <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center">密码：</TextBlock>
-                    <PasswordBox
-                        x:Name="PasswordInput"
+                    <TextBox
                         Height="40"
                         VerticalAlignment="Center"
-                        local:PasswordBoxHelper.BoundPassword="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding Path=Password, Mode=TwoWay}" />
                     <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center">用户角色：</TextBlock>
                     <ComboBox
                         materialDesign:ComboBoxAssist.MaxLength="2"

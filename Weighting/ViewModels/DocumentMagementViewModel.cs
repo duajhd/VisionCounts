@@ -35,17 +35,31 @@ using Kingdee.BOS.WebApi.Client;
 using Newtonsoft.Json.Linq;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Management;
+using Org.BouncyCastle.Bcpg.OpenPgp;
 namespace Weighting.ViewModels
 {
-   
-    public   class DocumentMagementViewModel : INotifyPropertyChanged
+    public class RawPrinterHelper
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        [DllImport("winspool.drv", SetLastError = true)]
+        public static extern bool OpenPrinter(string pPrinterName, out IntPtr phPrinter, IntPtr pDefault);
 
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        [DllImport("winspool.drv", SetLastError = true)]
+        public static extern bool ClosePrinter(IntPtr hPrinter);
+
+        [DllImport("winspool.drv", SetLastError = true)]
+        public static extern bool StartDocPrinter(IntPtr hPrinter, int level, [In] DOCINFOA pDocInfo);
+
+        [DllImport("winspool.drv", SetLastError = true)]
+        public static extern bool EndDocPrinter(IntPtr hPrinter);
+
+        [DllImport("winspool.drv", SetLastError = true)]
+        public static extern bool StartPagePrinter(IntPtr hPrinter);
+
+        [DllImport("winspool.drv", SetLastError = true)]
+        public static extern bool EndPagePrinter(IntPtr hPrinter);
+
+        [DllImport("winspool.drv", SetLastError = true)]
+        public static extern bool WritePrinter(IntPtr hPrinter, IntPtr pBytes, int dwCount, out int dwWritten);
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
         public class DOCINFOA
@@ -58,32 +72,10 @@ namespace Weighting.ViewModels
             public string pDataType;
         }
 
-        [DllImport("winspool.Drv", EntryPoint = "OpenPrinterA", SetLastError = true)]
-        public static extern bool OpenPrinter(string szPrinter, out IntPtr hPrinter, IntPtr pd);
-
-        [DllImport("winspool.Drv", SetLastError = true)]
-        public static extern bool ClosePrinter(IntPtr hPrinter);
-
-        [DllImport("winspool.Drv", SetLastError = true)]
-        public static extern bool StartDocPrinter(IntPtr hPrinter, int level, [In] DOCINFOA di);
-
-        [DllImport("winspool.Drv", SetLastError = true)]
-        public static extern bool EndDocPrinter(IntPtr hPrinter);
-
-        [DllImport("winspool.Drv", SetLastError = true)]
-        public static extern bool StartPagePrinter(IntPtr hPrinter);
-
-        [DllImport("winspool.Drv", SetLastError = true)]
-        public static extern bool EndPagePrinter(IntPtr hPrinter);
-
-        [DllImport("winspool.Drv", SetLastError = true)]
-        public static extern bool WritePrinter(IntPtr hPrinter, IntPtr pBytes, int dwCount, out int dwWritten);
-
         public static bool SendStringToPrinter(string printerName, string zplCommand)
         {
-            IntPtr pBytes;
+            IntPtr pBytes = IntPtr.Zero;
             int dwCount = zplCommand.Length;
-            pBytes = Marshal.StringToCoTaskMemAnsi(zplCommand);
 
             var docInfo = new DOCINFOA
             {
@@ -94,6 +86,8 @@ namespace Weighting.ViewModels
             bool success = false;
             if (OpenPrinter(printerName, out IntPtr hPrinter, IntPtr.Zero))
             {
+                pBytes = Marshal.StringToCoTaskMemAnsi(zplCommand);
+
                 if (StartDocPrinter(hPrinter, 1, docInfo))
                 {
                     if (StartPagePrinter(hPrinter))
@@ -104,11 +98,21 @@ namespace Weighting.ViewModels
                     EndDocPrinter(hPrinter);
                 }
                 ClosePrinter(hPrinter);
+                Marshal.FreeCoTaskMem(pBytes);
             }
-
-            Marshal.FreeCoTaskMem(pBytes);
             return success;
         }
+    }
+    public   class DocumentMagementViewModel : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler? PropertyChanged;
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+      
         public DocumentMagementViewModel() 
         {
             Items1 = new ObservableCollection<Record>();
@@ -241,99 +245,66 @@ namespace Weighting.ViewModels
             //await DialogHost.Show(dialog, "RootDialog");RootDialog
             await DialogHost.Show(dialog, "DetailedInDialog");
         }
+        public static string GenerateZplWithAutoLineBreak(List<string> lines, int labelWidthDots, int fontHeightDots = 30)
+        {
+            var sb = new StringBuilder();
+           
+
+            int startX = 50;
+            int currentY = 110;
+            int lineSpacing = fontHeightDots + 10;
+            int approxCharWidth = fontHeightDots; // 估算字符宽度
+            int maxCharsPerLine = labelWidthDots / 2 / approxCharWidth; // 最多打印半张纸宽
+
+            foreach (var line in lines)
+            {
+                var brokenLines = BreakTextIntoLines(line, maxCharsPerLine);
+                foreach (var part in brokenLines)
+                {
+                    sb.AppendLine($"^FO{startX},{currentY}^A1N,{fontHeightDots},{fontHeightDots}^FD{part}^FS");
+                    currentY += lineSpacing;
+                }
+            }
+
+          
+            return sb.ToString();
+        }
+
+        private static List<string> BreakTextIntoLines(string text, int maxChars)
+        {
+            List<string> lines = new List<string>();
+            for (int i = 0; i < text.Length; i += maxChars)
+            {
+                int len = Math.Min(maxChars, text.Length - i);
+                lines.Add(text.Substring(i, len));
+            }
+            return lines;
+        }
         private void SingleCommandExecute(object parameter)
         {
            
             Record row = (Record) parameter;
+            // 填上你电脑上打印机的名字！一定要和系统打印机列表里一模一样
+            string printerName = "ZDesigner ZD888-203dpi ZPL";
+            var sb = new System.Text.StringBuilder();
+            var lines = new List<string>();
+            sb.AppendLine("^XA^CW1,E:SIMSUN.TTF^SEE:GB18030.DAT^CI26"); // 开始标签
+            lines.Add($"配方名称：{row.FormulaName}");
+            lines.Add($"混料批号：{row.BatchNumber}");
+            lines.Add($"称重时间：{DateTime.Now.ToString("yyyy年MM月dd日 HH时mm分")}");
+            lines.Add($"操作人：{GlobalViewModelSingleton.Instance.Currentusers.UserName}");
+           
 
-            // 创建PrintDocument对象
-            PrintDocument pd = new PrintDocument();
+            sb.AppendLine(GenerateZplWithAutoLineBreak(lines,850));
+            sb.AppendLine($"^FO370,110^BQN,2,10 ^FDLA,{row.BatchNumber}");
+            sb.AppendLine("^XZ"); // 结束标签
+            string resuot = sb.ToString();
+            bool result = RawPrinterHelper.SendStringToPrinter(printerName, sb.ToString());
 
-            // 设置打印机名称（如果有多台打印机，确保指定正确的打印机）
-            pd.PrinterSettings.PrinterName = "ZDesigner ZD888-203dpi ZPL";
-
-            // 检查打印机是否可用
-            if (!pd.PrinterSettings.IsValid)
-            {
-                Console.WriteLine("指定的打印机无效或未安装！");
-                return;
-            }
-
-            // 设置纸张大小为8cm x 7cm（单位转换为百ths of an inch，1cm = 39.37 hundredths of an inch）
-            PaperSize labelSize = new PaperSize("Custom", (int)(8 * 39.37), (int)(7 * 39.37));
-            pd.DefaultPageSettings.PaperSize = labelSize;
-
-            // 设置页面边距为0
-            pd.DefaultPageSettings.Margins = new Margins(0, 0, 0, 0);
-
-
-            QRCodeGenerator qrGenerator = new QRCodeGenerator();
-            QRCodeData qrCodeData = qrGenerator.CreateQrCode(row.BatchNumber, QRCodeGenerator.ECCLevel.Q);
-            QRCode qrCode = new QRCode(qrCodeData);
-            Bitmap image = qrCode.GetGraphic(3);
-
-            Bitmap qrImage = qrCode.GetGraphic(3);
-            StringFormat format = new StringFormat();
-            format.Alignment = StringAlignment.Near; // 水平对齐方式（左对齐）
-            format.Trimming = StringTrimming.Word;
+            Console.WriteLine(result ? "发送成功！" : "发送失败！");
 
             
-            // 打印二维码
-           
-            pd.PrintPage += (sender, g) =>
-            {
-
-
-                int height = 37;
-                System.Drawing.Font font = new System.Drawing.Font("黑体", 9f);
-                Brush brush = new SolidBrush(Color.Black);
-                g.Graphics.SmoothingMode = SmoothingMode.HighQuality;
-                int interval = 15;
-                int pointX = 5;
-                Rectangle destRect = new Rectangle(190, 30, image.Width, image.Height);
-                g.Graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel);
-                height += 6;
-                RectangleF layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
-                g.Graphics.DrawString("配方名称:" + row.FormulaName, font, brush, layoutRectangle, format);
-
-                height += interval;
-                /*layoutRectangle = new RectangleF(pointX, height, 230f, 85f);
-                g.Graphics.DrawString("混料批号:" + asset.BatchNumber, font, brush, layoutRectangle);*/
-
-                string text = "混料批号:" + row.BatchNumber;
-
-                // 创建布局矩形，包括位置和大小
-                layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
-
-                // 使用DrawString方法绘制文本，传递StringFormat以控制换行
-                g.Graphics.DrawString(text, font, brush, layoutRectangle, format);
-
-                height += interval + 10;
-                layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
-
-                string ouputFormat = "yyyy年MM月dd日 HH时mm分";
-                //DateTime dateTime = DateTime.ParseExact(createTime,inputFormat,CultureInfo.InvariantCulture);
-                string createTime = row.DateOfCreation;
-                g.Graphics.DrawString("称重时间:" + createTime, font, brush, layoutRectangle, format);
-
-                height += interval + 10;
-                layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
-                g.Graphics.DrawString("操作人:" + row.DateOfCreation, font, brush, layoutRectangle, format);
-               
-            };
-            // 创建最终图像（白底）
-
-
-
-
-
-
-            // 创建PrintPreviewDialog对象，并将PrintDocument对象关联到预览对话框
-            /*     PrintPreviewDialog previewDialog = new PrintPreviewDialog();
-                 previewDialog.Document = pd;
-
-                 // 显示打印预览对话框
-                 previewDialog.ShowDialog();*/
+         
 
             //保存称重记录
             string[] weightRecord = new string[20];
@@ -370,7 +341,7 @@ namespace Weighting.ViewModels
                             { "@isPrint",1}
                         }); ;
             }
-            pd.Print(); // 开始打印*/
+           
      
 
         }

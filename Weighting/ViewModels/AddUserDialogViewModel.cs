@@ -68,7 +68,7 @@ namespace Weighting.ViewModels
             set
             {
                 _username = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(UserName));
             }
         }
         private string _password;
@@ -141,13 +141,13 @@ namespace Weighting.ViewModels
         public void SignUp(object o)
         {
             string message;
-           if (Register(UserName, Password, out message))
+            if (Register(UserName, Password, out message))
             {
-                MessageBox.Show(message);
-                
+                UserName = "";
+                Password = "";
             }
-            UserName = "";
-            Password = string.Empty;
+            MessageBox.Show(message);
+           
 
 
         }
@@ -157,13 +157,13 @@ namespace Weighting.ViewModels
 
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                MessageBox.Show("用户名或密码不能为空!");
+               
                 message = "用户名或密码不能为空！";
                 return false;
             }
             if (!IsValidUsername(username))
             {
-                message = "用户名必须为 6-16 位字母和数字组合，请重新输入！";
+                message = "用户名必须为 2-20位的中文和英文，不能包含数字和特殊字符，请重新输入！";
                 return false;
             }
 
