@@ -358,14 +358,14 @@ namespace Weighting.ViewModels
                 sql = $"SELECT * FROM MeasureResults WHERE DATE(DateOfCreation) > '{CreationDate.ToString("yyyy-MM-dd")}' AND IsPrint = {SelectedItem.id}";
             }else if (string.IsNullOrEmpty(FormulaName) && !string.IsNullOrEmpty(BatchNumber))
             {//方案名为空且批次号不为空
-                sql = $"SELECT * FROM MeasureResults  WHERE  BatchNumber = '{BatchNumber}' AND DATE(DateOfCreation) > '{CreationDate.ToString("yyyy-MM-dd")}' ";
+                sql = $"SELECT * FROM MeasureResults  WHERE  BatchNumber = '{BatchNumber}' AND DATE(DateOfCreation) > '{CreationDate.ToString("yyyy-MM-dd")}' AND IsPrint = {SelectedItem.id}";
             }else if (!string.IsNullOrEmpty(FormulaName)&& string.IsNullOrEmpty(BatchNumber))
             {
                 //方案名不为空且批次号为空
-                sql = $"SELECT * FROM MeasureResults  WHERE  FormulaName = '{FormulaName}' AND DATE(DateOfCreation) > '{CreationDate.ToString("yyyy-MM-dd")}'";
+                sql = $"SELECT * FROM MeasureResults  WHERE  FormulaName = '{FormulaName}' AND DATE(DateOfCreation) > '{CreationDate.ToString("yyyy-MM-dd")}' AND IsPrint = {SelectedItem.id}";
             }else if(!string.IsNullOrEmpty(FormulaName) && !string.IsNullOrEmpty(BatchNumber))
             {
-                sql = $"SELECT * FROM MeasureResults  WHERE  FormulaName = '{FormulaName}' AND BatchNumber = '{BatchNumber}'  DATE(DateOfCreation) > '{CreationDate.ToString("yyyy-MM-dd")}'";
+                sql = $"SELECT * FROM MeasureResults  WHERE  FormulaName = '{FormulaName}' AND BatchNumber = '{BatchNumber}' AND DATE(DateOfCreation) > '{CreationDate.ToString("yyyy-MM-dd")}' AND IsPrint = {SelectedItem.id}";
             }
             using (DatabaseHelper db = new DatabaseHelper(connectionStr))
             {
