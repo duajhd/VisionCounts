@@ -501,11 +501,7 @@ namespace Weighting.ViewModels
         }
         private void PrintCommandExecute(object parameter)
         {
-            if (!isConnectPrint())
-            {
-                MessageBox.Show("请先连接上打印机!");
-                return;
-            }
+          
             //try
             //{
             //    // 寻找 USB 打印机
@@ -527,66 +523,80 @@ namespace Weighting.ViewModels
 
 
             // Console.WriteLine(result ? "打印成功" : "打印失败");
-
+            string printerName = "ZDesigner ZD888-203dpi ZPL";
             foreach (Record item in Items1)
             {
                 if (item.IsSelected) 
                 {
-                    QRCodeGenerator qrGenerator = new QRCodeGenerator();
-                    QRCodeData qrCodeData = qrGenerator.CreateQrCode(item.BatchNumber, QRCodeGenerator.ECCLevel.Q);
-                    QRCode qrCode = new QRCode(qrCodeData);
-                    Bitmap image = qrCode.GetGraphic(3);
+                    //QRCodeGenerator qrGenerator = new QRCodeGenerator();
+                    //QRCodeData qrCodeData = qrGenerator.CreateQrCode(item.BatchNumber, QRCodeGenerator.ECCLevel.Q);
+                    //QRCode qrCode = new QRCode(qrCodeData);
+                    //Bitmap image = qrCode.GetGraphic(3);
 
-                    Bitmap qrImage = qrCode.GetGraphic(3);
-                    StringFormat format = new StringFormat();
-                    format.Alignment = StringAlignment.Near; // 水平对齐方式（左对齐）
-                    format.Trimming = StringTrimming.Word;
+                    //Bitmap qrImage = qrCode.GetGraphic(3);
+                    //StringFormat format = new StringFormat();
+                    //format.Alignment = StringAlignment.Near; // 水平对齐方式（左对齐）
+                    //format.Trimming = StringTrimming.Word;
 
 
-                    // 打印二维码
-                    PrintDocument pd = new PrintDocument();
-                    pd.PrintPage += (sender, g) =>
-                    {
+                    //// 打印二维码
+                    //PrintDocument pd = new PrintDocument();
+                    //pd.PrintPage += (sender, g) =>
+                    //{
 
-                        //初始写入行坐标
-                        int height = 37;
-                        System.Drawing.Font font = new System.Drawing.Font("黑体", 9f);
-                        Brush brush = new SolidBrush(Color.Black);
-                        g.Graphics.SmoothingMode = SmoothingMode.HighQuality;
-                        int interval = 15;
-                        int pointX = 5;
-                        Rectangle destRect = new Rectangle(190, 30, image.Width, image.Height);
-                        g.Graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel);
-                        height += 6;
-                        RectangleF layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
-                        g.Graphics.DrawString("配方名称:" + item.FormulaName, font, brush, layoutRectangle, format);
+                    //    //初始写入行坐标
+                    //    int height = 37;
+                    //    System.Drawing.Font font = new System.Drawing.Font("黑体", 9f);
+                    //    Brush brush = new SolidBrush(Color.Black);
+                    //    g.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+                    //    int interval = 15;
+                    //    int pointX = 5;
+                    //    Rectangle destRect = new Rectangle(190, 30, image.Width, image.Height);
+                    //    g.Graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel);
+                    //    height += 6;
+                    //    RectangleF layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
+                    //    g.Graphics.DrawString("配方名称:" + item.FormulaName, font, brush, layoutRectangle, format);
 
-                        height += interval;
-                        /*layoutRectangle = new RectangleF(pointX, height, 230f, 85f);
-                        g.Graphics.DrawString("混料批号:" + asset.BatchNumber, font, brush, layoutRectangle);*/
+                    //    height += interval;
+                    //    /*layoutRectangle = new RectangleF(pointX, height, 230f, 85f);
+                    //    g.Graphics.DrawString("混料批号:" + asset.BatchNumber, font, brush, layoutRectangle);*/
 
-                        string text = "混料批号:" + item.BatchNumber;
+                    //    string text = "混料批号:" + item.BatchNumber;
 
-                        // 创建布局矩形，包括位置和大小
-                        layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
+                    //    // 创建布局矩形，包括位置和大小
+                    //    layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
 
-                        // 使用DrawString方法绘制文本，传递StringFormat以控制换行
-                        g.Graphics.DrawString(text, font, brush, layoutRectangle, format);
+                    //    // 使用DrawString方法绘制文本，传递StringFormat以控制换行
+                    //    g.Graphics.DrawString(text, font, brush, layoutRectangle, format);
 
-                        height += interval + 10;
-                        layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
+                    //    height += interval + 10;
+                    //    layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
 
-                        string ouputFormat = "yyyy年MM月dd日 HH时mm分";
-                        //DateTime dateTime = DateTime.ParseExact(createTime,inputFormat,CultureInfo.InvariantCulture);
-                        string createTime = item.DateOfCreation;
-                        g.Graphics.DrawString("称重时间:" + createTime, font, brush, layoutRectangle, format);
+                    //    string ouputFormat = "yyyy年MM月dd日 HH时mm分";
+                    //    //DateTime dateTime = DateTime.ParseExact(createTime,inputFormat,CultureInfo.InvariantCulture);
+                    //    string createTime = item.DateOfCreation;
+                    //    g.Graphics.DrawString("称重时间:" + createTime, font, brush, layoutRectangle, format);
 
-                        height += interval + 10;
-                        layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
-                        g.Graphics.DrawString("操作人:" + item.DateOfCreation, font, brush, layoutRectangle, format);
+                    //    height += interval + 10;
+                    //    layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
+                    //    g.Graphics.DrawString("操作人:" + item.DateOfCreation, font, brush, layoutRectangle, format);
 
-                    };
+                    //};
 
+                    var sb = new System.Text.StringBuilder();
+                    var lines = new List<string>();
+                    sb.AppendLine("^XA^CW1,E:SIMSUN.TTF^SEE:GB18030.DAT^CI26"); // 开始标签
+                    lines.Add($"配方名称：{item.FormulaName}");
+                    lines.Add($"混料批号：{item.BatchNumber}");
+                    lines.Add($"称重时间：{DateTime.Now.ToString("yyyy年MM月dd日 HH时mm分")}");
+                    lines.Add($"操作人：{GlobalViewModelSingleton.Instance.Currentusers.UserName}");
+
+
+                    sb.AppendLine(GenerateZplWithAutoLineBreak(lines, 850));
+                    sb.AppendLine($"^FO370,110^BQN,2,10 ^FDLA,{item.BatchNumber}");
+                    sb.AppendLine("^XZ"); // 结束标签
+                  
+                    bool result = RawPrinterHelper.SendStringToPrinter(printerName, sb.ToString());
                     //保存称重记录
                     string[] weightRecord = new string[20];
                     float totalWeights = 0.0f; //总重量，单位是kg
@@ -611,8 +621,8 @@ namespace Weighting.ViewModels
                         }
                     }
                     weightRecord[4] = totalWeights.ToString();
-                   // pushERP(weightRecord);
-                    pd.Print(); // 开始打印*/
+                    pushERP(weightRecord);
+                   // pd.Print(); // 开始打印*/
                     item.IsPrint = 1;
                     string connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}Devices.db";
                     string sql = $"UPDATE  MeasureResults SET IsPrint=@isPrint WHERE BatchNumber = '{item.BatchNumber}'";

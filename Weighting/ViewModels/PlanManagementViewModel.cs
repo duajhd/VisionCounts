@@ -311,11 +311,11 @@ namespace Weighting.ViewModels
 
 
             //连接后立即开始采集
-            //foreach (DeviceClient item in GlobalViewModelSingleton.Instance.deviceClients)
-            //{
+            foreach (DeviceClient item in GlobalViewModelSingleton.Instance.deviceClients)
+            {
 
-            //    await item.ConnectAsync();
-            //}
+                await item.ConnectAsync();
+            }
 
 
 

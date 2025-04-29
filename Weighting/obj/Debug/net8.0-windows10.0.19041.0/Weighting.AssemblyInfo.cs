@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Weighting")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c713c4a39943207d85076011e91d796bfa147aad")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+75f8f10233b8368d3a69f501cf3a77db232b4038")]
 [assembly: System.Reflection.AssemblyProductAttribute("Weighting")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Weighting")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
