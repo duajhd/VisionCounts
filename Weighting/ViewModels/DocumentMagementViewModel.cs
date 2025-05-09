@@ -36,6 +36,7 @@ using Newtonsoft.Json.Linq;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Management;
 using Org.BouncyCastle.Bcpg.OpenPgp;
+using System.Data.Common;
 namespace Weighting.ViewModels
 {
     public class RawPrinterHelper
@@ -284,11 +285,32 @@ namespace Weighting.ViewModels
         {
            
             Record row = (Record) parameter;
-            // 填上你电脑上打印机的名字！一定要和系统打印机列表里一模一样
-            string printerName = "ZDesigner ZD888-203dpi ZPL";
+
+            // 查找 USB 打印机
+            UsbDiscoverer usbDiscoverer = new UsbDiscoverer();
+            DiscoveredUsbPrinter usbPrinter = null;
+
+            foreach (DiscoveredUsbPrinter zebraprinter in UsbDiscoverer.GetZebraUsbPrinters(new ZebraPrinterFilter()))
+            {
+                Console.WriteLine("找到打印机：" + zebraprinter.ToString());
+                usbPrinter = zebraprinter;
+                break;
+            }
+
+            if (usbPrinter == null)
+            {
+                MessageBox.Show("未找到 USB 打印机");
+                return;
+            }
+
+            // 使用 USB 连接打印机
+            UsbConnection usbConnection = new UsbConnection(usbPrinter.Address);
+
+            usbConnection.Open();
+
             var sb = new System.Text.StringBuilder();
             var lines = new List<string>();
-            sb.AppendLine("^XA^CW1,E:SIMSUN.TTF^SEE:GB18030.DAT^CI26"); // 开始标签
+            sb.AppendLine("^XA^CW1,E:SIMSUN.TTF^SEE:GB18030.DAT^CI28"); // 开始标签
             lines.Add($"配方名称：{row.FormulaName}");
             lines.Add($"混料批号：{row.BatchNumber}");
             lines.Add($"称重时间：{DateTime.Now.ToString("yyyy年MM月dd日 HH时mm分")}");
@@ -298,39 +320,17 @@ namespace Weighting.ViewModels
             sb.AppendLine(GenerateZplWithAutoLineBreak(lines,850));
             sb.AppendLine($"^FO370,110^BQN,2,10 ^FDLA,{row.BatchNumber}");
             sb.AppendLine("^XZ"); // 结束标签
-            string resuot = sb.ToString();
-            bool result = RawPrinterHelper.SendStringToPrinter(printerName, sb.ToString());
 
-            Console.WriteLine(result ? "发送成功！" : "发送失败！");
+            // 关键：将 ZPL 字符串编码为 UTF-8 字节流
+            byte[] utf8Bytes = Encoding.UTF8.GetBytes(sb.ToString());
+            usbConnection.Write(utf8Bytes); // 直接写入字节数据
 
-            
-         
 
-            //保存称重记录
-            string[] weightRecord = new string[20];
-            float totalWeights = 0.0f; //总重量，单位是kg
-            weightRecord[0] = DateTime.Now.ToString("yyyy-MM-dd");
-             weightRecord[1] = GlobalViewModelSingleton.Instance.CuurentFormula.Creator;
-            weightRecord[2] = GlobalViewModelSingleton.Instance.CuurentFormula.FormulaName;
-            weightRecord[3] = $"{GlobalViewModelSingleton.Instance.CuurentFormula.FormulaName} /{DateTime.Now.ToString("yyyy-MM-dd")}-{GlobalViewModelSingleton.Instance.CuurentFormula.BatchNumber}";
-            int index = 5;
-            foreach (PlatformScale item in GlobalViewModelSingleton.Instance.CuurentFormula.ScalesData)
-            {
-                // detailRecord.Weight + "" + detailRecord.Unit;
-                weightRecord[index] =  $"{item.weights},{item.MaterialUnit}";
-                index += 1;
-                //计算总重量
-                if (item.MaterialUnit=="g")
-                {
-                    totalWeights += (item.weights) / 1000;
-                }
-                else
-                {
-                    totalWeights += item.weights;
-                }
-            }
-            weightRecord[4] = totalWeights.ToString();
-            pushERP(weightRecord);
+
+
+            usbConnection.Close();
+
+          
             string connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}Devices.db";
             string sql = $"UPDATE  MeasureResults SET IsPrint=@isPrint WHERE BatchNumber = '{row.BatchNumber}'";
             //$"UPDATE Users SET  UserName=@userName,RoleId=@roleId WHERE UserId = '{row.ID}'";
@@ -355,17 +355,17 @@ namespace Weighting.ViewModels
             if (string.IsNullOrEmpty(FormulaName)&& string.IsNullOrEmpty(BatchNumber))
             {
                 //全为空，查出所有结果
-                sql = $"SELECT * FROM MeasureResults WHERE DATE(DateOfCreation) > '{CreationDate.ToString("yyyy-MM-dd")}' AND IsPrint = {SelectedItem.id}";
+                sql = $"SELECT * FROM MeasureResults WHERE DATE(DateOfCreation) >= '{CreationDate.ToString("yyyy-MM-dd")}' AND IsPrint = {SelectedItem.id}";
             }else if (string.IsNullOrEmpty(FormulaName) && !string.IsNullOrEmpty(BatchNumber))
             {//方案名为空且批次号不为空
-                sql = $"SELECT * FROM MeasureResults  WHERE  BatchNumber = '{BatchNumber}' AND DATE(DateOfCreation) > '{CreationDate.ToString("yyyy-MM-dd")}' AND IsPrint = {SelectedItem.id}";
+                sql = $"SELECT * FROM MeasureResults  WHERE  BatchNumber = '{BatchNumber}' AND DATE(DateOfCreation) >= '{CreationDate.ToString("yyyy-MM-dd")}' AND IsPrint = {SelectedItem.id}";
             }else if (!string.IsNullOrEmpty(FormulaName)&& string.IsNullOrEmpty(BatchNumber))
             {
                 //方案名不为空且批次号为空
-                sql = $"SELECT * FROM MeasureResults  WHERE  FormulaName = '{FormulaName}' AND DATE(DateOfCreation) > '{CreationDate.ToString("yyyy-MM-dd")}' AND IsPrint = {SelectedItem.id}";
+                sql = $"SELECT * FROM MeasureResults  WHERE  FormulaName = '{FormulaName}' AND DATE(DateOfCreation) >= '{CreationDate.ToString("yyyy-MM-dd")}' AND IsPrint = {SelectedItem.id}";
             }else if(!string.IsNullOrEmpty(FormulaName) && !string.IsNullOrEmpty(BatchNumber))
             {
-                sql = $"SELECT * FROM MeasureResults  WHERE  FormulaName = '{FormulaName}' AND BatchNumber = '{BatchNumber}' AND DATE(DateOfCreation) > '{CreationDate.ToString("yyyy-MM-dd")}' AND IsPrint = {SelectedItem.id}";
+                sql = $"SELECT * FROM MeasureResults  WHERE  FormulaName = '{FormulaName}' AND BatchNumber = '{BatchNumber}' AND DATE(DateOfCreation) >= '{CreationDate.ToString("yyyy-MM-dd")}' AND IsPrint = {SelectedItem.id}";
             }
             using (DatabaseHelper db = new DatabaseHelper(connectionStr))
             {
@@ -406,238 +406,90 @@ namespace Weighting.ViewModels
                 }
             }
         }
-        public bool pushERP(string[] weightRecord)
-        {
-            //K3CloudApi client = new K3CloudApi("https://erp.quadrant.cn/k3cloud/");
-            K3CloudApiClient client = new K3CloudApiClient("https://erp.quadrant.cn/k3cloud/");
-            //K3CloudApi client = new K3CloudApi("http://115.236.169.2:8181/k3cloud");     zjkjhl0144.
-            try
-            {
-                //659193fec0e84d
-                var loginResult = client.Login("65cb1ca55b2f44", "ERPAPI", "Quadrant2023!#@", 2052);// 正：639691765153c9 659c049e433c9e      测试："650a55d6cf9b51", "ERP-开发", "zj@123456789"           
-                if (loginResult)
-                {
-                    //用于记录结果
-                    StringBuilder Info = new StringBuilder();
-                    //业务对象标识
-                    string formId = "VNVC_HLPH";
-                    //请求参数，要求为json字符串
-                    string jsonString = string.Format(@"
-                {{
-                    ""NeedUpDateFields"": [],
-                    ""NeedReturnFields"": [],
-                    ""IsDeleteEntry"": ""true"",
-                    ""SubSystemId"": """",
-                    ""IsVerifyBaseDataField"": ""false"",
-                    ""IsEntryBatchFill"": ""true"",
-                    ""ValidateFlag"": ""true"",
-                    ""NumberSearch"": ""true"",
-                    ""IsAutoAdjustField"": ""false"",
-                    ""InterationFlags"": """",
-                    ""IgnoreInterationFlag"": """",
-                    ""IsControlPrecision"": ""false"",
-                    ""ValidateRepeatJson"": ""false"",
-                    ""IsAutoSubmitAndAudit"": ""true"",
-                    ""Model"": {{
-                        ""FID"": 0,
-                        ""FNumber"": ""{0}"",
-                        ""FName"": ""{1}"",
-                        ""F_VNVC_OrgId"": {{
-                            ""FNumber"": ""2060""
-                        }},
-                        ""F_VNVC_CreateDate"": ""{2}"",
-                        ""F_VNVC_User"": ""{3}"",
-                        ""F_VNVC_Entity"": [
-                            {{
-                                ""FEntryID"": 0,
-                                ""F_VNVC_FAMC"": ""{1}"",
-                                ""F_VNVC_PCH"": ""{0}"",
-                                ""F_VNVC_ZZL"": ""{4}"",
-                                ""F_VNVC_PF1"": ""{5}"",
-                                ""F_VNVC_PF2"": ""{6}"",
-                                ""F_VNVC_PF3"": ""{7}"",
-                                ""F_VNVC_PF4"": ""{8}"",
-                                ""F_VNVC_PF5"": ""{9}"",
-                                ""F_VNVC_PF6"": ""{10}"",
-                                ""F_VNVC_PF7"": ""{11}"",
-                                ""F_VNVC_PF8"": ""{12}"",
-                                ""F_VNVC_CZ"": ""{13}"",
-                                ""F_VNVC_BZ"": ""{14}""
-                            }}
-                        ]
-                    }}
-                }}", weightRecord[3], weightRecord[2], weightRecord[0], weightRecord[1], weightRecord[4], weightRecord[5], weightRecord[6], weightRecord[7], weightRecord[8], weightRecord[9], weightRecord[10], weightRecord[11], weightRecord[12], weightRecord[13], weightRecord[14]);
-
-
-                    //调用接口
-                    var resultJson = client.Save(formId, jsonString);
-
-                    JObject jsonObject = JObject.Parse((string)resultJson);
-                    bool isSuccess = (bool)jsonObject["Result"]["ResponseStatus"]["IsSuccess"];
-                    if (isSuccess)
-                    {
-                        MessageBox.Show("成功同步一条记录到ERP");
-                        return true;
-                    }
-                    else
-                    {
-                        MessageBox.Show("同步记录到ERP失败!");
-
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("ERP登录校验未通过!");
-
-                }
-
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("ERP同步异常!" + e);
-
-            }
-            return false;
-        }
+     
         private void PrintCommandExecute(object parameter)
         {
-          
-            //try
-            //{
-            //    // 寻找 USB 打印机
-            //    Connection usbConnection = UsbDiscoverer.GetZebraUsbPrinters()[0].GetConnection();
-
-            //    usbConnection.Open();
-
-            //    ZebraPrinter printer = ZebraPrinterFactory.GetInstance(usbConnection);
-
-            //    string zpl = "^XA^FO50,50^A0N,50,50^FDHello Zebra!^FS^XZ";
-            //    usbConnection.Write(zpl);
-
-            //    usbConnection.Close();
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine("打印失败: " + ex.Message);
-            //}
 
 
-            // Console.WriteLine(result ? "打印成功" : "打印失败");
-            string printerName = "ZDesigner ZD888-203dpi ZPL";
-            foreach (Record item in Items1)
+            try
             {
-                if (item.IsSelected) 
+
+
+                // 查找 USB 打印机
+                UsbDiscoverer usbDiscoverer = new UsbDiscoverer();
+                DiscoveredUsbPrinter usbPrinter = null;
+
+                foreach (DiscoveredUsbPrinter zebraprinter in UsbDiscoverer.GetZebraUsbPrinters(new ZebraPrinterFilter()))
                 {
-                    //QRCodeGenerator qrGenerator = new QRCodeGenerator();
-                    //QRCodeData qrCodeData = qrGenerator.CreateQrCode(item.BatchNumber, QRCodeGenerator.ECCLevel.Q);
-                    //QRCode qrCode = new QRCode(qrCodeData);
-                    //Bitmap image = qrCode.GetGraphic(3);
+                    Console.WriteLine("找到打印机：" + zebraprinter.ToString());
+                    usbPrinter = zebraprinter;
+                    break;
+                }
 
-                    //Bitmap qrImage = qrCode.GetGraphic(3);
-                    //StringFormat format = new StringFormat();
-                    //format.Alignment = StringAlignment.Near; // 水平对齐方式（左对齐）
-                    //format.Trimming = StringTrimming.Word;
+                if (usbPrinter == null)
+                {
+                    MessageBox.Show("未找到 USB 打印机");
+                    return;
+                }
 
+                // 使用 USB 连接打印机
+                UsbConnection usbConnection = new UsbConnection(usbPrinter.Address);
 
-                    //// 打印二维码
-                    //PrintDocument pd = new PrintDocument();
-                    //pd.PrintPage += (sender, g) =>
-                    //{
+                usbConnection.Open();
 
-                    //    //初始写入行坐标
-                    //    int height = 37;
-                    //    System.Drawing.Font font = new System.Drawing.Font("黑体", 9f);
-                    //    Brush brush = new SolidBrush(Color.Black);
-                    //    g.Graphics.SmoothingMode = SmoothingMode.HighQuality;
-                    //    int interval = 15;
-                    //    int pointX = 5;
-                    //    Rectangle destRect = new Rectangle(190, 30, image.Width, image.Height);
-                    //    g.Graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel);
-                    //    height += 6;
-                    //    RectangleF layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
-                    //    g.Graphics.DrawString("配方名称:" + item.FormulaName, font, brush, layoutRectangle, format);
-
-                    //    height += interval;
-                    //    /*layoutRectangle = new RectangleF(pointX, height, 230f, 85f);
-                    //    g.Graphics.DrawString("混料批号:" + asset.BatchNumber, font, brush, layoutRectangle);*/
-
-                    //    string text = "混料批号:" + item.BatchNumber;
-
-                    //    // 创建布局矩形，包括位置和大小
-                    //    layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
-
-                    //    // 使用DrawString方法绘制文本，传递StringFormat以控制换行
-                    //    g.Graphics.DrawString(text, font, brush, layoutRectangle, format);
-
-                    //    height += interval + 10;
-                    //    layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
-
-                    //    string ouputFormat = "yyyy年MM月dd日 HH时mm分";
-                    //    //DateTime dateTime = DateTime.ParseExact(createTime,inputFormat,CultureInfo.InvariantCulture);
-                    //    string createTime = item.DateOfCreation;
-                    //    g.Graphics.DrawString("称重时间:" + createTime, font, brush, layoutRectangle, format);
-
-                    //    height += interval + 10;
-                    //    layoutRectangle = new RectangleF(pointX, height, 180f, 85f);
-                    //    g.Graphics.DrawString("操作人:" + item.DateOfCreation, font, brush, layoutRectangle, format);
-
-                    //};
-
-                    var sb = new System.Text.StringBuilder();
-                    var lines = new List<string>();
-                    sb.AppendLine("^XA^CW1,E:SIMSUN.TTF^SEE:GB18030.DAT^CI26"); // 开始标签
-                    lines.Add($"配方名称：{item.FormulaName}");
-                    lines.Add($"混料批号：{item.BatchNumber}");
-                    lines.Add($"称重时间：{DateTime.Now.ToString("yyyy年MM月dd日 HH时mm分")}");
-                    lines.Add($"操作人：{GlobalViewModelSingleton.Instance.Currentusers.UserName}");
-
-
-                    sb.AppendLine(GenerateZplWithAutoLineBreak(lines, 850));
-                    sb.AppendLine($"^FO370,110^BQN,2,10 ^FDLA,{item.BatchNumber}");
-                    sb.AppendLine("^XZ"); // 结束标签
-                  
-                    bool result = RawPrinterHelper.SendStringToPrinter(printerName, sb.ToString());
-                    //保存称重记录
-                    string[] weightRecord = new string[20];
-                    float totalWeights = 0.0f; //总重量，单位是kg
-                    weightRecord[0] = DateTime.Now.ToString("yyyy-MM-dd");
-                    weightRecord[1] = GlobalViewModelSingleton.Instance.CuurentFormula.Creator;
-                    weightRecord[2] = GlobalViewModelSingleton.Instance.CuurentFormula.FormulaName;
-                    weightRecord[3] = $"{GlobalViewModelSingleton.Instance.CuurentFormula.FormulaName} /{DateTime.Now.ToString("yyyy-MM-dd")}-{GlobalViewModelSingleton.Instance.CuurentFormula.BatchNumber}";
-                    int index = 5;
-                    foreach (PlatformScale platformScale in GlobalViewModelSingleton.Instance.CuurentFormula.ScalesData)
+                foreach (Record item in Items1)
+                {
+                    if (item.IsSelected)
                     {
-                        // detailRecord.Weight + "" + detailRecord.Unit;
-                        weightRecord[index] = $"{platformScale.weights},{platformScale.MaterialUnit}";
-                        index += 1;
-                        //计算总重量
-                        if (platformScale.MaterialUnit == "g")
+
+
+                        var sb = new System.Text.StringBuilder();
+                        var lines = new List<string>();
+                        sb.AppendLine("^XA^CW1,E:SIMSUN.TTF^SEE:GB18030.DAT^CI28"); // 开始标签
+                        lines.Add($"配方名称：{item.FormulaName}");
+                        lines.Add($"混料批号：{item.BatchNumber}");
+                        lines.Add($"称重时间：{DateTime.Now.ToString("yyyy年MM月dd日 HH时mm分")}");
+                        lines.Add($"操作人：{GlobalViewModelSingleton.Instance.Currentusers.UserName}");
+
+
+                        sb.AppendLine(GenerateZplWithAutoLineBreak(lines, 850));
+                        sb.AppendLine($"^FO370,110^BQN,2,10 ^FDLA,{item.BatchNumber}");
+                        sb.AppendLine("^XZ"); // 结束标签
+
+                        // 关键：将 ZPL 字符串编码为 UTF-8 字节流
+                        byte[] utf8Bytes = Encoding.UTF8.GetBytes(sb.ToString());
+                        usbConnection.Write(utf8Bytes); // 直接写入字节数据
+                      
+                        // pd.Print(); // 开始打印*/
+                        item.IsPrint = 1;
+                        string connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}Devices.db";
+                        string sql = $"UPDATE  MeasureResults SET IsPrint=@isPrint WHERE BatchNumber = '{item.BatchNumber}'";
+                        //$"UPDATE Users SET  UserName=@userName,RoleId=@roleId WHERE UserId = '{row.ID}'";
+                        using (DatabaseHelper db = new DatabaseHelper(connectionStr))
                         {
-                            totalWeights += (platformScale.weights) / 1000;
-                        }
-                        else
-                        {
-                            totalWeights += platformScale.weights;
-                        }
-                    }
-                    weightRecord[4] = totalWeights.ToString();
-                    pushERP(weightRecord);
-                   // pd.Print(); // 开始打印*/
-                    item.IsPrint = 1;
-                    string connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}Devices.db";
-                    string sql = $"UPDATE  MeasureResults SET IsPrint=@isPrint WHERE BatchNumber = '{item.BatchNumber}'";
-                    //$"UPDATE Users SET  UserName=@userName,RoleId=@roleId WHERE UserId = '{row.ID}'";
-                    using (DatabaseHelper db = new DatabaseHelper(connectionStr))
-                    {
-                        db.ExecuteNonQuery(sql,new Dictionary<string, object>
+                            db.ExecuteNonQuery(sql, new Dictionary<string, object>
                         {
                             { "@isPrint",1}
-                        });;
+                        }); ;
+                        }
                     }
+
+
                 }
-               
+                usbConnection.Close();
+
+
 
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine("打印失败：" + ex.Message);
+               
+            }
+        
+           
+
+           
         }
         //检查是否有打印机连接成功
         public bool isConnectPrint()

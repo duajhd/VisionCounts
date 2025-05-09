@@ -1,15 +1,21 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Kingdee.BOS.WebApi.Client;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using Weighting.Shared;
+using static MaterialDesignThemes.Wpf.Theme.ToolBar;
+
 
 namespace Weighting.ViewModels
 {
@@ -73,15 +79,121 @@ namespace Weighting.ViewModels
             }
          
         }
+        public bool pushERP(string[] weightRecord)
+        {
+            //K3CloudApi client = new K3CloudApi("https://erp.quadrant.cn/k3cloud/");
+           // K3CloudApiClient client = new K3CloudApiClient("https://erp.quadrant.cn/k3cloud/");
+            //K3CloudApi client = new K3CloudApi("http://115.236.169.2:8181/k3cloud");     zjkjhl0144.
+            try
+            {
+                //659193fec0e84d
+                K3CloudApiClient client = new K3CloudApiClient("http://10.11.18.24/K3Cloud/");
+                var loginResult = client.ValidateLogin("6819b5bd88b930", "ERP-开发", "147258Zj!@#", 2052);
+                //var loginResult = client.Login("65cb1ca55b2f44", "ERPAPI", "Quadrant2023!#@", 2052);// 正：639691765153c9 659c049e433c9e      测试："650a55d6cf9b51", "ERP-开发", "zj@123456789"           
+                JObject jsonObject = JObject.Parse((string)loginResult);
+                
+                if (1 == (int)jsonObject["LoginResultType"] )
+                {
+                    //用于记录结果
+                    StringBuilder Info = new StringBuilder();
+                    //业务对象标识
+                    string formId = "VNVC_HLPH";
+                    //请求参数，要求为json字符串
+                    string jsonString = string.Format(@"
+                {{
+                    ""NeedUpDateFields"": [],
+                    ""NeedReturnFields"": [],
+                    ""IsDeleteEntry"": ""true"",
+                    ""SubSystemId"": """",
+                    ""IsVerifyBaseDataField"": ""false"",
+                    ""IsEntryBatchFill"": ""true"",
+                    ""ValidateFlag"": ""true"",
+                    ""NumberSearch"": ""true"",
+                    ""IsAutoAdjustField"": ""false"",
+                    ""InterationFlags"": """",
+                    ""IgnoreInterationFlag"": """",
+                    ""IsControlPrecision"": ""false"",
+                    ""ValidateRepeatJson"": ""false"",
+                    ""IsAutoSubmitAndAudit"": ""true"",
+                    ""Model"": {{
+                        ""FID"": 0,
+                        ""FNumber"": ""{0}"",
+                        ""FName"": ""{1}"",
+                        ""F_VNVC_OrgId"": {{
+                            ""FNumber"": ""2060""
+                        }},
+                        ""F_VNVC_CreateDate"": ""{2}"",
+                        ""F_VNVC_User"": ""{3}"",
+                        ""F_VNVC_Entity"": [
+                            {{
+                                ""FEntryID"": 0,
+                                ""F_VNVC_FAMC"": ""{1}"",
+                                ""F_VNVC_PCH"": ""{0}"",
+                                ""F_VNVC_ZZL"": ""{4}"",
+                                ""F_VNVC_PF1"": ""{5}"",
+                                ""F_VNVC_PF2"": ""{6}"",
+                                ""F_VNVC_PF3"": ""{7}"",
+                                ""F_VNVC_PF4"": ""{8}"",
+                                ""F_VNVC_PF5"": ""{9}"",
+                                ""F_VNVC_PF6"": ""{10}"",
+                                ""F_VNVC_PF7"": ""{11}"",
+                                ""F_VNVC_PF8"": ""{12}"",
+                                ""F_VNVC_CZ"": ""{13}"",
+                                ""F_VNVC_BZ"": ""{14}""
+                            }}
+                        ]
+                    }}
+                }}", weightRecord[3], weightRecord[2], weightRecord[0], weightRecord[1], weightRecord[4], weightRecord[5], weightRecord[6], weightRecord[7], weightRecord[8], weightRecord[9], weightRecord[10], weightRecord[11], weightRecord[12], weightRecord[13], weightRecord[14]);
+
+
+                    //调用接口
+                    var resultJson = client.Save(formId, jsonString);
+
+                     jsonObject = JObject.Parse((string)resultJson);
+                    bool isSuccess = (bool)jsonObject["Result"]["ResponseStatus"]["IsSuccess"];
+                    if (isSuccess)
+                    {
+                        MessageBox.Show("成功同步一条记录到ERP");
+                        return true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("同步记录到ERP失败!");
+
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("ERP登录校验未通过!");
+
+                }
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("ERP同步异常!" + e);
+
+            }
+            return false;
+        }
         //生成一条称重记录
-      private void GenerateRecordsCommandExecute(object parameter)
+        private void GenerateRecordsCommandExecute(object parameter)
         {
             if (GlobalViewModelSingleton.Instance.IPToMeasureResult.Count == 0)
             {
                 MessageBox.Show("没有激活的方案");
                 return;
             }
-            GlobalViewModelSingleton.Instance.CuurentFormula.BatchNumber += 1;
+
+            int SatisfiedSacleCounts = GlobalViewModelSingleton.Instance.IPToMeasureResult.Count(pair=>pair.Value.IsSatisfied==false);
+            //if (SatisfiedSacleCounts!=0)
+            //{
+            //    MessageBox.Show("有秤台未达标准重量！全部达标后才可生成");
+            //    return;
+            //}
+            //批次当天切换方案不会清零，而且可以继承别的方案的批号；过24点后自动清理   还是得从数据库获取一个批号
+            GlobalViewModelSingleton.Instance.CuurentFormula.BatchNumber = GetTodayBatchNum();
+            
             string connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}Devices.db";
             string sql = "INSERT INTO MeasureResults( FormulaName, DateOfCreation, Operator, BatchNumber,IsPrint) VALUES( @formulaName, @dateOfCreation, @operator, @batchNumber,@isPrint)";
             string BatchNumber =$"{GlobalViewModelSingleton.Instance.CuurentFormula.FormulaName} /{DateTime.Now.ToString("yyyyMMdd")}-{GlobalViewModelSingleton.Instance.CuurentFormula.BatchNumber}";
@@ -131,7 +243,32 @@ namespace Weighting.ViewModels
                     });
                 }
 
-
+                //保存称重记录
+                string[] weightRecord = new string[20];
+                float totalWeights = 0.0f; //总重量，单位是kg
+                weightRecord[0] = DateTime.Now.ToString("yyyy-MM-dd");
+                weightRecord[1] = GlobalViewModelSingleton.Instance.CuurentFormula.Creator;
+                weightRecord[2] = GlobalViewModelSingleton.Instance.CuurentFormula.FormulaName;
+                weightRecord[3] = $"{GlobalViewModelSingleton.Instance.CuurentFormula.FormulaName} /{DateTime.Now.ToString("yyyyMMdd")}-{GlobalViewModelSingleton.Instance.CuurentFormula.BatchNumber}";
+                int index = 5;
+                foreach (MeasureResult results in GlobalViewModelSingleton.Instance.IPToMeasureResult.Values)
+                {
+                    // detailRecord.Weight + "" + detailRecord.Unit;
+                    weightRecord[index] = $"{results.weights}{results.MaterialUnit}";
+                    index += 1;
+                    //计算总重量，单位是kg
+                    if (results.MaterialUnit == "g")
+                    {
+                        totalWeights += (results.Result) / 1000;
+                    }
+                    else
+                    {
+                        totalWeights += results.Result;
+                    }
+                }
+                weightRecord[4] = totalWeights.ToString();
+                bool res = pushERP(weightRecord);
+              
 
             } 
             catch(Exception ex)
@@ -318,6 +455,40 @@ namespace Weighting.ViewModels
             ushort crcInData = BitConverter.ToUInt16(dataWithCRC, len - 2);
 
             return crcCalculated == crcInData;
+        }
+
+
+        private int GetTodayBatchNum()
+        {
+            string connectionStr = $"Data Source={GlobalViewModelSingleton.Instance.CurrentDirectory}Devices.db";
+              string sql = $"SELECT BatchNumber FROM MeasureResults WHERE DATE(DateOfCreation) = '{DateTime.Now.ToString("yyyy-MM-dd")}'";
+           // string sql = $"SELECT BatchNumber FROM MeasureResults WHERE DATE(DateOfCreation) = '2025-05-10'";
+            List<string> batchnums = new List<string>();
+            using (DatabaseHelper db = new DatabaseHelper(connectionStr))
+            {
+                DataTable dt = db.ExecuteQuery(sql);
+                
+
+              foreach (DataRow row in dt.Rows)
+              {
+                    batchnums.Add(DataRowHelper.GetValue<string>(row, "BatchNumber", null));
+              }
+            }
+            int? max = batchnums
+            .Select(s =>
+            {
+                var match = Regex.Match(s, @"-(\d+)$");
+                return match.Success ? (int?)int.Parse(match.Groups[1].Value) : null;
+            })
+            .Where(x => x.HasValue)
+            .Max();
+            if (max>0&& max!=0)
+            {
+                return max.Value+1;
+            }
+            else{
+                return 1;
+            }
         }
     }
 }

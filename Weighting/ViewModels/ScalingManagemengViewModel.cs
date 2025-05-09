@@ -193,11 +193,11 @@ namespace Weighting.ViewModels
             {
                 MaterialName = "",
 
-                weights = 0.00f,
+                weights = 0.000f,
 
-                UpperTolerance = 0.00f,
+                UpperTolerance = 0.000f,
 
-                LowerTolerance = -0.00f,
+                LowerTolerance = -0.000f,
 
                 ScalingNum = "1"
 
@@ -267,9 +267,9 @@ namespace Weighting.ViewModels
                     db.ExecuteNonQuery(sql, new Dictionary<string, object>
                 {
                     { "@materialName",item.Item.MaterialName},
-                    {"@weights",Math.Round(item.Item.weights,2) },
-                            { "@upperTolerance", Math.Round(item.Item.UpperTolerance,2) },
-                            { "@lowerTolerance",Math.Round(item.Item.LowerTolerance,2)},
+                    {"@weights",Math.Round(item.Item.weights,3) },
+                            { "@upperTolerance", Math.Round(item.Item.UpperTolerance,3) },
+                            { "@lowerTolerance",Math.Round(item.Item.LowerTolerance,3)},
                             { "@code",Code},
                             { "@name",FormulaName},
                             { "@scalingName",$"{item.Item.ScalingID}号秤台"},

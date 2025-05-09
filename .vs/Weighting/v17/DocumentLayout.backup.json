@@ -1,0 +1,634 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\zhijain\\Weighting\\Weighting\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\views\\scalingmagement.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\views\\scalingmagement.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\viewmodels\\weightingmanagementviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\viewmodels\\weightingmanagementviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\weightingtypes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\weightingtypes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\shared\\deviceclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\shared\\deviceclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\shared\\globalviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\shared\\globalviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\viewmodels\\documentmagementviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\viewmodels\\documentmagementviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\viewmodels\\planmanagementviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\viewmodels\\planmanagementviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\weighting.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\weighting.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\viewmodels\\scalingmanagemengviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\viewmodels\\scalingmanagemengviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\viewmodels\\loginviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\viewmodels\\loginviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\views\\weightingmanagement.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\views\\weightingmanagement.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\shared\\permissiontovisibilityconverter .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\shared\\permissiontovisibilityconverter .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\views\\detailedinformationdialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\views\\detailedinformationdialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\views\\changeformuladialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\views\\changeformuladialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\views\\planmanagement.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\views\\planmanagement.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\viewmodels\\scalingresults.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\viewmodels\\scalingresults.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\weightingviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\weightingviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\login.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\login.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\viewmodels\\adduserdialogviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\viewmodels\\adduserdialogviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\views\\adduserdialog.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\views\\adduserdialog.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\views\\adduserdialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\views\\adduserdialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\views\\adddevicedialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\views\\adddevicedialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\shared\\notemptyvalidationrule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\shared\\notemptyvalidationrule.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\views\\weightingmanagement.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\views\\weightingmanagement.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\viewmodels\\usermanagementviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\viewmodels\\usermanagementviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\views\\documentmagement.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\views\\documentmagement.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Quadrant\\Weighing_Consumer_System\\Weighing_Consumer_System\\page\\RecordPage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\views\\usermanagement.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\views\\usermanagement.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\views\\detailedinformationdialog.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\views\\detailedinformationdialog.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\views\\adddevicedialog.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\views\\adddevicedialog.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\views\\changeuserdialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\views\\changeuserdialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\viewmodels\\devicemanagementviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\viewmodels\\devicemanagementviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\views\\documentmagement.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\views\\documentmagement.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\shared\\bindingproxy .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\shared\\bindingproxy .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\viewmodels\\rolemanagementviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\viewmodels\\rolemanagementviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|d:\\zhijain\\weighting\\weighting\\weighting\\views\\devicemanagement.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{B7ED6A54-1182-47A1-90F3-5A5F3AC7B029}|Weighting\\Weighting.csproj|solutionrelative:weighting\\views\\devicemanagement.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Weighting",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Weighting.csproj",
+              "RelativeDocumentMoniker": "Weighting\\Weighting.csproj",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Weighting.csproj",
+              "RelativeToolTip": "Weighting\\Weighting.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-04-16T05:28:14.119Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "GlobalViewModel.cs",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Shared\\GlobalViewModel.cs",
+              "RelativeDocumentMoniker": "Weighting\\Shared\\GlobalViewModel.cs",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Shared\\GlobalViewModel.cs",
+              "RelativeToolTip": "Weighting\\Shared\\GlobalViewModel.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAYwDUAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-16T05:09:09.491Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "WeightingTypes.cs",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\WeightingTypes.cs",
+              "RelativeDocumentMoniker": "Weighting\\WeightingTypes.cs",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\WeightingTypes.cs",
+              "RelativeToolTip": "Weighting\\WeightingTypes.cs",
+              "ViewState": "AgIAAH0BAAAAAAAAAAA+wIcBAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-16T05:17:46.972Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "DeviceClient.cs",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Shared\\DeviceClient.cs",
+              "RelativeDocumentMoniker": "Weighting\\Shared\\DeviceClient.cs",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Shared\\DeviceClient.cs",
+              "RelativeToolTip": "Weighting\\Shared\\DeviceClient.cs",
+              "ViewState": "AgIAAGAAAAAAAAAAAAAEwHAAAABbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T00:11:55.962Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "Weighting\\MainWindow.xaml",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\MainWindow.xaml",
+              "RelativeToolTip": "Weighting\\MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-21T06:01:25.787Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ScalingMagement.xaml",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Views\\ScalingMagement.xaml",
+              "RelativeDocumentMoniker": "Weighting\\Views\\ScalingMagement.xaml",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Views\\ScalingMagement.xaml",
+              "RelativeToolTip": "Weighting\\Views\\ScalingMagement.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-17T00:54:33.965Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "WeightingManagementViewModel.cs",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\ViewModels\\WeightingManagementViewModel.cs",
+              "RelativeDocumentMoniker": "Weighting\\ViewModels\\WeightingManagementViewModel.cs",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\ViewModels\\WeightingManagementViewModel.cs",
+              "RelativeToolTip": "Weighting\\ViewModels\\WeightingManagementViewModel.cs",
+              "ViewState": "AgIAAM0AAAAAAAAAAAAgwF4AAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-16T05:27:01.921Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{269a02dc-6af8-11d3-bdc4-00c04f688e50}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "PlanManagementViewModel.cs",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\ViewModels\\PlanManagementViewModel.cs",
+              "RelativeDocumentMoniker": "Weighting\\ViewModels\\PlanManagementViewModel.cs",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\ViewModels\\PlanManagementViewModel.cs",
+              "RelativeToolTip": "Weighting\\ViewModels\\PlanManagementViewModel.cs",
+              "ViewState": "AgIAACkAAAAAAAAAAAAkwBYAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-16T05:09:16.472Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "LoginViewModel.cs",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\ViewModels\\LoginViewModel.cs",
+              "RelativeDocumentMoniker": "Weighting\\ViewModels\\LoginViewModel.cs",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\ViewModels\\LoginViewModel.cs",
+              "RelativeToolTip": "Weighting\\ViewModels\\LoginViewModel.cs",
+              "ViewState": "AgIAAGoAAAAAAAAAAAAQwJgAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-16T05:31:19.417Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "DocumentMagementViewModel.cs",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\ViewModels\\DocumentMagementViewModel.cs",
+              "RelativeDocumentMoniker": "Weighting\\ViewModels\\DocumentMagementViewModel.cs",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\ViewModels\\DocumentMagementViewModel.cs",
+              "RelativeToolTip": "Weighting\\ViewModels\\DocumentMagementViewModel.cs",
+              "ViewState": "AgIAAHMBAAAAAAAAAAAYwIwBAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-19T03:49:50.559Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ScalingManagemengViewModel.cs",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\ViewModels\\ScalingManagemengViewModel.cs",
+              "RelativeDocumentMoniker": "Weighting\\ViewModels\\ScalingManagemengViewModel.cs",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\ViewModels\\ScalingManagemengViewModel.cs",
+              "RelativeToolTip": "Weighting\\ViewModels\\ScalingManagemengViewModel.cs",
+              "ViewState": "AgIAAA0BAAAAAAAAAAAswBYBAAA7AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T00:54:38.003Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "WeightingManagement.xaml",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Views\\WeightingManagement.xaml",
+              "RelativeDocumentMoniker": "Weighting\\Views\\WeightingManagement.xaml",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Views\\WeightingManagement.xaml",
+              "RelativeToolTip": "Weighting\\Views\\WeightingManagement.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-16T05:12:03.782Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "PermissionToVisibilityConverter .cs",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Shared\\PermissionToVisibilityConverter .cs",
+              "RelativeDocumentMoniker": "Weighting\\Shared\\PermissionToVisibilityConverter .cs",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Shared\\PermissionToVisibilityConverter .cs",
+              "RelativeToolTip": "Weighting\\Shared\\PermissionToVisibilityConverter .cs",
+              "ViewState": "AgIAALcAAAAAAAAAAAAQwMMAAABjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-21T07:43:42.984Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "ChangeFormulaDialog.xaml",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Views\\ChangeFormulaDialog.xaml",
+              "RelativeDocumentMoniker": "Weighting\\Views\\ChangeFormulaDialog.xaml",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Views\\ChangeFormulaDialog.xaml",
+              "RelativeToolTip": "Weighting\\Views\\ChangeFormulaDialog.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-21T01:24:08.196Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "DetailedInformationDialog.xaml",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Views\\DetailedInformationDialog.xaml",
+              "RelativeDocumentMoniker": "Weighting\\Views\\DetailedInformationDialog.xaml",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Views\\DetailedInformationDialog.xaml",
+              "RelativeToolTip": "Weighting\\Views\\DetailedInformationDialog.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-22T06:28:46.927Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "PlanManagement.xaml",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Views\\PlanManagement.xaml",
+              "RelativeDocumentMoniker": "Weighting\\Views\\PlanManagement.xaml",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Views\\PlanManagement.xaml",
+              "RelativeToolTip": "Weighting\\Views\\PlanManagement.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-16T05:19:01.485Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "ScalingResults.xaml",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\ViewModels\\ScalingResults.xaml",
+              "RelativeDocumentMoniker": "Weighting\\ViewModels\\ScalingResults.xaml",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\ViewModels\\ScalingResults.xaml",
+              "RelativeToolTip": "Weighting\\ViewModels\\ScalingResults.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-17T10:40:34.036Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "WeightingViewModel.cs",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\WeightingViewModel.cs",
+              "RelativeDocumentMoniker": "Weighting\\WeightingViewModel.cs",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\WeightingViewModel.cs",
+              "RelativeToolTip": "Weighting\\WeightingViewModel.cs",
+              "ViewState": "AgIAAPMAAAAAAAAAAIBJwPUAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-16T05:17:46.325Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "AddDeviceDialog.xaml.cs",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Views\\AddDeviceDialog.xaml.cs",
+              "RelativeDocumentMoniker": "Weighting\\Views\\AddDeviceDialog.xaml.cs",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Views\\AddDeviceDialog.xaml.cs",
+              "RelativeToolTip": "Weighting\\Views\\AddDeviceDialog.xaml.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAIBJwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T06:29:01.896Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "App.xaml",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\App.xaml",
+              "RelativeDocumentMoniker": "Weighting\\App.xaml",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\App.xaml",
+              "RelativeToolTip": "Weighting\\App.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-22T03:04:13.494Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "DetailedInformationDialog.xaml.cs",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Views\\DetailedInformationDialog.xaml.cs",
+              "RelativeDocumentMoniker": "Weighting\\Views\\DetailedInformationDialog.xaml.cs",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Views\\DetailedInformationDialog.xaml.cs",
+              "RelativeToolTip": "Weighting\\Views\\DetailedInformationDialog.xaml.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAIBJwBQAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T06:28:55.333Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Login.xaml",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Login.xaml",
+              "RelativeDocumentMoniker": "Weighting\\Login.xaml",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Login.xaml",
+              "RelativeToolTip": "Weighting\\Login.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-18T10:44:23.812Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "RecordPage.xaml.cs",
+              "DocumentMoniker": "D:\\Quadrant\\Weighing_Consumer_System\\Weighing_Consumer_System\\page\\RecordPage.xaml.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Quadrant\\Weighing_Consumer_System\\Weighing_Consumer_System\\page\\RecordPage.xaml.cs",
+              "ToolTip": "D:\\Quadrant\\Weighing_Consumer_System\\Weighing_Consumer_System\\page\\RecordPage.xaml.cs",
+              "RelativeToolTip": "..\\..\\..\\Quadrant\\Weighing_Consumer_System\\Weighing_Consumer_System\\page\\RecordPage.xaml.cs",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T07:32:09.662Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "WeightingManagement.xaml.cs",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Views\\WeightingManagement.xaml.cs",
+              "RelativeDocumentMoniker": "Weighting\\Views\\WeightingManagement.xaml.cs",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Views\\WeightingManagement.xaml.cs",
+              "RelativeToolTip": "Weighting\\Views\\WeightingManagement.xaml.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAowAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-28T02:52:48.09Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "AdduserDialog.xaml",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Views\\AdduserDialog.xaml",
+              "RelativeDocumentMoniker": "Weighting\\Views\\AdduserDialog.xaml",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Views\\AdduserDialog.xaml",
+              "RelativeToolTip": "Weighting\\Views\\AdduserDialog.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-28T07:34:09.419Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "AdduserDialog.xaml.cs",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Views\\AdduserDialog.xaml.cs",
+              "RelativeDocumentMoniker": "Weighting\\Views\\AdduserDialog.xaml.cs",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Views\\AdduserDialog.xaml.cs",
+              "RelativeToolTip": "Weighting\\Views\\AdduserDialog.xaml.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAIBJwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-28T08:11:12.489Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "DocumentMagement.xaml.cs",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Views\\DocumentMagement.xaml.cs",
+              "RelativeDocumentMoniker": "Weighting\\Views\\DocumentMagement.xaml.cs",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Views\\DocumentMagement.xaml.cs",
+              "RelativeToolTip": "Weighting\\Views\\DocumentMagement.xaml.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAIBJwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-21T07:26:53.521Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "BindingProxy .cs",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Shared\\BindingProxy .cs",
+              "RelativeDocumentMoniker": "Weighting\\Shared\\BindingProxy .cs",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Shared\\BindingProxy .cs",
+              "RelativeToolTip": "Weighting\\Shared\\BindingProxy .cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAIBJwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-21T05:06:21.301Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "AddUserDialogViewModel.cs",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\ViewModels\\AddUserDialogViewModel.cs",
+              "RelativeDocumentMoniker": "Weighting\\ViewModels\\AddUserDialogViewModel.cs",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\ViewModels\\AddUserDialogViewModel.cs",
+              "RelativeToolTip": "Weighting\\ViewModels\\AddUserDialogViewModel.cs",
+              "ViewState": "AgIAAIwAAAAAAAAAAIAywJIAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-21T00:15:14.388Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "RoleManagementViewModel.cs",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\ViewModels\\RoleManagementViewModel.cs",
+              "RelativeDocumentMoniker": "Weighting\\ViewModels\\RoleManagementViewModel.cs",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\ViewModels\\RoleManagementViewModel.cs",
+              "RelativeToolTip": "Weighting\\ViewModels\\RoleManagementViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-21T00:15:07.42Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "Weighting\\MainWindow.xaml.cs",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\MainWindow.xaml.cs",
+              "RelativeToolTip": "Weighting\\MainWindow.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-18T10:43:51.561Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "AddDeviceDialog.xaml",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Views\\AddDeviceDialog.xaml",
+              "RelativeDocumentMoniker": "Weighting\\Views\\AddDeviceDialog.xaml",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Views\\AddDeviceDialog.xaml",
+              "RelativeToolTip": "Weighting\\Views\\AddDeviceDialog.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-17T00:48:42.544Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "DeviceManagementViewModel.cs",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\ViewModels\\DeviceManagementViewModel.cs",
+              "RelativeDocumentMoniker": "Weighting\\ViewModels\\DeviceManagementViewModel.cs",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\ViewModels\\DeviceManagementViewModel.cs",
+              "RelativeToolTip": "Weighting\\ViewModels\\DeviceManagementViewModel.cs",
+              "ViewState": "AgIAANoAAAAAAAAAAAAkwOYAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T00:16:06.456Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "NotEmptyValidationRule.cs",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Shared\\NotEmptyValidationRule.cs",
+              "RelativeDocumentMoniker": "Weighting\\Shared\\NotEmptyValidationRule.cs",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Shared\\NotEmptyValidationRule.cs",
+              "RelativeToolTip": "Weighting\\Shared\\NotEmptyValidationRule.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T00:16:04.233Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "UserManagement.xaml",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Views\\UserManagement.xaml",
+              "RelativeDocumentMoniker": "Weighting\\Views\\UserManagement.xaml",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Views\\UserManagement.xaml",
+              "RelativeToolTip": "Weighting\\Views\\UserManagement.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-17T00:11:21.713Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "ChangeUserDialog.xaml",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Views\\ChangeUserDialog.xaml",
+              "RelativeDocumentMoniker": "Weighting\\Views\\ChangeUserDialog.xaml",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Views\\ChangeUserDialog.xaml",
+              "RelativeToolTip": "Weighting\\Views\\ChangeUserDialog.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-17T00:11:16.698Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "DocumentMagement.xaml",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Views\\DocumentMagement.xaml",
+              "RelativeDocumentMoniker": "Weighting\\Views\\DocumentMagement.xaml",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Views\\DocumentMagement.xaml",
+              "RelativeToolTip": "Weighting\\Views\\DocumentMagement.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-17T00:11:07.442Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "DeviceManagement.xaml",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Views\\DeviceManagement.xaml",
+              "RelativeDocumentMoniker": "Weighting\\Views\\DeviceManagement.xaml",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Views\\DeviceManagement.xaml",
+              "RelativeToolTip": "Weighting\\Views\\DeviceManagement.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-17T00:10:44.976Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "UserManagementViewModel.cs",
+              "DocumentMoniker": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\ViewModels\\UserManagementViewModel.cs",
+              "RelativeDocumentMoniker": "Weighting\\ViewModels\\UserManagementViewModel.cs",
+              "ToolTip": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\ViewModels\\UserManagementViewModel.cs",
+              "RelativeToolTip": "Weighting\\ViewModels\\UserManagementViewModel.cs",
+              "ViewState": "AgIAAAwBAAAAAAAAAAAgwBsBAAB2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-16T05:31:21.522Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -2228,6 +2228,18 @@
           }
         }
       },
+      "Yefeng.Kingdee.BOS.WebApi.Client/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.1"
+        },
+        "compile": {
+          "lib/net5.0/Yefeng.Kingdee.BOS.WebApi.Client.dll": {}
+        },
+        "runtime": {
+          "lib/net5.0/Yefeng.Kingdee.BOS.WebApi.Client.dll": {}
+        }
+      },
       "Zebra.Printer.SDK/3.0.3337": {
         "type": "package",
         "dependencies": {
@@ -5867,6 +5879,18 @@
         "version.txt"
       ]
     },
+    "Yefeng.Kingdee.BOS.WebApi.Client/1.0.0": {
+      "sha512": "ZlzkhSjo3OzbMCcD1zmNWnhES6edEn4Owd+ghMLdMchLx45949en7KWp/Ewi/q0CRRdo9MmS5pwwvkRCxQz6iQ==",
+      "type": "package",
+      "path": "yefeng.kingdee.bos.webapi.client/1.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net5.0/Yefeng.Kingdee.BOS.WebApi.Client.dll",
+        "yefeng.kingdee.bos.webapi.client.1.0.0.nupkg.sha512",
+        "yefeng.kingdee.bos.webapi.client.nuspec"
+      ]
+    },
     "Zebra.Printer.SDK/3.0.3337": {
       "sha512": "kALMUcfac0OLxyxgwpE5p/SkfDk9s12eWpcz/rCp+ymgPqsfoGMcptX+t32NLrykAAGkBcJW+Vm/qf+KfxdcaQ==",
       "type": "package",
@@ -5906,27 +5930,28 @@
       "SkiaSharp >= 3.116.1",
       "System.Data.SQLite >= 1.0.119",
       "System.IO.Ports >= 9.0.4",
+      "Yefeng.Kingdee.BOS.WebApi.Client >= 1.0.0",
       "Zebra.Printer.SDK >= 3.0.3337"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\26672\\.nuget\\packages\\": {},
+    "C:\\Users\\蔡明\\.nuget\\packages\\": {},
     "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Quadrant\\Weighting\\Weighting\\Weighting.csproj",
+      "projectUniqueName": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Weighting.csproj",
       "projectName": "Weighting",
-      "projectPath": "D:\\Quadrant\\Weighting\\Weighting\\Weighting.csproj",
-      "packagesPath": "C:\\Users\\26672\\.nuget\\packages\\",
-      "outputPath": "D:\\Quadrant\\Weighting\\Weighting\\obj\\",
+      "projectPath": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\Weighting.csproj",
+      "packagesPath": "C:\\Users\\蔡明\\.nuget\\packages\\",
+      "outputPath": "D:\\zhijain\\Weighting\\Weighting\\Weighting\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\26672\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\蔡明\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -5952,7 +5977,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "9.0.200"
     },
     "frameworks": {
       "net8.0-windows10.0.19041": {
@@ -5986,6 +6012,10 @@
             "target": "Package",
             "version": "[9.0.4, )"
           },
+          "Yefeng.Kingdee.BOS.WebApi.Client": {
+            "target": "Package",
+            "version": "[1.0.0, )"
+          },
           "Zebra.Printer.SDK": {
             "target": "Package",
             "version": "[3.0.3337, )"
@@ -6005,21 +6035,21 @@
         "downloadDependencies": [
           {
             "name": "Microsoft.Windows.SDK.NET.Ref",
-            "version": "[10.0.19041.31, 10.0.19041.31]"
+            "version": "[10.0.19041.57, 10.0.19041.57]"
           }
         ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           },
-          "Microsoft.Windows.SDK.NET.Ref": {
+          "Microsoft.Windows.SDK.NET.Ref.Windows": {
             "privateAssets": "all"
           },
           "Microsoft.WindowsDesktop.App.WPF": {
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

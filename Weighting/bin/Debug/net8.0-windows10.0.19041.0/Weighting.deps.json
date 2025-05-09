@@ -15,20 +15,24 @@
           "SkiaSharp": "3.116.1",
           "System.Data.SQLite": "1.0.119",
           "System.IO.Ports": "9.0.4",
+          "Yefeng.Kingdee.BOS.WebApi.Client": "1.0.0",
           "Zebra.Printer.SDK": "3.0.3337",
-          "Kingdee.BOS.WebApi.Client": "8.0.319.1",
           "Kingdee.CDP.WebApi.SDK": "9.1.0.0",
-          "runtimepack.Microsoft.Windows.SDK.NET.Ref": "10.0.19041.31"
+          "runtimepack.Microsoft.Windows.SDK.NET.Ref": "10.0.19041.57"
         },
         "runtime": {
           "Weighting.dll": {}
         }
       },
-      "runtimepack.Microsoft.Windows.SDK.NET.Ref/10.0.19041.31": {
+      "runtimepack.Microsoft.Windows.SDK.NET.Ref/10.0.19041.57": {
         "runtime": {
           "Microsoft.Windows.SDK.NET.dll": {
-            "assemblyVersion": "10.0.19041.24",
-            "fileVersion": "10.0.19041.31"
+            "assemblyVersion": "10.0.19041.38",
+            "fileVersion": "10.0.19041.55"
+          },
+          "WinRT.Runtime.dll": {
+            "assemblyVersion": "2.2.0.0",
+            "fileVersion": "2.2.0.48161"
           }
         }
       },
@@ -143,14 +147,7 @@
           }
         }
       },
-      "Microsoft.Windows.CsWinRT/2.2.0": {
-        "runtime": {
-          "lib/net8.0/WinRT.Runtime.dll": {
-            "assemblyVersion": "2.2.0.0",
-            "fileVersion": "2.2.0.48161"
-          }
-        }
-      },
+      "Microsoft.Windows.CsWinRT/2.2.0": {},
       "Microsoft.Xaml.Behaviors.Wpf/1.1.39": {
         "runtime": {
           "lib/net5.0-windows7.0/Microsoft.Xaml.Behaviors.dll": {
@@ -824,6 +821,17 @@
           "System.Drawing.Common": "9.0.1"
         }
       },
+      "Yefeng.Kingdee.BOS.WebApi.Client/1.0.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "runtime": {
+          "lib/net5.0/Yefeng.Kingdee.BOS.WebApi.Client.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "Zebra.Printer.SDK/3.0.3337": {
         "dependencies": {
           "Csv": "2.0.93",
@@ -860,14 +868,6 @@
           }
         }
       },
-      "Kingdee.BOS.WebApi.Client/8.0.319.1": {
-        "runtime": {
-          "Kingdee.BOS.WebApi.Client.dll": {
-            "assemblyVersion": "8.0.319.1",
-            "fileVersion": "8.0.319.1"
-          }
-        }
-      },
       "Kingdee.CDP.WebApi.SDK/9.1.0.0": {
         "runtime": {
           "Kingdee.CDP.WebApi.SDK.dll": {
@@ -884,7 +884,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "runtimepack.Microsoft.Windows.SDK.NET.Ref/10.0.19041.31": {
+    "runtimepack.Microsoft.Windows.SDK.NET.Ref/10.0.19041.57": {
       "type": "runtimepack",
       "serviceable": false,
       "sha512": ""
@@ -1484,17 +1484,19 @@
       "path": "system.windows.extensions/4.7.0",
       "hashPath": "system.windows.extensions.4.7.0.nupkg.sha512"
     },
+    "Yefeng.Kingdee.BOS.WebApi.Client/1.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ZlzkhSjo3OzbMCcD1zmNWnhES6edEn4Owd+ghMLdMchLx45949en7KWp/Ewi/q0CRRdo9MmS5pwwvkRCxQz6iQ==",
+      "path": "yefeng.kingdee.bos.webapi.client/1.0.0",
+      "hashPath": "yefeng.kingdee.bos.webapi.client.1.0.0.nupkg.sha512"
+    },
     "Zebra.Printer.SDK/3.0.3337": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-kALMUcfac0OLxyxgwpE5p/SkfDk9s12eWpcz/rCp+ymgPqsfoGMcptX+t32NLrykAAGkBcJW+Vm/qf+KfxdcaQ==",
       "path": "zebra.printer.sdk/3.0.3337",
       "hashPath": "zebra.printer.sdk.3.0.3337.nupkg.sha512"
-    },
-    "Kingdee.BOS.WebApi.Client/8.0.319.1": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
     },
     "Kingdee.CDP.WebApi.SDK/9.1.0.0": {
       "type": "reference",

@@ -84,7 +84,7 @@
                             <!--  set a max length to get an indicator in the editor  -->
                             <DataGridTextColumn Header="标准重量">
                                 <DataGridTextColumn.Binding>
-                                    <Binding Path="Item.weights" StringFormat="{}{0:F2}">
+                                    <Binding Path="Item.weights" StringFormat="{}{0:F3}">
                                         <Binding.ValidationRules>
                                             <StaticResource ResourceKey="NotEmptyRule" />
                                         </Binding.ValidationRules>
@@ -99,7 +99,7 @@
                                 SelectedValueBinding="{Binding Item.MaterialUnit}" />
                             <DataGridTextColumn Header="上公差">
                                 <DataGridTextColumn.Binding>
-                                    <Binding Path="Item.UpperTolerance" StringFormat="{}{0:F2}">
+                                    <Binding Path="Item.UpperTolerance" StringFormat="{}{0:F3}">
                                         <Binding.ValidationRules>
                                             <StaticResource ResourceKey="NotEmptyRule" />
                                         </Binding.ValidationRules>
@@ -111,7 +111,7 @@
                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                 Header="下公差">
                                 <DataGridTextColumn.Binding>
-                                    <Binding Path="Item.LowerTolerance" StringFormat="{}{0:F2}">
+                                    <Binding Path="Item.LowerTolerance" StringFormat="{}{0:F3}">
                                         <Binding.ValidationRules>
                                             <StaticResource ResourceKey="NotEmptyRule" />
                                         </Binding.ValidationRules>

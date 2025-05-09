@@ -44,7 +44,14 @@
                     Source="pack://application:,,,/Weighting;component/Q.png"
                     Stretch="Fill" />
                 <TextBlock
-                    Grid.Column="1"
+                 Grid.Column="1"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Center"
+                 FontSize="20"
+                 FontWeight="Bold"
+                 Text="铁氧体混料称重系统" />
+                <TextBlock
+                    Grid.Column="2"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     FontSize="20"

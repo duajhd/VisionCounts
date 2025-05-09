@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 
 namespace Weighting.Shared
@@ -164,4 +165,55 @@ namespace Weighting.Shared
             return Binding.DoNothing;
         }
     }
+
+
+    public class gUnitVisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is string paramStr)
+            {
+                if (paramStr.Equals("kg", StringComparison.OrdinalIgnoreCase))
+                {
+                    return Visibility.Collapsed;
+                }
+                if (paramStr.Equals("g", StringComparison.OrdinalIgnoreCase))
+                {
+                    return Visibility.Visible;
+                }
+            }
+            return Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class kgUnitVisibilityConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is string paramStr)
+            {
+
+                if (paramStr.Equals("g", StringComparison.OrdinalIgnoreCase))
+                {
+                    return Visibility.Collapsed;
+                }
+                if (paramStr.Equals("kg", StringComparison.OrdinalIgnoreCase))
+                {
+                    return Visibility.Visible;
+                }
+            }
+            return Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
 }

@@ -7,14 +7,17 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+<ApplicationIcon>36ae7f78b25dc.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="36ae7f78b25dc.ico" />
     <None Remove="OIP.jpg" />
     <None Remove="Q.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="favicon.ico" />
     <Resource Include="OIP.jpg" />
     <Resource Include="Q.png" />
   </ItemGroup>
@@ -27,13 +30,11 @@
     <PackageReference Include="SkiaSharp" Version="3.116.1" />
     <PackageReference Include="System.Data.SQLite" Version="1.0.119" />
     <PackageReference Include="System.IO.Ports" Version="9.0.4" />
+    <PackageReference Include="Yefeng.Kingdee.BOS.WebApi.Client" Version="1.0.0" />
     <PackageReference Include="Zebra.Printer.SDK" Version="3.0.3337" />
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Kingdee.BOS.WebApi.Client">
-      <HintPath>bin\Debug\net8.0-windows10.0.19041.0\Kingdee.BOS.WebApi.Client.dll</HintPath>
-    </Reference>
     <Reference Include="Kingdee.CDP.WebApi.SDK">
       <HintPath>bin\Debug\net8.0-windows10.0.19041.0\Kingdee.CDP.WebApi.SDK.dll</HintPath>
     </Reference>

@@ -258,11 +258,11 @@ namespace Weighting.ViewModels
 
                         MaterialName = DataRowHelper.GetValue<string>(row, "MaterialName", null),
 
-                        weights = DataRowHelper.GetValue<float>(row, "weights", 0f),
+                        weights = DataRowHelper.GetValue<float>(row, "weights", 0.000f),
 
-                        UpperTolerance = DataRowHelper.GetValue<float>(row, "UpperTolerance", 0f),
+                        UpperTolerance = DataRowHelper.GetValue<float>(row, "UpperTolerance", 0.000f),
 
-                        LowerTolerance = DataRowHelper.GetValue<float>(row, "LowerTolerance", 0f),
+                        LowerTolerance = DataRowHelper.GetValue<float>(row, "LowerTolerance", 0.000f),
 
                         MaterialUnit = DataRowHelper.GetValue<string>(row, "MaterialUnit", null),
 
@@ -311,11 +311,11 @@ namespace Weighting.ViewModels
 
 
             //连接后立即开始采集
-            foreach (DeviceClient item in GlobalViewModelSingleton.Instance.deviceClients)
-            {
+            //foreach (DeviceClient item in GlobalViewModelSingleton.Instance.deviceClients)
+            //{
 
-                await item.ConnectAsync();
-            }
+            //    await item.ConnectAsync();
+            //}
 
 
 
@@ -384,11 +384,11 @@ namespace Weighting.ViewModels
 
                             MaterialName = DataRowHelper.GetValue<string>(row, "MaterialName", null),
 
-                            weights = DataRowHelper.GetValue<float>(row, "weights", 0f),
+                            weights = DataRowHelper.GetValue<float>(row, "weights", 0.000f),
 
-                            UpperTolerance = DataRowHelper.GetValue<float>(row, "UpperTolerance", 0f),
+                            UpperTolerance = DataRowHelper.GetValue<float>(row, "UpperTolerance", 0.000f),
 
-                            LowerTolerance = DataRowHelper.GetValue<float>(row, "LowerTolerance", 0f),
+                            LowerTolerance = DataRowHelper.GetValue<float>(row, "LowerTolerance", 0.000f),
 
                             MaterialUnit = DataRowHelper.GetValue<string>(row, "MaterialUnit", null),
 
@@ -432,11 +432,11 @@ namespace Weighting.ViewModels
             {
                 MaterialName = "",
 
-                weights = 0.00f,
+                weights = 0.000f,
 
-                UpperTolerance = 0.00f,
+                UpperTolerance = 0.000f,
 
-                LowerTolerance = -0.00f,
+                LowerTolerance = -0.000f,
 
                 ScalingNum = "1"
 
@@ -496,9 +496,9 @@ namespace Weighting.ViewModels
                         db.ExecuteNonQuery(sql, new Dictionary<string, object>
                         {
                             { "@materialName",item.MaterialName},
-                            {"@weights",Math.Round(item.weights,2) },
-                            { "@upperTolerance", Math.Round(item.UpperTolerance,2) },
-                           { "@lowerTolerance",Math.Round(item.LowerTolerance,2)},
+                            {"@weights",Math.Round(item.weights,3) },
+                            { "@upperTolerance", Math.Round(item.UpperTolerance,3) },
+                           { "@lowerTolerance",Math.Round(item.LowerTolerance,3)},
                           { "@name",formulaname},
                            { "@code",item.Code},
                          { "@scalingName",$"{item.ScalingID}号秤台"},

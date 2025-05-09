@@ -953,6 +953,17 @@
           }
         }
       },
+      "Yefeng.Kingdee.BOS.WebApi.Client/1.0.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "runtime": {
+          "lib/net5.0/Yefeng.Kingdee.BOS.WebApi.Client.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "Zebra.Printer.SDK/3.0.3337": {
         "dependencies": {
           "Csv": "2.0.93",
@@ -1586,6 +1597,13 @@
       "sha512": "sha512-CeWTdRNfRaSh0pm2gDTJFwVaXfTq6Xwv/sA887iwPTneW7oMtMlpvDIO+U60+3GWTB7Aom6oQwv5VZVUhQRdPQ==",
       "path": "system.windows.extensions/4.7.0",
       "hashPath": "system.windows.extensions.4.7.0.nupkg.sha512"
+    },
+    "Yefeng.Kingdee.BOS.WebApi.Client/1.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ZlzkhSjo3OzbMCcD1zmNWnhES6edEn4Owd+ghMLdMchLx45949en7KWp/Ewi/q0CRRdo9MmS5pwwvkRCxQz6iQ==",
+      "path": "yefeng.kingdee.bos.webapi.client/1.0.0",
+      "hashPath": "yefeng.kingdee.bos.webapi.client.1.0.0.nupkg.sha512"
     },
     "Zebra.Printer.SDK/3.0.3337": {
       "type": "package",
